@@ -1,0 +1,2 @@
+beginner_tutorials:morai_msgs:ssafy_1:ssafy_2
+-DCATKIN_DEVEL_PREFIX=/home/ssafy/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ssafy/catkin_ws/install -G Unix Makefiles
