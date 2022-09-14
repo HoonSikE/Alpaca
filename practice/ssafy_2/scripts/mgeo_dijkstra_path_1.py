@@ -77,12 +77,11 @@ class dijkstra_path_pub :
         # F8 키보드 입력 또는 시뮬레이터에서 화면 좌측 상단에 View --> MGeo Viewer 를 클릭합니다.
         # MGeo Viewer 기능을 이용하여 맵에있는 MGeo 정보를 확인 할 수 있으며 시각화 까지 가능합니다.
         # 해당 기능을 이용하여 원하는 시작 위치와 종료 위치의 Node 이름을 알아낸 뒤 아래 변수에 입력하세요.
-        
-        self.start_node = 'A119BS010184'
-        self.end_node = 'A119BS010148'
-
         '''
-
+        # self.start_node = 'A119BS010184'
+        self.start_node = 'A119BS010278'
+        # self.end_node = 'A119BS010148'
+        self.end_node = 'A119BS010751'
         self.global_path_msg = Path()
         self.global_path_msg.header.frame_id = '/map'
 
@@ -94,8 +93,8 @@ class dijkstra_path_pub :
             '''
             # dijkstra 이용해 만든 Global Path 메세지 를 전송하는 publisher 를 만든다.
             self.global_path_pub.
-            
             '''
+            self.global_path_pub.publish(self.global_path_msg)
             rate.sleep()
 
     def calc_dijkstra_path_node(self, start_node, end_node):
@@ -107,8 +106,13 @@ class dijkstra_path_pub :
         out_path.header.frame_id = '/map'
         '''
         # dijkstra 경로 데이터 중 Point 정보를 이용하여 Path 데이터를 만들어 줍니다.
-
         '''
+        for waypoint in path["point_path"] :
+            read_pose = PoseStamped()
+            read_pose.pose.position.x = waypoint[0]
+            read_pose.pose.position.y = waypoint[1]
+            read_pose.pose.orientation.w = 1
+            out_path.poses.append(read_pose)    
 
         return out_path
 
@@ -149,21 +153,34 @@ class Dijkstra:
 
             for to_node in from_node.get_to_nodes():
                 # 현재 노드에서 to_node로 연결되어 있는 링크를 찾고, 그 중에서 가장 빠른 링크를 찾아준다
-                shortest_link, min_cost = self.find_shortest_link_leading_to_node(from_node,to_node)
+                shortest_link, min_cost = from_node.find_shortest_link_leading_to_node(to_node)
                 weight[from_node_id][to_node.idx] = min_cost           
 
         return weight
 
-    def find_shortest_link_leading_to_node(self, from_node,to_node):
-        """현재 노드에서 to_node로 연결되어 있는 링크를 찾고, 그 중에서 가장 빠른 링크를 찾아준다"""
-        #TODO: (3) weight 값 계산
-        '''
-        # 최단거리 Link 인 shortest_link 변수와
-        # shortest_link 의 min_cost 를 계산 합니다.
+    # def find_shortest_link_leading_to_node(self, from_node,to_node):
+    #     """현재 노드에서 to_node로 연결되어 있는 링크를 찾고, 그 중에서 가장 빠른 링크를 찾아준다"""
+    #     #TODO: (3) weight 값 계산
+    #     '''
+    #     # 최단거리 Link 인 shortest_link 변수와
+    #     # shortest_link 의 min_cost 를 계산 합니다.
+    #     '''
+    #     to_links = []
+    #     for link in self.get_to_links():
+    #         if link.to_node is to_node:
+    #             to_links.append(link)
 
-        '''
+    #     if len(to_links) == 0:
+    #         raise BaseException('[ERROR] Error @ Dijkstra.find_shortest_path : Internal data error. There is no link from node (id={}) to node (id={})'.format(self.idx, to_node.idx))
 
-        return shortest_link, min_cost
+    #     shortest_link = None
+    #     min_cost = float('inf')
+    #     for link in to_links:
+    #         if link.cost < min_cost:
+    #             min_cost = link.cost
+    #             shortest_link = link
+
+    #     return shortest_link, min_cost
         
     def find_nearest_node_idx(self, distance, s):        
         idx_list = self.nodes.keys()
@@ -188,7 +205,6 @@ class Dijkstra:
         # from_node 의 Value 값은 Key 값의 Node Idx 에서 가장 비용이 작은(가장 가까운) Node Idx로 합니다.
         # from_node 통해 각 Node 에서 가장 가까운 Node 찾고
         # 이를 연결해 시작 노드부터 도착 노드 까지의 최단 경로를 탐색합니다. 
-
         '''
         s = dict()
         from_node = dict() 
@@ -229,7 +245,7 @@ class Dijkstra:
             from_node = self.nodes[from_node_idx]
             to_node = self.nodes[to_node_idx]
 
-            shortest_link, min_cost = self.find_shortest_link_leading_to_node(from_node,to_node)
+            shortest_link, min_cost = from_node.find_shortest_link_leading_to_node(to_node)
             link_path.append(shortest_link.idx)
 
         #TODO: (8) Result 판별
