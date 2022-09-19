@@ -31,8 +31,8 @@ class pure_pursuit :
         self.forward_point=[0,0,0]
         self.current_postion=Point()
 
-        self.vehicle_length = 4
-        self.lfd = 20
+        self.vehicle_length = 2.75
+        self.lfd = 15
 
 
         rate = rospy.Rate(30) # 30hz
