@@ -10,7 +10,7 @@ import java.util.*
 data class Destination(
     val address: String = "",
     val latitude: String = "",
+    val count: Int = 0,
     val addressName: String = "",
-    val longitude: String = "",
-    val count: Int = 0
+    val longitude: String = ""
 ) : Parcelable

@@ -1,18 +1,16 @@
 package com.example.taxi.data.repository
 
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.taxi.data.dto.user.User
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.SharedPrefConstants
 import com.example.taxi.utils.constant.UiState
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
+
 
 class AuthRepositoryImpl(
     val auth: FirebaseAuth,

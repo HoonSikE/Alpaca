@@ -33,4 +33,8 @@
     <color name="hintGray">#CBD7E2</color>
 
     <color name="bronze">#92621C</color>
+    <color name="silver">#c0c0c0</color>
+    <color name="gold">#FFD700</color>
+    <color name="platinum">#0F52BA</color>
+    <color name="diamond">#B9F2FF</color>
 </resources>
