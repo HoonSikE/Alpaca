@@ -1,1 +1,0 @@
-/home/ssafy/catkin_ws/src/ssafy_2/scripts/mgeo_dijkstra_path_1.py
