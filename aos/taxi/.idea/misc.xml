@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_login.xml" value="0.1125" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_user_home.xml" value="0.25364583333333335" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/button_regular.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/circle_article.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/circle_profile.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/dialog_backgound.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/edittext_regular.xml" value="0.1415" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/layout_recycler.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/layout_recycler_no_item.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/layout_user_profile.xml" value="0.1225" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/overlay_gradient_login.xml" value="0.1415" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable/ic_cancel.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable/splash_icon.xml" value="0.1" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/dlg_favorites.xml" value="0.264" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_Information_user.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_assigned_taxi_information.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_broading_list.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_call_taxi.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_chatbot.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_destination_search.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_destination_setting.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_driving_taxi.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_driving_taxi_check.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_email_login.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_end_driving_taxi.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_favorites.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_find_id.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_find_pw.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_join.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_location_tracking_taxi.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_login.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_my_page.xml" value="0.1125" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_payment.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_personal_chat.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_provider_home.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_search.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_start_driving_taxi.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_taxi_assessment.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_taxi_detail.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_update_password.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_update_user_info.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_user_home.xml" value="0.264" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_user_profile.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_user_with_drawal.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/fragment_waiting_call_taxi.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/item_destination_list.xml" value="0.4" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/layout/item_favorites.xml" value="0.128" />
+        <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1415" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
