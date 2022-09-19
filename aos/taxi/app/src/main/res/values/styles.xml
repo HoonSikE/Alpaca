@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActionBarTitle" parent="android:TextAppearance">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:gravity">start|center</item>
+    </style>
+
+    <style name="HeadError" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SubHeadError" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="BigTitle" parent="android:TextAppearance">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_bold</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Head" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="HeadSemiBold" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="HeadBold" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="HeadWhite" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="HeadSemiBoldWhite" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="HeadBoldWhite" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SubHeadSemiBold" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SubHeadBold" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SubHeadWhite" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SubHeadSemiBoldWhite" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SubHeadBoldWhite" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SubHead" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Body" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="BodyBold" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="BodySemiBoldWhite" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="BodyWhite" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="StampBody" parent="android:TextAppearance">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="notFontPaddingBody" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/notosanskr_regular</item>
+    </style>
+
+    <style name="RippleEffect">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="RippleEffectBorderless">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
+    <style name="BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/primaryColor</item>
+    </style>
+
+    <style name="CustomDialogFragment">
+        <!-- 꽉 채운 화면에 배경 없이 (custom view 영역만 보임) -->
+
+        <item name="android:windowMinWidthMajor">60%</item>
+        <item name="android:windowMinWidthMinor">60%</item>
+
+        <!-- Dim 처리 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+
+        <!-- Dialog 가 센터에 나옴 -->
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+
+    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="actionTextColorAlpha">1</item>
+    </style>
+
+    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
+    <style name="ChipText" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="ArticleMenuBottomSheetFragment" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ArticleMenuBottomSheetStyle</item>
+    </style>
+
+    <style name="ArticleMenuBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TripInformationDescription" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="NoticeContent" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Term" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="ArticleWrite" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+</resources>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_login_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_login"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/overlay_gradient_login"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_login_inner_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_login_title"
+                style="@style/HeadBoldWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.05"
+                android:text="가제:Taxi"
+                android:textSize="64sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.13" />
+
+            <TextView
+                android:id="@+id/text_login_slogan"
+                style="@style/HeadBoldWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="임팀장의 매드맥스"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_login_title" />
+
+            <ImageView
+                android:id="@+id/image_login_apple"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginBottom="32dp"
+                android:src="@drawable/ic_apple"
+                app:layout_constraintBottom_toTopOf="@id/button_login_emailLogin"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/image_login_fecebook"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_facebook"
+                app:layout_constraintBottom_toBottomOf="@id/image_login_apple"
+                app:layout_constraintEnd_toStartOf="@id/image_login_google"
+                app:layout_constraintStart_toEndOf="@id/image_login_apple"
+                app:layout_constraintTop_toTopOf="@id/image_login_apple"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/image_login_google"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="64dp"
+                android:src="@drawable/ic_google"
+                app:layout_constraintBottom_toBottomOf="@id/image_login_apple"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/image_login_apple"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/button_login_emailLogin"
+                style="@style/BodyWhite"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/button_regular"
+                android:text="이메일 로그인"
+                app:layout_constraintBottom_toTopOf="@id/text_login_label_signup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/text_login_label_signup"
+                style="@style/BodyWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="72dp"
+                android:text="계정이 없으신가요?"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/text_login_signup"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/text_login_signup"
+                style="@style/BodyWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가입하기"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/text_login_label_signup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_login_label_signup"
+                app:layout_constraintTop_toTopOf="@id/text_login_label_signup" />
+
+            <ProgressBar
+                android:id="@+id/progressBar_login_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
