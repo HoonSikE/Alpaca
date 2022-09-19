@@ -1,5 +1,6 @@
 package com.example.taxi.ui.home.user
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.mypage.Favorites
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.databinding.FragmentUserHomeBinding
+import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.show
@@ -67,6 +69,9 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                 }
                 is UiState.Success -> {
                     //binding.progressBar.hide()
+                    binding.textUserHomeName.text = ApplicationClass.prefs.name + "님, 안녕하세요"
+                    binding.textUserHomeCount.text = ApplicationClass.prefs.useCount.toString() + "회"
+                    setLevel()
                     val list : MutableList<Destination> = state.data.toMutableList()
                     destinationListAdapter.updateList(list)
                     binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler)
@@ -111,5 +116,31 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
 
     private val favoritesListener: (address: String) -> Unit = {
         //userHomeViewModel.deleteFavorites()
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun setLevel(){
+        when(ApplicationClass.prefs.useCount?.div(10)){
+            1 -> {
+                binding.textUserHomeClass.text = "Bronze"
+                binding.textUserHomeClass.setTextColor(R.color.bronze)
+            }
+            2 -> {
+                binding.textUserHomeClass.text = "Silver"
+                binding.textUserHomeClass.setTextColor(R.color.silver)
+            }
+            3 -> {
+                binding.textUserHomeClass.text = "Gold"
+                binding.textUserHomeClass.setTextColor(R.color.gold)
+            }
+            4 -> {
+                binding.textUserHomeClass.text = "Platinum"
+                binding.textUserHomeClass.setTextColor(R.color.platinum)
+            }
+            5 -> {
+                binding.textUserHomeClass.text = "Diamond"
+                binding.textUserHomeClass.setTextColor(R.color.diamond)
+            }
+        }
     }
 }
