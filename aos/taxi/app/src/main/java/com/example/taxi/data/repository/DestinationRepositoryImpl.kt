@@ -27,7 +27,7 @@ class DestinationRepositoryImpl(
                         val newDestination = mutableListOf<Destination>()
                         if(destinations != null){
                             for(des in destinations){
-                                val destination = Destination(des.address, des.latitude, des.addressName, des.longitude, des.count)
+                                val destination = Destination(des.address, des.latitude, des.count, des.addressName, des.longitude)
                                 newDestination.add(destination)
                             }
                             result.invoke(

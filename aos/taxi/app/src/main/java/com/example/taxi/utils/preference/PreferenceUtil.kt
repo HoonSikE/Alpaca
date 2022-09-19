@@ -20,4 +20,11 @@ class PreferenceUtil(context: Context) {
             prefs.edit().putString(NAME, value).apply()
         }
 
+    var useCount: Int?
+        get() = prefs.getInt(USECOUNT, 0)
+        set(value) {
+            if (value != null) {
+                prefs.edit().putInt(USECOUNT, value).apply()
+            }
+        }
 }

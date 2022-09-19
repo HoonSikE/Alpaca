@@ -1,11 +1,17 @@
 package com.example.taxi.ui.login
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
+import com.example.taxi.data.dto.mypage.Favorites
 import com.example.taxi.databinding.FragmentEmailLoginBinding
+import com.example.taxi.di.ApplicationClass
+import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.isValidEmail
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,6 +22,7 @@ class EmailLoginFragment : BaseFragment<FragmentEmailLoginBinding>(R.layout.frag
 
     override fun init() {
         setOnClickListeners()
+        observerData()
     }
 
     private fun setOnClickListeners(){
@@ -34,6 +41,40 @@ class EmailLoginFragment : BaseFragment<FragmentEmailLoginBinding>(R.layout.frag
 
         binding.textEmailLoginFindPW.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_findPWFragment)
+        }
+    }
+
+    private fun observerData() {
+        authViewModel.login.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                    authViewModel.getSession { user ->
+                        Log.d("user : ", user.toString())
+                        if (user != null){
+                            ApplicationClass.userId = user.userId
+                            ApplicationClass.prefs.name = user.name
+                            ApplicationClass.prefs.userSeq = user.userSeq
+                            ApplicationClass.prefs.useCount = user.useCount
+                            if(user.isEachProvider){
+                                findNavController().navigate(R.id.action_loginFragment_to_providerHomeFragment)
+                            }else{
+                                findNavController().navigate(R.id.action_loginFragment_to_userHomeFragment)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

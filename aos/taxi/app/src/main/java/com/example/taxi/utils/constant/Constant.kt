@@ -3,6 +3,7 @@ package com.example.taxi.utils.constant
 
 const val USER_SEQ = "user_seq"
 const val NAME = "name"
+const val USECOUNT = "useCount"
 
 /**
  * 출발전 / 도착 후 상태
