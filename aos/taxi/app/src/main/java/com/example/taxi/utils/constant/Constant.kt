@@ -17,6 +17,7 @@ object FireStoreCollection{
     val USER = "User"
     val ROUTE = "Route"
     val ROUTESETTING = "RouteSetting"
+    val TAXILIST = "TaxiList"
 }
 
 object FireStoreDocumentField {

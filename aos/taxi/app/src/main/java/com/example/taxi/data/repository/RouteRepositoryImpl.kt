@@ -1,6 +1,8 @@
 package com.example.taxi.data.repository
 
 import android.util.Log
+import com.example.taxi.data.dto.user.calltaxi.Taxi
+import com.example.taxi.data.dto.user.calltaxi.TaxiList
 import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.data.dto.user.route.Location
 import com.example.taxi.data.dto.user.route.Route
@@ -67,6 +69,43 @@ class RouteRepositoryImpl(
                     )
                 )
                 Log.d("addRouteSetting", "Destination has been created fail")
+            }
+    }
+
+    override fun getTaxiList(result: (UiState<List<Taxi>>) -> Unit) {
+        database.collection(FireStoreCollection.TAXILIST).document("Alpaca")
+            .get()
+            .addOnSuccessListener { document ->
+                Log.d("getTaxiList", "DocumentSnapshot data: ${document.data}")
+                if (document != null) {
+                    val taxiList = document.toObject(TaxiList::class.java)
+                    if(taxiList != null){
+                        val taxiList = taxiList.taxiList
+                        val newTaxiList = mutableListOf<Taxi>()
+                        if(taxiList != null){
+                            for(des in taxiList){
+                                val taxi = Taxi(carImage = des.carImage, carNumber = des.carNumber,
+                                isEachDriving = des.isEachDriving, isEachInOperation = des.isEachInOperation,
+                                rideComfortAverage = des.rideComfortAverage, cleanlinessAverage = des.cleanlinessAverage,
+                                position = des.position)
+                                newTaxiList.add(taxi)
+                            }
+                            result.invoke(
+                                UiState.Success(newTaxiList)
+                            )
+                        }
+                    }
+                } else {
+                    Log.d("getTaxiList", "No such document")
+                }
+            }
+            .addOnFailureListener {
+                Log.d("getTaxiList", "Fail get document")
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
             }
     }
 }

@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Location(
+    var lati: String = "",
     var long: String = "",
-    var lati: String = ""
 ) : Parcelable

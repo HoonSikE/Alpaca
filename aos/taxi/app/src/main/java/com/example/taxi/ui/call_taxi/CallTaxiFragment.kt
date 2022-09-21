@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.core.widget.EdgeEffectCompat.getDistance
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taxi.R
@@ -82,7 +84,11 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initNaverMap()
+        initData()
+        findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
+            bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
+        )
+        //initNaverMap()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -96,8 +102,8 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
         if(arguments?.getParcelable<Destination>("Destination")!=null && arguments?.getParcelable<Destination>("StartingPoint")!=null){
             destination = arguments?.getParcelable<Destination>("Destination") as Destination
             startingPoint = arguments?.getParcelable<Destination>("StartingPoint") as Destination
-            binding.textCallTaxiDestination.text = destination.addressName
-            binding.textCallTaxiStart.text = startingPoint.addressName
+            //binding.textCallTaxiDestination.text = destination.addressName
+            //binding.textCallTaxiStart.text = startingPoint.addressName
         }
     }
 
