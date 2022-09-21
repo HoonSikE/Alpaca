@@ -12,6 +12,7 @@ import com.example.taxi.databinding.ItemFavoritesBinding
 class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
     private var favoritesList = mutableListOf<Favorites>()
     lateinit var onItemClickListener: (View, String) -> Unit
+    lateinit var onFavoritesClickListener: (View, String, String, String, String) -> Unit
 
     fun setListData(data: MutableList<Favorites>){
         favoritesList = data
@@ -31,6 +32,7 @@ class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolde
             )
         ).apply {
             bindOnItemClickListener(onItemClickListener)
+            bindOnItemClickListener(onFavoritesClickListener)
         }
     }
 
@@ -45,12 +47,14 @@ class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolde
     class FavoritesViewHolder(private val binding: ItemFavoritesBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        lateinit var place : String
         private lateinit var address : String
         private lateinit var latitude : String
         private lateinit var longitude : String
 
         fun bind(data: Favorites) {
             binding.addrName.text = data.addressName
+            place = data.addressName
             address = data.address
             latitude = data.latitude
             longitude = data.longitude
@@ -59,6 +63,12 @@ class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolde
         fun bindOnItemClickListener(onItemClickListener: (View, String) -> Unit ) {
             binding.imgStar.setOnClickListener {
                 onItemClickListener(it, address)
+            }
+        }
+
+        fun bindOnItemClickListener(onItemClickListener: (View, String, String, String, String) -> Unit ) {
+            binding.addrName.setOnClickListener {
+                onItemClickListener(it, place, address, latitude, longitude)
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.example.taxi.ui.home.user
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
@@ -13,6 +12,7 @@ import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.mypage.Favorites
 import com.example.taxi.data.dto.user.destination.Destination
+import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.databinding.FragmentUserHomeBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.UiState
@@ -26,9 +26,24 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     private lateinit var destinationListAdapter: DestinationListAdapter
     private lateinit var favoritesAdapter: FavoritesAdapter
     private val userHomeViewModel : UserHomeViewModel by viewModels()
+    private var destinationLatitude:Double = 0.0
+    private var destinationLongitude:Double = 0.0
+    private var destinationPlace: String = ""
+    private var destinationAddress: String = ""
+    private lateinit var destination: Destination
 
     private val favoritesDeleteClickListener: (View, String) -> Unit = { _, address ->
         showFavoritesDialog(address)
+    }
+
+    private val destinationOnClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
+        destination = Destination(address,x,place,y)
+        findNavController().navigate(R.id.action_userHomeFragment_to_destinationSettingFragment, bundleOf("Destination" to destination))
+    }
+
+    private val favoritesOnClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
+        destination = Destination(address,x,place,y)
+        findNavController().navigate(R.id.action_userHomeFragment_to_destinationSettingFragment, bundleOf("Destination" to destination))
     }
 
     override fun init() {
@@ -39,12 +54,15 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
 
     private fun initAdapter() {
         userHomeViewModel.getDestinations()
-        destinationListAdapter = DestinationListAdapter()
+        destinationListAdapter = DestinationListAdapter().apply {
+            onItemClickListener = destinationOnClickListener
+        }
         binding.recyclerviewUserHomeDestinationList.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerviewUserHomeDestinationList.adapter = destinationListAdapter
         userHomeViewModel.getFavorites()
         favoritesAdapter = FavoritesAdapter().apply {
             onItemClickListener = favoritesDeleteClickListener
+            onFavoritesClickListener = favoritesOnClickListener
         }
         binding.recyclerviewUserHomeFavorites.apply {
             adapter = favoritesAdapter
@@ -72,7 +90,7 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                     binding.textUserHomeName.text = ApplicationClass.prefs.name + "님, 안녕하세요"
                     binding.textUserHomeCount.text = ApplicationClass.prefs.useCount.toString() + "회"
                     setLevel()
-                    val list : MutableList<Destination> = state.data.toMutableList()
+                    val list : MutableList<FrequentDestination> = state.data.toMutableList()
                     destinationListAdapter.updateList(list)
                     binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textUserHomeNoContentDestination.hide()

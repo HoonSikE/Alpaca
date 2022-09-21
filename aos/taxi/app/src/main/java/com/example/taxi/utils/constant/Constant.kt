@@ -31,3 +31,8 @@ object SharedPrefConstants {
     val LOCAL_SHARED_PREF = "local_shared_pref"
     val USER_SESSION = "user_session"
 }
+
+object KakaoApi {
+    val BASE_URL = "https://dapi.kakao.com/"
+    val API_KEY = "KakaoAK 71db95f3e177c75c9ef05e627c8d6c71"
+}
