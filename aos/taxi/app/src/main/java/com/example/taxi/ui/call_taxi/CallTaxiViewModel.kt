@@ -3,6 +3,7 @@ package com.example.taxi.ui.call_taxi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.taxi.data.dto.user.calltaxi.Taxi
 import com.example.taxi.data.dto.user.route.Location
 import com.example.taxi.data.dto.user.route.RouteSetting
 import com.example.taxi.data.repository.RouteRepository
@@ -22,6 +23,10 @@ class CallTaxiViewModel @Inject constructor(
     val routeSetting: LiveData<UiState<RouteSetting>>
         get() = _routeSetting
 
+    private val _taxiList = MutableLiveData<UiState<List<Taxi>>>()
+    val taxiList: LiveData<UiState<List<Taxi>>>
+        get() = _taxiList
+
     fun getRoute() {
         _route.value = UiState.Loading
         repository.getRoute { _route.value = it }
@@ -31,4 +36,11 @@ class CallTaxiViewModel @Inject constructor(
         _routeSetting.value = UiState.Loading
         repository.addRouteSetting(routeSetting) { _routeSetting.value = it }
     }
+
+    fun getTaxiList() {
+        _taxiList.value = UiState.Loading
+        repository.getTaxiList { _taxiList.value = it }
+    }
+
+
 }
