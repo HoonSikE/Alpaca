@@ -3,11 +3,10 @@ package com.example.taxi.di
 import android.content.SharedPreferences
 import com.example.taxi.data.repository.AuthRepository
 import com.example.taxi.data.repository.AuthRepositoryImpl
-import com.example.taxi.data.repository.DestinationRepository
-import com.example.taxi.data.repository.DestinationRepositoryImpl
+import com.example.taxi.data.repository.FrequentDestinationRepository
+import com.example.taxi.data.repository.FrequentFrequentDestinationRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -20,10 +19,10 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    fun provideDestinationRepository(
+    fun provideFrequentDestinationRepository(
         database: FirebaseFirestore
-    ): DestinationRepository {
-        return DestinationRepositoryImpl(database)
+    ): FrequentDestinationRepository {
+        return FrequentFrequentDestinationRepositoryImpl(database)
     }
 
     @Provides

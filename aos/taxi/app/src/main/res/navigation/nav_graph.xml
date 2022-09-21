@@ -39,8 +39,8 @@
         android:label="DestinationSettingFragment"
         tools:layout="@layout/fragment_destination_setting">
         <action
-            android:id="@+id/action_destinationSettingFragment_to_searchFragment"
-            app:destination="@id/searchFragment"
+            android:id="@+id/action_destinationSettingFragment_to_callTaxiFragment"
+            app:destination="@id/callTaxiFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
@@ -167,19 +167,6 @@
         android:label="UserProfileFragment"
         tools:layout="@layout/fragment_user_profile"
         />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.taxi.ui.call_taxi.setting.search.SearchFragment"
-        android:label="SearchFragment"
-        tools:layout="@layout/fragment_search">
-        <action
-            android:id="@+id/action_searchFragment_to_callTaxiFragment"
-            app:destination="@id/callTaxiFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
-    </fragment>
     <fragment
         android:id="@+id/callTaxiFragment"
         android:name="com.example.taxi.ui.call_taxi.CallTaxiFragment"

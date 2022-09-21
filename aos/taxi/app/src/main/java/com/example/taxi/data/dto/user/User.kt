@@ -1,10 +1,7 @@
 package com.example.taxi.data.dto.user
 
 import android.os.Parcelable
-import com.example.taxi.data.dto.user.destination.Destination
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class User(

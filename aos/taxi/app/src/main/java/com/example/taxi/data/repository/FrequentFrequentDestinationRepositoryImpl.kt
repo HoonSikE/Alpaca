@@ -3,35 +3,35 @@ package com.example.taxi.data.repository
 import android.util.Log
 import com.example.taxi.data.dto.mypage.Favorites
 import com.example.taxi.data.dto.mypage.FavoritesDto
-import com.example.taxi.data.dto.user.destination.Destination
-import com.example.taxi.data.dto.user.destination.DestinationDto
+import com.example.taxi.data.dto.user.destination.FrequentDestination
+import com.example.taxi.data.dto.user.destination.FrequentDestinationDto
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.UiState
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class DestinationRepositoryImpl(
+class FrequentFrequentDestinationRepositoryImpl(
     private val database: FirebaseFirestore
-) : DestinationRepository {
+) : FrequentDestinationRepository {
 
-    override fun getDestination(result: (UiState<List<Destination>>) -> Unit) {
+    override fun getDestination(result: (UiState<List<FrequentDestination>>) -> Unit) {
         database.collection(FireStoreCollection.DESTINATION).document(ApplicationClass.userId)
             .get()
             .addOnSuccessListener { document ->
                 Log.d("getDestination", "DocumentSnapshot data: ${document.data}")
                 if (document != null) {
-                    val destinationDto = document.toObject(DestinationDto::class.java)
-                    if(destinationDto != null){
-                        val destinations = destinationDto.destination
-                        val newDestination = mutableListOf<Destination>()
+                    val frequentDestinationDto = document.toObject(FrequentDestinationDto::class.java)
+                    if(frequentDestinationDto != null){
+                        val destinations = frequentDestinationDto.frequentDestination
+                        val newFrequentDestination = mutableListOf<FrequentDestination>()
                         if(destinations != null){
                             for(des in destinations){
-                                val destination = Destination(des.address, des.latitude, des.count, des.addressName, des.longitude)
-                                newDestination.add(destination)
+                                val frequentDestination = FrequentDestination(des.address, des.latitude, des.count, des.addressName, des.longitude)
+                                newFrequentDestination.add(frequentDestination)
                             }
                             result.invoke(
-                                UiState.Success(newDestination)
+                                UiState.Success(newFrequentDestination)
                             )
                         }
                     }
@@ -49,13 +49,13 @@ class DestinationRepositoryImpl(
             }
     }
 
-    override fun addDestination(destination: Destination, result: (UiState<Destination>) -> Unit) {
+    override fun addDestination(frequentDestination: FrequentDestination, result: (UiState<FrequentDestination>) -> Unit) {
         val document = database.collection(FireStoreCollection.DESTINATION).document(ApplicationClass.userId)
         document
-            .set(destination)
+            .set(frequentDestination)
             .addOnSuccessListener {
                 result.invoke(
-                    UiState.Success(destination)
+                    UiState.Success(frequentDestination)
                 )
                 Log.d("getDestination", "Destination has been created successfully")
             }
@@ -103,7 +103,7 @@ class DestinationRepositoryImpl(
             }
     }
 
-    override fun addFavorites(destination: Destination, result: (UiState<Favorites>) -> Unit) {
+    override fun addFavorites(frequentDestination: FrequentDestination, result: (UiState<Favorites>) -> Unit) {
         TODO("Not yet implemented")
     }
 
