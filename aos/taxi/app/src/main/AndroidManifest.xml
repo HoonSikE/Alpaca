@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Taxi"
         tools:targetApi="31">
         <activity
-            android:name="com.example.taxi.MainActivity"
+            android:name="com.example.taxi.di.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

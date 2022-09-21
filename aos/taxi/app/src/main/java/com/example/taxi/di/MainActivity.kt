@@ -1,10 +1,11 @@
-package com.example.taxi
+package com.example.taxi.di
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.taxi.R
 import com.example.taxi.databinding.ActivityMainBinding
+import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,5 +20,9 @@ class MainActivity : AppCompatActivity() {
             it.setBackgroundDrawable(ColorDrawable(R.color.white))
             it.hide()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
