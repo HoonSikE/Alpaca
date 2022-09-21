@@ -7,7 +7,117 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainer_call_taxi"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/view_call_taxi"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/button_regular"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/white"
+            android:elevation="9dp"
+            />
+
+        <ImageView
+            android:id="@+id/image_call_taxi_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/ic_back_destination"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/view_call_taxi"
+            app:layout_constraintTop_toTopOf="@+id/view_call_taxi"
+            android:elevation="10dp"
+            />
+
+        <TextView
+            android:id="@+id/text_call_taxi_start"
+            style="@style/Body"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.30"
+            android:layout_height="16dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginStart="16dp"
+            android:hint="출발지 입력"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@+id/image_call_taxi_back"
+            app:layout_constraintTop_toTopOf="@+id/view_call_taxi"
+            android:text=""
+            android:maxLines="1"
+            android:elevation="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/image_call_taxi_forward"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_forward"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="@+id/view_call_taxi"
+            app:layout_constraintEnd_toEndOf="@+id/view_call_taxi"
+            app:layout_constraintTop_toTopOf="@+id/view_call_taxi"
+            android:elevation="10dp"
+            />
+
+        <TextView
+            android:id="@+id/text_call_taxi_destination"
+            style="@style/Body"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.30"
+            android:layout_height="16dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginStart="16dp"
+            android:maxLines="1"
+            android:hint="목적지 입력"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@+id/image_call_taxi_forward"
+            app:layout_constraintTop_toTopOf="@+id/view_call_taxi"
+            android:text=""
+            android:elevation="10dp"
+            />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_call_taxi"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:elevation="10dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:closeIcon="@drawable/ic_close"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@drawable/search_regular"
+            app:layout_constraintStart_toStartOf="@+id/view_call_taxi"
+            app:layout_constraintTop_toTopOf="@+id/view_call_taxi" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_call_taxi_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:elevation="10dp"
+            android:visibility="gone"
+            android:background="@drawable/layout_recycler"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_call_taxi"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

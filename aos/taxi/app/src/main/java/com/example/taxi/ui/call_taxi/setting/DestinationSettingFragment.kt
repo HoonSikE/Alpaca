@@ -80,7 +80,8 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
 
     private fun checkEnd(){
         if(binding.textDestinationSettingStart.text !="" && binding.textDestinationSettingDestination.text != ""){
-            findNavController().navigate(R.id.action_destinationSettingFragment_to_callTaxiFragment)
+            findNavController().navigate(R.id.action_destinationSettingFragment_to_callTaxiFragment,
+            bundleOf("Destination" to destination, "StartingPoint" to startingPoint))
         }
     }
 
@@ -240,11 +241,13 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     }
 
     private fun getDistance(list : List<DestinationSearch>) {
-        for(i in list){
-            var newX = ( kotlin.math.cos(startingPoint.latitude.toDouble()) * 6400 * 2 * 3.14 / 360 ) * abs(startingPoint.longitude.toDouble() - i.x.toDouble())
-            var newY = 111 * abs(startingPoint.longitude.toDouble() - i.y.toDouble())
+        if(startingPoint!=null){
+            for(i in list){
+                var newX = ( kotlin.math.cos(startingPoint.latitude.toDouble()) * 6400 * 2 * 3.14 / 360 ) * abs(startingPoint.longitude.toDouble() - i.x.toDouble())
+                var newY = 111 * abs(startingPoint.longitude.toDouble() - i.y.toDouble())
 
-            i.distance = ((sqrt(newX.pow(2)+newY.pow(2)) * 100.0).roundToInt() / 100.0).toString()+"Km"
+                i.distance = ((sqrt(newX.pow(2)+newY.pow(2)) * 100.0).roundToInt() / 100.0).toString()+"Km"
+            }
         }
         initSearchAdapter(list)
     }
