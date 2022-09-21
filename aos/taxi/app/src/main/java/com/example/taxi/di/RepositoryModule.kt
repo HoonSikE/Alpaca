@@ -1,10 +1,7 @@
 package com.example.taxi.di
 
 import android.content.SharedPreferences
-import com.example.taxi.data.repository.AuthRepository
-import com.example.taxi.data.repository.AuthRepositoryImpl
-import com.example.taxi.data.repository.FrequentDestinationRepository
-import com.example.taxi.data.repository.FrequentFrequentDestinationRepositoryImpl
+import com.example.taxi.data.repository.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
@@ -34,5 +31,13 @@ object RepositoryModule {
         gson: Gson
     ): AuthRepository {
         return AuthRepositoryImpl(auth,database,appPreferences,gson)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRouteRepository(
+        database: FirebaseFirestore
+    ): RouteRepository {
+        return RouteRepositoryImpl(database)
     }
 }
