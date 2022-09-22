@@ -10,6 +10,7 @@ import com.example.taxi.data.dto.user.calltaxi.Taxi
 import com.example.taxi.data.dto.user.calltaxi.TaxiList
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.databinding.FragmentWaitingCallTaxiBinding
+import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.call_taxi.CallTaxiViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
@@ -77,8 +78,17 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
         }
         binding.progressBarWaitingCallTaxiLoading.hide()
             Log.d("taxi", taxi.toString())
+        ApplicationClass.prefs.carNumber = taxi.carNumber
+        ApplicationClass.prefs.carImage = taxi.carImage
+        ApplicationClass.prefs.rideComfortAverage = taxi.rideComfortAverage.toFloat()
+        ApplicationClass.prefs.latitude = taxi.position.lati
+        ApplicationClass.prefs.longitude = taxi.position.long
+        ApplicationClass.prefs.cleanlinessAverage = taxi.cleanlinessAverage.toFloat()
+        ApplicationClass.prefs.isEachDriving = taxi.isEachDriving
+        ApplicationClass.prefs.isEachInOperation = !taxi.isEachInOperation
+        //TODO : 차량 isEachInOperation 업데이트
         //TODO : LastDestination, Destination(FrequentDestination) 업데이트
-        findNavController().navigate(R.id.action_waitingCallTaxiFragment_to_assignedTaxiInformationFragment, bundleOf("Taxi" to taxi))
+        findNavController().navigate(R.id.action_waitingCallTaxiFragment_to_assignedTaxiInformationFragment)
     }
 
 }

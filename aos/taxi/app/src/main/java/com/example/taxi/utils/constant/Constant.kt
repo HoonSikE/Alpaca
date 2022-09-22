@@ -4,6 +4,14 @@ package com.example.taxi.utils.constant
 const val USER_SEQ = "user_seq"
 const val NAME = "name"
 const val USECOUNT = "useCount"
+const val CARNUMBER = "carNumber"
+const val RIDECOMFORTAVERAGE= "rideComfortAverage"
+const val CARIMAGE = "carImage"
+const val LATITUDE = "latitude"
+const val LONGITUDE = "longitude"
+const val CLEANLINESSAVERAGE = "cleanlinessAverage"
+const val ISEACHDRIVING = "isEachDriving"
+const val ISEACHINOPERATION = "isEachInOperation"
 
 /**
  * 출발전 / 도착 후 상태
