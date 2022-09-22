@@ -1,6 +1,12 @@
 package com.example.taxi.ui.login.join
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taxi.R
@@ -14,17 +20,37 @@ import com.example.taxi.utils.constant.isValidEmail
 import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
+import android.Manifest
+import android.content.pm.PackageManager
+import com.example.taxi.data.dto.user.address_info.AddressInfo
+import com.example.taxi.di.ApplicationClass
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import de.hdodenhof.circleimageview.CircleImageView
 
 @AndroidEntryPoint
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     val authViewModel: AuthViewModel by viewModels()
     var isEachProvider = false
+    // 주소
+    lateinit var addressInfo : AddressInfo
+    // 사진 업로드
+    var pickImageFromAlbum = 0
+    var firestore = FirebaseFirestore.getInstance()
+    var fbStorage : FirebaseStorage? = FirebaseStorage.getInstance()
+    var uriPhoto : Uri? = null
 
     override fun init() {
         setOnClickListeners()
     }
 
     private fun setOnClickListeners(){
+        binding.imageJoinUserImageButton.setOnClickListener{
+            // Open Album
+            var photoPickerInent = Intent(Intent.ACTION_PICK)
+            photoPickerInent.type = "image/*"
+            startActivityForResult(photoPickerInent, pickImageFromAlbum)
+        }
         binding.buttonJoinLogin.setOnClickListener {
             if (validation()){
                 isEachProvider = binding.switchJoinIsEachProvider.isChecked
@@ -33,6 +59,12 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     password = binding.editTextJoinPw.text.toString(),
                     user = getUserObj()
                 )
+                // 주소정보 추가
+                addressInfo = AddressInfo(
+                    binding.editTextJoinHomeAddress.text.toString(),
+                    binding.editTextJoinCompanyAddress.text.toString()
+                )
+                observer()
             }
         }
     }
@@ -53,10 +85,31 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     binding.buttonJoinLogin.setText("Register")
                     binding.progressBarJoinLoading.hide()
                     toast(state.data)
-                    if(isEachProvider){
-                        findNavController().navigate(R.id.action_joinFragment_to_providerHomeFragment)
-                    }else{
-                        findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
+
+                    authViewModel.getSession { user ->
+                        if (user != null){
+                            ApplicationClass.userId = user.userId
+                            ApplicationClass.prefs.name = user.name
+                            ApplicationClass.prefs.userSeq = user.userSeq
+                            ApplicationClass.prefs.tel = user.tel
+                            ApplicationClass.prefs.useCount = user.useCount
+
+//                            // 권한 확인 후 업로드
+//                            if(ContextCompat.checkSelfPermission(binding.imageJoinUserImage!!.context,
+//                                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                                funImageUpload(binding.imageJoinUserImage!!)
+//                                findNavController().navigate(R.id.action_joinFragment_to_loginFragment)
+//                            }
+                            authViewModel.addAddressInfo(
+                                addressInfo = addressInfo
+                            )
+
+                            if(isEachProvider){
+                                findNavController().navigate(R.id.action_joinFragment_to_providerHomeFragment)
+                            }else{
+                                findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
+                            }
+                        }
                     }
                 }
                 else -> {}
@@ -73,7 +126,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             isEachProvider = binding.switchJoinIsEachProvider.isChecked
         )
     }
-
+    // 입력 확인
     private fun validation(): Boolean {
         var isValid = true
 
@@ -129,6 +182,51 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             isValid = false
             toast("비밀번호 확인에 실패했습니다. 다시 입력해주세요.")
         }
+
+        if (binding.editTextJoinHomeAddress.text.isNullOrEmpty()){
+            binding.editTextJoinHomeAddress.setText("")
+        }
+
+        if (binding.editTextJoinCompanyAddress.text.isNullOrEmpty()){
+            binding.editTextJoinCompanyAddress.setText("")
+        }
         return isValid
+    }
+
+    // 앨범에서 사진을 선택할 시 Firebase Storage에 업로드
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == pickImageFromAlbum){
+            if(resultCode == Activity.RESULT_OK){
+                // 앨범 사진 출력
+                uriPhoto = data?.data
+                binding.imageJoinUserImage.setImageURI(uriPhoto)
+            }
+        }
+    }
+
+    private fun funImageUpload(view : CircleImageView){
+        var userSeq = ApplicationClass.prefs.userSeq.toString()
+        var imgFileName = userSeq + ".png"
+        var storage = FirebaseStorage.getInstance()
+
+        storage.getReference().child("user_profiles").child(imgFileName)
+            .putFile(uriPhoto!!)//어디에 업로드할지 지정
+            .addOnSuccessListener {
+                    taskSnapshot -> // 업로드 정보를 담는다
+                taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener {
+                        it->
+                    var imageUrl=it.toString()
+
+                    firestore.collection("User")
+                        .document(userSeq).update("profileImage", imageUrl)
+                        .addOnSuccessListener {
+                            toast("Success Image Uploaded")
+                        }.addOnFailureListener{
+                            toast("Failed Image Uploaded")
+                        }
+                }
+            }
     }
 }

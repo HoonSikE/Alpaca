@@ -64,6 +64,7 @@ class EmailLoginFragment : BaseFragment<FragmentEmailLoginBinding>(R.layout.frag
                         if (user != null){
                             ApplicationClass.userId = user.userId
                             ApplicationClass.prefs.name = user.name
+                            ApplicationClass.prefs.tel = user.tel
                             ApplicationClass.prefs.userSeq = user.userSeq
                             ApplicationClass.prefs.useCount = user.useCount
                             if(user.isEachProvider){

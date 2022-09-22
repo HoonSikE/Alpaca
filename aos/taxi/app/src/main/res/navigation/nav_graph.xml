@@ -96,6 +96,14 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             />
+
+        <action
+            android:id="@+id/action_loginFragment_to_MyPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/joinFragment"
@@ -103,6 +111,13 @@
         android:label="JoinFragment"
         tools:layout="@layout/fragment_join"
         >
+        <action
+            android:id="@+id/action_joinFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_joinFragment_to_userHomeFragment"
             app:destination="@id/userHomeFragment"
@@ -370,6 +385,13 @@
             app:popExitAnim="@anim/to_right"
             />
         <action
+            android:id="@+id/action_myPageFragment_to_loginFragment"
+            app:destination="@id/loginFragment"             app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+        <action
             android:id="@+id/action_myPageFragment_to_chatBotFragment"
             app:destination="@id/chatBotFragment"
             app:enterAnim="@anim/from_right"
@@ -446,6 +468,14 @@
         android:id="@+id/emailLoginFragment"
         android:name="com.example.taxi.ui.login.EmailLoginFragment"
         android:label="EmailLoginFragment"
-        tools:layout="@layout/fragment_email_login"/>
+        tools:layout="@layout/fragment_email_login">
+        <action
+            android:id="@+id/action_emailloginFragment_to_MyPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
 
 </navigation>

@@ -4,6 +4,7 @@ package com.example.taxi.utils.constant
 const val USER_SEQ = "user_seq"
 const val NAME = "name"
 const val USECOUNT = "useCount"
+const val TEL = "tel"
 
 /**
  * 출발전 / 도착 후 상태
@@ -15,6 +16,7 @@ object FireStoreCollection{
     val DESTINATION = "Destination"
     val FAVORITES = "Favorites"
     val USER = "User"
+    val USERADDRESSINFO = "UserAddressInfo"
 }
 
 object FireStoreDocumentField {

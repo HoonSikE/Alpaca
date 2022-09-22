@@ -9,7 +9,7 @@ class PreferenceUtil(context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences("taxi", Context.MODE_PRIVATE)
 
     var userSeq: String?
-        get() = prefs.getString(NAME, null)
+        get() = prefs.getString(USER_SEQ, null)
         set(value) {
             prefs.edit().putString(USER_SEQ, value).apply()
         }
@@ -18,6 +18,12 @@ class PreferenceUtil(context: Context) {
         get() = prefs.getString(NAME, null)
         set(value) {
             prefs.edit().putString(NAME, value).apply()
+        }
+
+    var tel: String?
+        get() = prefs.getString(TEL, null)
+        set(value) {
+            prefs.edit().putString(TEL, value).apply()
         }
 
     var useCount: Int?
