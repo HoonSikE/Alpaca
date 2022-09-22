@@ -5,37 +5,50 @@
       <map>
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable-v24/button_regular.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable-v24/circle_profile.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable-v24/dialog_backgound.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable-v24/edittext_comment.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable-v24/edittext_regular.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable-v24/ic_back.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable-v24/layout_recycler.xml" value="0.1555" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable-v24/layout_recycler_no_item.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/button_light.xml" value="0.1555" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/dialog_backgound.xml" value="0.1555" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/dlg_bottomsheet.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_back_destination.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_camera.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_cancel.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_check.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_close.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_forward.xml" value="0.1235" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_gallery.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_local_taxi.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_lock_close.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_lock_open.xml" value="0.1555" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/ic_plus.xml" value="0.1555" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/img_photo.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/search_regular.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/view_bottom.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_favorites.xml" value="0.15364583333333334" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_startDrivingLock.xml" value="0.15364583333333334" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_assigned_taxi_information.xml" value="0.2" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_call_taxi.xml" value="0.1" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_check_bottom_sheet.xml" value="0.15364583333333334" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_destination_search.xml" value="0.1125" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_destination_setting.xml" value="0.28125" />
-        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_driving_taxi_check.xml" value="0.25364583333333335" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_driving_taxi_check.xml" value="0.264" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_join.xml" value="0.1125" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_location_tracking_taxi.xml" value="0.15364583333333334" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_login.xml" value="0.1125" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_start_driving_taxi.xml" value="0.136" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_update_user_info.xml" value="0.1125" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_user_home.xml" value="0.25364583333333335" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_user_with_drawal.xml" value="0.15364583333333334" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_waiting_call_taxi.xml" value="0.2" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/item_destination_list.xml" value="0.1125" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/item_destination_search_list.xml" value="0.2526041666666667" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/item_driving_taxi_check.xml" value="0.4" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/item_favorites.xml" value="0.25364583333333335" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/xml/file_paths.xml" value="0.15260416666666668" />
         <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/button_regular.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/circle_article.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/taxi/app/src/main/res/drawable-v24/circle_profile.xml" value="0.1235" />

@@ -112,6 +112,9 @@ dependencies {
     //NaverMap API
     implementation 'com.naver.maps:map-sdk:3.15.0'
 
+    // CanHub/Android-Image-Cropper
+    implementation 'com.github.CanHub:Android-Image-Cropper:4.3.1'
+
 }
 
 kapt {
