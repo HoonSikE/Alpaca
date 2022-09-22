@@ -7,8 +7,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DrivingTaxiCheckFragment : BaseFragment<FragmentDrivingTaxiCheckBinding>(R.layout.fragment_driving_taxi_check) {
+
+
     override fun init() {
-        TODO("Not yet implemented")
+
     }
 
 }

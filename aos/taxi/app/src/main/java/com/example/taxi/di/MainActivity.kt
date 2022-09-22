@@ -1,5 +1,6 @@
 package com.example.taxi.di
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import com.example.taxi.databinding.ActivityMainBinding
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
+@SuppressLint("ResourceAsColor")
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
