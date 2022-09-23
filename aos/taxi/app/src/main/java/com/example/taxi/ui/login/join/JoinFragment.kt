@@ -1,12 +1,17 @@
 package com.example.taxi.ui.login.join
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.user.User
+import com.example.taxi.data.dto.user.address_info.AddressInfo
 import com.example.taxi.databinding.FragmentJoinBinding
+import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.login.AuthViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
@@ -19,12 +24,23 @@ import dagger.hilt.android.AndroidEntryPoint
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     val authViewModel: AuthViewModel by viewModels()
     var isEachProvider = false
+    // 주소
+    lateinit var addressInfo : AddressInfo
+    // 사진 업로드
+    var pickImageFromAlbum = 0
+    var uriPhoto : Uri? = null
 
     override fun init() {
         setOnClickListeners()
     }
 
     private fun setOnClickListeners(){
+        binding.imageJoinUserImageButton.setOnClickListener{
+            // Open Album
+            var photoPickerInent = Intent(Intent.ACTION_PICK)
+            photoPickerInent.type = "image/*"
+            startActivityForResult(photoPickerInent, pickImageFromAlbum)
+        }
         binding.buttonJoinLogin.setOnClickListener {
             if (validation()){
                 isEachProvider = binding.switchJoinIsEachProvider.isChecked
@@ -33,6 +49,12 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     password = binding.editTextJoinPw.text.toString(),
                     user = getUserObj()
                 )
+                // 주소정보 추가
+                addressInfo = AddressInfo(
+                    binding.editTextJoinHomeAddress.text.toString(),
+                    binding.editTextJoinCompanyAddress.text.toString()
+                )
+                observer()
             }
         }
     }
@@ -53,10 +75,27 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     binding.buttonJoinLogin.setText("Register")
                     binding.progressBarJoinLoading.hide()
                     toast(state.data)
-                    if(isEachProvider){
-                        findNavController().navigate(R.id.action_joinFragment_to_providerHomeFragment)
-                    }else{
-                        findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
+
+                    authViewModel.getSession { user ->
+                        if (user != null){
+                            ApplicationClass.userId = user.userId
+                            ApplicationClass.prefs.name = user.name
+                            ApplicationClass.prefs.userSeq = user.userSeq
+                            ApplicationClass.prefs.tel = user.tel
+                            ApplicationClass.prefs.useCount = user.useCount
+
+//                            funImageUpload(binding.imageJoinUserImage!!)
+
+                            // 주소정보 추가 (userSeq값 할당 후 실행)ㅋㅌ
+                            authViewModel.addAddressInfo(
+                                addressInfo = addressInfo
+                            )
+                            if(isEachProvider){
+                                findNavController().navigate(R.id.action_joinFragment_to_providerHomeFragment)
+                            }else{
+                                findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
+                            }
+                        }
                     }
                 }
                 else -> {}
@@ -129,6 +168,27 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             isValid = false
             toast("비밀번호 확인에 실패했습니다. 다시 입력해주세요.")
         }
+
+        if (binding.editTextJoinHomeAddress.text.isNullOrEmpty()){
+            binding.editTextJoinHomeAddress.setText("")
+        }
+
+        if (binding.editTextJoinCompanyAddress.text.isNullOrEmpty()){
+            binding.editTextJoinCompanyAddress.setText("")
+        }
         return isValid
+    }
+
+    // 앨범에서 사진을 선택할 시 Firebase Storage에 업로드
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == pickImageFromAlbum){
+            if(resultCode == Activity.RESULT_OK){
+                // 앨범 사진 출력
+                uriPhoto = data?.data
+                binding.imageJoinUserImage.setImageURI(uriPhoto)
+            }
+        }
     }
 }
