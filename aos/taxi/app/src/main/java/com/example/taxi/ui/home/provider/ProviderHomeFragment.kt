@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.fragment_provider_home) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 
 }

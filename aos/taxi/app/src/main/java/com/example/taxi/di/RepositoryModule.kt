@@ -40,4 +40,12 @@ object RepositoryModule {
     ): RouteRepository {
         return RouteRepositoryImpl(database)
     }
+
+    @Provides
+    @Singleton
+    fun userInfoRepository(
+        database: FirebaseFirestore
+    ) : UserInfoRepository{
+        return UserInfoRepositoryImpl(database)
+    }
 }
