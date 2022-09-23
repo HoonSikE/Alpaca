@@ -77,6 +77,12 @@ class PreferenceUtil(context: Context) {
             prefs.edit().putString(NAME, value).apply()
         }
 
+    var tel: String?
+        get() = prefs.getString(TEL, null)
+        set(value) {
+            prefs.edit().putString(TEL, value).apply()
+        }
+
     var useCount: Int?
         get() = prefs.getInt(USECOUNT, 0)
         set(value) {
