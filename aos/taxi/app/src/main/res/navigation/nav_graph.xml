@@ -88,14 +88,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             />
-        <action
-            android:id="@+id/action_loginFragment_to_emailLoginFragment"
-            app:destination="@id/emailLoginFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            />
     </fragment>
     <fragment
         android:id="@+id/joinFragment"
@@ -446,10 +438,4 @@
         android:name="com.example.taxi.ui.mypage.chat.PersonalChatFragment"
         android:label="PersonalChatFragment"
         tools:layout="@layout/fragment_personal_chat"/>
-    <fragment
-        android:id="@+id/emailLoginFragment"
-        android:name="com.example.taxi.ui.login.EmailLoginFragment"
-        android:label="EmailLoginFragment"
-        tools:layout="@layout/fragment_email_login"/>
-
 </navigation>

@@ -4,6 +4,7 @@ package com.example.taxi.utils.constant
 const val USER_SEQ = "user_seq"
 const val NAME = "name"
 const val USECOUNT = "useCount"
+const val TEL = "tel"
 const val CARNUMBER = "carNumber"
 const val RIDECOMFORTAVERAGE= "rideComfortAverage"
 const val CARIMAGE = "carImage"
