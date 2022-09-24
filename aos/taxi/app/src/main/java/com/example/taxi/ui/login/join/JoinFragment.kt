@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taxi.R
@@ -28,7 +29,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     lateinit var addressInfo : AddressInfo
     // 사진 업로드
     var pickImageFromAlbum = 0
-    var uriPhoto : Uri? = null
+    var uriPhoto : String = ""
 
     override fun init() {
         setOnClickListeners()
@@ -67,12 +68,12 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     binding.progressBarJoinLoading.show()
                 }
                 is UiState.Failure -> {
-                    binding.buttonJoinLogin.setText("Register")
+//                    binding.buttonJoinLogin.setText("Register")
                     binding.progressBarJoinLoading.hide()
                     state.error?.let { toast(it) }
                 }
                 is UiState.Success -> {
-                    binding.buttonJoinLogin.setText("Register")
+//                    binding.buttonJoinLogin.setText("Register")
                     binding.progressBarJoinLoading.hide()
                     toast(state.data)
 
@@ -84,9 +85,12 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                             ApplicationClass.prefs.tel = user.tel
                             ApplicationClass.prefs.useCount = user.useCount
 
-//                            funImageUpload(binding.imageJoinUserImage!!)
+                            // 이미지 추가
+                            authViewModel.addImageUpLoad(
+                                user = user
+                            )
 
-                            // 주소정보 추가 (userSeq값 할당 후 실행)ㅋㅌ
+                            // 주소정보 추가 (userSeq값 할당 후 실행)
                             authViewModel.addAddressInfo(
                                 addressInfo = addressInfo
                             )
@@ -109,7 +113,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             name = binding.editTextJoinName.text.toString(),
             tel = binding.editTextJoinTel.text.toString()+"-"+binding.editTextJoinTel2.text.toString()+"-"+binding.editTextJoinTel3.text.toString(),
             userId = binding.editTextJoinId.text.toString(),
-            isEachProvider = binding.switchJoinIsEachProvider.isChecked
+            isEachProvider = binding.switchJoinIsEachProvider.isChecked,
+            profileImage = uriPhoto.toString()
         )
     }
 
@@ -179,15 +184,15 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         return isValid
     }
 
-    // 앨범에서 사진을 선택할 시 Firebase Storage에 업로드
+    // 앨범에서 사진을 선택할 시 출력
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == pickImageFromAlbum){
             if(resultCode == Activity.RESULT_OK){
                 // 앨범 사진 출력
-                uriPhoto = data?.data
-                binding.imageJoinUserImage.setImageURI(uriPhoto)
+                uriPhoto = data?.data.toString()
+                binding.imageJoinUserImage.setImageURI(uriPhoto.toUri())
             }
         }
     }
