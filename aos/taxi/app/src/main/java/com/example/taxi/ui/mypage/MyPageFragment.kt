@@ -48,5 +48,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                 findNavController().navigate(R.id.action_myPageFragment_to_loginFragment)
             }
         }
+        binding.textUserWithdrawal.setOnClickListener{
+
+        }
     }
 }
