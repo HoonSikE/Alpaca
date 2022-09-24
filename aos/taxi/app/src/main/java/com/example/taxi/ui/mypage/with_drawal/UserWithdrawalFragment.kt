@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UserWithdrawalFragment : BaseFragment<FragmentUserWithDrawalBinding>(R.layout.fragment_user_with_drawal) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 
 }
