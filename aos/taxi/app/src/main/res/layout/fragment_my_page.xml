@@ -120,7 +120,7 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toEndOf="@id/tv_my_page_class"
                     app:layout_constraintTop_toBottomOf="@+id/tv_my_page_count"
-                    android:text="Rating" />
+                    android:text="Rate" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--Information Management-->

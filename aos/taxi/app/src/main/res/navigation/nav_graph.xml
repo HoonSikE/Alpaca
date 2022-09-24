@@ -342,9 +342,10 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             />
+
         <action
-            android:id="@+id/action_myPageFragment_to_userWithdrawalFragment"
-            app:destination="@id/userWithdrawalFragment"
+            android:id="@+id/action_myPageFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"

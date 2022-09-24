@@ -90,4 +90,12 @@ class PreferenceUtil(context: Context) {
                 prefs.edit().putInt(USECOUNT, value).apply()
             }
         }
+
+    var profileImage: String?
+        get() = prefs.getString(PROFILEIMAGE, null)
+        set(value) {
+            if (value != null) {
+                prefs.edit().putString(PROFILEIMAGE, value).apply()
+            }
+        }
 }
