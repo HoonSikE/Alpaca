@@ -1,5 +1,6 @@
 package com.example.taxi.ui.login
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -33,6 +34,11 @@ class AuthViewModel @Inject constructor(
     private val _addressInfo = MutableLiveData<UiState<AddressInfo>>()
     val addressInfo: LiveData<UiState<AddressInfo>>
         get() = _addressInfo
+
+    // 사진
+    private val _addImageUpLoad = MutableLiveData<UiState<User>>()
+    val addImageUpLoad: LiveData<UiState<User>>
+        get() = _addImageUpLoad
 
     fun register(
         email: String,
@@ -80,6 +86,14 @@ class AuthViewModel @Inject constructor(
             addressInfo = addressInfo
         ) {
             _addressInfo.value = it
+        }
+    }
+
+    fun addImageUpLoad(user: User){
+        userinfoRepository.addImageUpLoad(
+            user = user
+        ) {
+            _addImageUpLoad.value = it
         }
     }
 }
