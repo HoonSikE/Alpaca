@@ -85,6 +85,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                             ApplicationClass.prefs.tel = user.tel
                             ApplicationClass.prefs.userSeq = user.userSeq
                             ApplicationClass.prefs.useCount = user.useCount
+                            ApplicationClass.prefs.profileImage = user.profileImage
                             if (user.isEachProvider) {
                                 findNavController().navigate(R.id.action_loginFragment_to_providerHomeFragment)
                             } else {

@@ -29,7 +29,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     lateinit var addressInfo : AddressInfo
     // 사진 업로드
     var pickImageFromAlbum = 0
-    var uriPhoto : String = ""
+    var uriPhoto : Uri? = null
 
     override fun init() {
         setOnClickListeners()
@@ -84,6 +84,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                             ApplicationClass.prefs.userSeq = user.userSeq
                             ApplicationClass.prefs.tel = user.tel
                             ApplicationClass.prefs.useCount = user.useCount
+                            ApplicationClass.prefs.profileImage = user.profileImage
 
                             // 이미지 추가
                             authViewModel.addImageUpLoad(
@@ -191,8 +192,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         if(requestCode == pickImageFromAlbum){
             if(resultCode == Activity.RESULT_OK){
                 // 앨범 사진 출력
-                uriPhoto = data?.data.toString()
-                binding.imageJoinUserImage.setImageURI(uriPhoto.toUri())
+                uriPhoto = data?.data
+                binding.imageJoinUserImage.setImageURI(uriPhoto)
             }
         }
     }
