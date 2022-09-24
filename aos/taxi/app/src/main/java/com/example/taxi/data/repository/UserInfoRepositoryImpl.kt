@@ -17,10 +17,10 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
             .get()
             .addOnSuccessListener { document ->
                 if(document != null){
-                    val userInfo = document.toObject(AddressInfo::class.java)
-                    if(userInfo != null){
+                    val addressInfo = document.toObject(AddressInfo::class.java)
+                    if(addressInfo != null){
                         result.invoke(
-                            UiState.Success(userInfo)
+                            UiState.Success(addressInfo)
                         )
                     }
                 }else {
@@ -56,6 +56,7 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
                 Log.d("getAddress", "Address has been created fail")
             }
     }
+
     override fun addImageUpLoad(user: User, result: (UiState<User>) -> Unit) {
         var storage = FirebaseStorage.getInstance()
         var userSeq = ApplicationClass.prefs.userSeq.toString()
