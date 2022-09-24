@@ -1,13 +1,17 @@
 package com.example.taxi.data.repository
 
 import android.util.Log
+import androidx.core.net.toUri
+import com.example.taxi.data.dto.user.User
 import com.example.taxi.data.dto.user.address_info.AddressInfo
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.UiState
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfoRepository{
+//class UserInfoRepositoryImpl(private val database: FirebaseFirestore, private val storage: FirebaseStorage) : UserInfoRepository{
     override fun getAddressInfo(result: (UiState<AddressInfo>) -> Unit) {
         database.collection(FireStoreCollection.USERADDRESSINFO).document(ApplicationClass.prefs.userSeq.toString())
             .get()
@@ -50,6 +54,19 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
                     )
                 )
                 Log.d("getAddress", "Address has been created fail")
+            }
+    }
+    override fun addImageUpLoad(user: User, result: (UiState<User>) -> Unit) {
+        var storage = FirebaseStorage.getInstance()
+        var userSeq = ApplicationClass.prefs.userSeq.toString()
+        var imgFileName = userSeq + ".png"
+
+        storage.getReference().child("user_profiles").child(imgFileName)
+            .putFile(user.profileImage.toUri())//어디에 업로드할지 지정
+            .addOnSuccessListener {
+                Log.d("addImageUpLoad", "Image has been uploaded successfully")
+            }.addOnFailureListener{
+                Log.d("addImageUpLoad", "Image has been uploaded fail")
             }
     }
 }
