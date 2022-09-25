@@ -8,6 +8,31 @@ import com.example.taxi.utils.constant.*
 class PreferenceUtil(context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
     private val taxi: SharedPreferences = context.getSharedPreferences("taxi", Context.MODE_PRIVATE)
+    private val destination: SharedPreferences = context.getSharedPreferences("destination", Context.MODE_PRIVATE)
+
+    var destinationLatitude : String?
+        get() = destination.getString(DESTINATIONLATITUDE, null)
+        set(value){
+            destination.edit().putString(DESTINATIONLATITUDE, value).apply()
+        }
+
+    var destinationLongitude : String?
+        get() = destination.getString(DESTINATIONLONGITUDE, null)
+        set(value){
+            destination.edit().putString(DESTINATIONLONGITUDE, value).apply()
+        }
+
+    var startLatitude : String?
+        get() = destination.getString(STARTLATITUDE, null)
+        set(value){
+            destination.edit().putString(STARTLATITUDE, value).apply()
+        }
+
+    var startLongitude : String?
+        get() = destination.getString(STARTLONGITUDE, null)
+        set(value){
+            destination.edit().putString(STARTLONGITUDE, value).apply()
+        }
 
     var carNumber : String?
         get() = taxi.getString(CARNUMBER, null)

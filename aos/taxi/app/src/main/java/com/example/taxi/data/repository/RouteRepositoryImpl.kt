@@ -15,25 +15,18 @@ import com.google.firebase.firestore.FirebaseFirestore
 class RouteRepositoryImpl(
     private val database: FirebaseFirestore
 ) : RouteRepository {
-    override fun getRoute(result: (UiState<List<Location>>) -> Unit) {
-        database.collection(FireStoreCollection.ROUTE).document("12가3456")
+    override fun getRoute(result: (UiState<List<String>>) -> Unit) {
+        database.collection(FireStoreCollection.ROUTE).document("Route")
             .get()
             .addOnSuccessListener { document ->
                 Log.d("getRoute", "DocumentSnapshot data: ${document.data}")
                 if (document != null) {
                     val route = document.toObject(Route::class.java)
                     if(route != null){
-                        val locations = route.position
-                        val newLocation = mutableListOf<Location>()
-                        if(locations != null){
-                            for(des in locations){
-                                val location = Location(des.long, des.lati)
-                                newLocation.add(location)
-                            }
-                            result.invoke(
-                                UiState.Success(newLocation)
-                            )
-                        }
+                        val locations = route.route
+                        result.invoke(
+                            UiState.Success(locations)
+                        )
                     }
                 } else {
                     Log.d("getRoute", "No such document")
