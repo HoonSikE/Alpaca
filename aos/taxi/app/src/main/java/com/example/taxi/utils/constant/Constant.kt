@@ -13,6 +13,10 @@ const val LONGITUDE = "longitude"
 const val CLEANLINESSAVERAGE = "cleanlinessAverage"
 const val ISEACHDRIVING = "isEachDriving"
 const val ISEACHINOPERATION = "isEachInOperation"
+const val DESTINATIONLATITUDE = "destinationLatitude"
+const val DESTINATIONLONGITUDE = "destinationLongitude"
+const val STARTLATITUDE = "startLatitude"
+const val STARTLONGITUDE = "startLongitude"
 
 /**
  * 출발전 / 도착 후 상태

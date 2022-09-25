@@ -124,7 +124,7 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
 
     private fun setOnClickListeners(){
         binding.buttonUserHomeCallTaxi.setOnClickListener {
-            findNavController().navigate(R.id.action_userHomeFragment_to_destinationSettingFragment)
+            findNavController().navigate(R.id.action_userHomeFragment_to_startPointSettingFragment)
         }
     }
 

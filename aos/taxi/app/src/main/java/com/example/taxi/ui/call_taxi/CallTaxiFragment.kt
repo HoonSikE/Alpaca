@@ -38,6 +38,8 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.overlay.PathOverlay
 import com.ssafy.daero.utils.view.getPxFromDp
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,13 +71,8 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
         binding.imageCallTaxiForward.visibility = View.VISIBLE
         binding.textCallTaxiDestination.visibility = View.VISIBLE
         binding.searchCallTaxi.setQuery("", false)
-        if(checkState){
-            destination = Destination(address,x,place,y)
-            binding.textCallTaxiDestination.text = destination.addressName
-        }else{
-            startingPoint = Destination(address,x,place,y)
-            binding.textCallTaxiStart.text = startingPoint.addressName
-        }
+        destination = Destination(address,x,place,y)
+        binding.textCallTaxiDestination.text = destination.addressName
         checkEnd()
     }
 
@@ -84,11 +81,7 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initData()
-        findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
-            bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
-        )
-        //initNaverMap()
+        initNaverMap()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -101,9 +94,14 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
     private fun initData() {
         if(arguments?.getParcelable<Destination>("Destination")!=null && arguments?.getParcelable<Destination>("StartingPoint")!=null){
             destination = arguments?.getParcelable<Destination>("Destination") as Destination
+            Log.d("목적지",destination.toString())
             startingPoint = arguments?.getParcelable<Destination>("StartingPoint") as Destination
-            //binding.textCallTaxiDestination.text = destination.addressName
-            //binding.textCallTaxiStart.text = startingPoint.addressName
+            Log.d("출발지",startingPoint.toString())
+            binding.textCallTaxiDestination.text = destination.addressName
+            binding.textCallTaxiStart.text = startingPoint.addressName
+            findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
+                bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
+            )
         }
     }
 
@@ -141,10 +139,18 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
                 }
                 is UiState.Success -> {
                     //binding.progressBar.hide()
+                    val json = requireActivity().assets.open("node_set.json").reader().readText()
+                    val node = JSONObject(json)
+                    val location = mutableListOf<Location>()
+                    for(i in state.data){
+                        val pathNode = node.getJSONArray(i)
+                        location.add(Location(pathNode.getDouble(1).toString(), pathNode.getDouble(0).toString()))
+                    }
+                    Log.d("테스트11111", location.toString())
                     deleteMarkers()
                     deletePaths()
-                    drawMarkers(state.data)
-                    drawPolyline(state.data)
+                    drawMarkers(location)
+                    drawPolyline(location)
                 }
             }
         }
@@ -170,8 +176,8 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
 
     private fun drawMarkers(location: List<Location>) {
         if (location.isNotEmpty()) {
-            markers.add(createMarker(location[0]))
-            markers.add(createMarker(location[location.lastIndex]))
+            markers.add(createMarker(location[0], 0))
+            markers.add(createMarker(location[location.lastIndex], location.lastIndex))
 
             naverMap?.moveCamera(
                 CameraUpdate.scrollTo(
@@ -181,15 +187,19 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
                     )
                 )
             )
-            naverMap?.moveCamera(CameraUpdate.zoomTo(10.0))
+            naverMap?.moveCamera(CameraUpdate.zoomTo(15.0))
         }
     }
 
-    private fun createMarker(location: Location): Marker {
+    private fun createMarker(location: Location, index: Int): Marker {
         return Marker().apply {
             position = LatLng(location.lati.toDouble(), location.long.toDouble())    // 마커 좌표
             icon = OverlayImage.fromResource(R.drawable.ic_marker)
-            iconTintColor = requireActivity().getColor(R.color.primaryColor)// 마커 색깔
+            if(index==0){
+                iconTintColor = requireActivity().getColor(R.color.greenTextColor)// 마커 색깔
+            }else{
+                iconTintColor = requireActivity().getColor(R.color.primaryColor)// 마커 색깔
+            }
             width = requireContext().getPxFromDp(40f)   // 마커 가로 크기
             height = requireContext().getPxFromDp(40f)  // 마커 세로 크기
             zIndex = 0  // 마커 높이
@@ -222,12 +232,8 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
 
     private fun setOnClickListeners() {
         binding.textCallTaxiStart.setOnClickListener {
-            binding.searchCallTaxi.visibility = View.VISIBLE
-            binding.recyclerviewCallTaxiSearch.visibility = View.VISIBLE
-            binding.textCallTaxiStart.visibility = View.GONE
-            binding.imageCallTaxiForward.visibility = View.GONE
-            binding.textCallTaxiDestination.visibility = View.GONE
-            checkState = false
+            findNavController().navigate(R.id.action_callTaxiFragment_to_startPointSettingFragment
+                ,bundleOf("Destination" to destination))
         }
         binding.textCallTaxiDestination.setOnClickListener {
             binding.searchCallTaxi.visibility = View.VISIBLE

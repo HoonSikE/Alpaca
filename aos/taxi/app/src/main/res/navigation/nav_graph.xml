@@ -32,6 +32,9 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"/>
+        <action
+            android:id="@+id/action_userHomeFragment_to_startPointSettingFragment"
+            app:destination="@id/startPointSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/destinationSettingFragment"
@@ -41,6 +44,13 @@
         <action
             android:id="@+id/action_destinationSettingFragment_to_callTaxiFragment"
             app:destination="@id/callTaxiFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_destinationSettingFragment_to_startPointSettingFragment"
+            app:destination="@id/startPointSettingFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
@@ -175,6 +185,14 @@
         <action
             android:id="@+id/action_callTaxiFragment_to_waitingCallTaxiFragment"
             app:destination="@id/waitingCallTaxiFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+        <action
+            android:id="@+id/action_callTaxiFragment_to_startPointSettingFragment"
+            app:destination="@id/startPointSettingFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
@@ -438,4 +456,24 @@
         android:name="com.example.taxi.ui.mypage.chat.PersonalChatFragment"
         android:label="PersonalChatFragment"
         tools:layout="@layout/fragment_personal_chat"/>
+    <fragment
+        android:id="@+id/startPointSettingFragment"
+        android:name="com.example.taxi.ui.call_taxi.setting.StartPointSettingFragment"
+        android:label="StartPointSettingFragment"
+        tools:layout="@layout/fragment_start_point_setting">
+        <action
+            android:id="@+id/action_startPointSettingFragment_to_destinationSettingFragment"
+            app:destination="@id/destinationSettingFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+        <action
+            android:id="@+id/action_startPointSettingFragment_to_callTaxiFragment"
+            app:destination="@id/callTaxiFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
 </navigation>

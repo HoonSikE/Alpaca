@@ -86,6 +86,10 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
         ApplicationClass.prefs.cleanlinessAverage = taxi.cleanlinessAverage.toFloat()
         ApplicationClass.prefs.isEachDriving = taxi.isEachDriving
         ApplicationClass.prefs.isEachInOperation = !taxi.isEachInOperation
+        ApplicationClass.prefs.startLatitude = startingPoint.latitude
+        ApplicationClass.prefs.startLongitude = startingPoint.longitude
+        ApplicationClass.prefs.destinationLatitude = destination.latitude
+        ApplicationClass.prefs.destinationLongitude = destination.longitude
         //TODO : 차량 isEachInOperation 업데이트
         //TODO : LastDestination, Destination(FrequentDestination) 업데이트
         findNavController().navigate(R.id.action_waitingCallTaxiFragment_to_assignedTaxiInformationFragment)

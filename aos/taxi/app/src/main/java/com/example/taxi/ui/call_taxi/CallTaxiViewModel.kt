@@ -15,8 +15,8 @@ import javax.inject.Inject
 class CallTaxiViewModel @Inject constructor(
     private val repository: RouteRepository
 ): ViewModel() {
-    private val _route = MutableLiveData<UiState<List<Location>>>()
-    val route: LiveData<UiState<List<Location>>>
+    private val _route = MutableLiveData<UiState<List<String>>>()
+    val route: LiveData<UiState<List<String>>>
         get() = _route
 
     private val _routeSetting = MutableLiveData<UiState<RouteSetting>>()
