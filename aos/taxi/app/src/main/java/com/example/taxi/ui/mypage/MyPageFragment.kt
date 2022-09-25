@@ -37,10 +37,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
     private fun setOnClickListeners() {
         binding.textUpdateUserInfo.setOnClickListener {
-            findNavController().navigate(R.id.updateUserInfoFragment)
+            findNavController().navigate(R.id.action_myPageFragment_to_updateUserInfoFragment)
         }
         binding.textUpdatePassword.setOnClickListener {
-            findNavController().navigate(R.id.updatePasswordFragment)
+            findNavController().navigate(R.id.action_myPageFragment_to_updatePasswordFragment)
         }
         binding.textUpdateUserLogout.setOnClickListener {
             authViewModel.logout {
@@ -48,7 +48,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             }
         }
         binding.textUserWithdrawal.setOnClickListener {
-
+            findNavController().navigate(R.id.action_myPageFragment_to_userWithdrawalFragment)
         }
     }
 
