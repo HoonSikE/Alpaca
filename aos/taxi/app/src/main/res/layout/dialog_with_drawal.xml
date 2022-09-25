@@ -92,7 +92,6 @@
                 app:layout_constraintTop_toTopOf="@+id/text_dialog_user_with_drawal1"
                 app:layout_constraintBottom_toBottomOf="@+id/text_dialog_user_with_drawal1"
                 app:layout_constraintStart_toEndOf="@+id/text_dialog_user_with_drawal2"
-                app:layout_constraintEnd_toend="parent"
                 />
 
             <TextView

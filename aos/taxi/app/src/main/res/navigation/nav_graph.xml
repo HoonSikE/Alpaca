@@ -403,7 +403,16 @@
         android:id="@+id/userWithdrawalFragment"
         android:name="com.example.taxi.ui.mypage.with_drawal.UserWithdrawalFragment"
         android:label="UserWithdrawalFragment"
-        tools:layout="@layout/fragment_user_with_drawal"/>
+        tools:layout="@layout/fragment_user_with_drawal">
+        <action
+            android:id="@+id/action_userWithdrawalFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/updatePasswordFragment"
         android:name="com.example.taxi.ui.mypage.update_password.UpdatePasswordFragment"

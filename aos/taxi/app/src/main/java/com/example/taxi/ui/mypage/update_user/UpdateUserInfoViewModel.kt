@@ -28,6 +28,16 @@ class UpdateUserInfoViewModel @Inject constructor(
     val updateUserTel: LiveData<UiState<String>>
         get() = _updateUserTel
 
+    // 주소 삭제
+    private val _deleteUserAddress = MutableLiveData<UiState<String>>()
+    val deleteUserAddress: LiveData<UiState<String>>
+        get() = _deleteUserAddress
+
+    // 사진 삭제
+    private val _deleteImage = MutableLiveData<UiState<String>>()
+    val deleteImage: LiveData<UiState<String>>
+        get() = _deleteImage
+
     fun addAddressInfo(addressInfo: AddressInfo){
         userinfoRepository.addAddressInfo(
             addressInfo = addressInfo
@@ -55,6 +65,20 @@ class UpdateUserInfoViewModel @Inject constructor(
             tel = tel
         ) {
             _updateUserTel.value = it
+        }
+    }
+
+    fun deleteUserAddress(result: () -> Unit){
+        userinfoRepository.deleteUserAddress(
+        ) {
+            _deleteUserAddress.value = it
+        }
+    }
+
+    fun deleteImage(result: () -> Unit){
+        userinfoRepository.deleteImage(
+        ) {
+            _deleteImage.value = it
         }
     }
 }

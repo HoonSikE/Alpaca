@@ -9,4 +9,6 @@ interface UserInfoRepository {
     fun addAddressInfo(addressInfo: AddressInfo, result: (UiState<AddressInfo>) -> Unit)
     fun addImageUpLoad(user: User, result: (UiState<User>) -> Unit)
     fun updateUserTel(tel: String, result: (UiState<String>) -> Unit)
+    fun deleteUserAddress(result: (UiState<String>) -> Unit)
+    fun deleteImage(result: (UiState<String>) -> Unit)
 }
