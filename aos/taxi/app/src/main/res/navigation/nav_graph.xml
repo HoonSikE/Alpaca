@@ -360,6 +360,16 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             />
+
+        <action
+            android:id="@+id/action_myPageFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+
         <action
             android:id="@+id/action_myPageFragment_to_userWithdrawalFragment"
             app:destination="@id/userWithdrawalFragment"
@@ -396,12 +406,31 @@
         android:id="@+id/updateUserInfoFragment"
         android:name="com.example.taxi.ui.mypage.update_user.UpdateUserInfoFragment"
         android:label="UpdateUserInfoFragment"
-        tools:layout="@layout/fragment_update_user_info"/>
+        tools:layout="@layout/fragment_update_user_info">
+
+        <action
+            android:id="@+id/action_myPageFragment_to_updateUserInfoFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/userWithdrawalFragment"
         android:name="com.example.taxi.ui.mypage.with_drawal.UserWithdrawalFragment"
         android:label="UserWithdrawalFragment"
-        tools:layout="@layout/fragment_user_with_drawal"/>
+        tools:layout="@layout/fragment_user_with_drawal">
+        <action
+            android:id="@+id/action_userWithdrawalFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/updatePasswordFragment"
         android:name="com.example.taxi.ui.mypage.update_password.UpdatePasswordFragment"

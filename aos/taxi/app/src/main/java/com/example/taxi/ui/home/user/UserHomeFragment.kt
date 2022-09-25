@@ -123,6 +123,9 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun setOnClickListeners(){
+        binding.imageMoveMyPage.setOnClickListener{
+            findNavController().navigate(R.id.action_userHomeFragment_to_myPageFragment)
+        }
         binding.buttonUserHomeCallTaxi.setOnClickListener {
             findNavController().navigate(R.id.action_userHomeFragment_to_startPointSettingFragment)
         }

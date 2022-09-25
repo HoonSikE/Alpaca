@@ -116,7 +116,7 @@
                     android:text="* 이메일 아이디"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_join_user_image" />
-                <!-- 이메일 아이디 -->
+
                 <TextView
                     android:id="@+id/text_required_input"
                     style="@style/SubHeadSemiBoldPrimaryColor"
@@ -420,7 +420,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/button_regular"
-                    android:text="가입 여부 확인"
+                    android:text="회원 가입"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

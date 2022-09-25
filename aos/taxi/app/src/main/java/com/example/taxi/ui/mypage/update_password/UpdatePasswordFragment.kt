@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(R.layout.fragment_update_password) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 
 }
