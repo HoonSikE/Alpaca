@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Route(
-    var position : MutableList<Location> = mutableListOf()
+    var route : MutableList<String> = mutableListOf()
 ) : Parcelable

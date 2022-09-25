@@ -67,13 +67,8 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
         binding.imageDestinationSettingForward.visibility = View.VISIBLE
         binding.textDestinationSettingDestination.visibility = View.VISIBLE
         binding.searchDestinationSetting.setQuery("", false)
-        if(checkState){
-            destination = Destination(address,x,place,y)
-            binding.textDestinationSettingDestination.text = destination.addressName
-        }else{
-            startingPoint = Destination(address,x,place,y)
-            binding.textDestinationSettingStart.text = startingPoint.addressName
-        }
+        destination = Destination(address,x,place,y)
+        binding.textDestinationSettingDestination.text = destination.addressName
         checkEnd()
     }
 
@@ -99,6 +94,10 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
         if(arguments?.getParcelable<Destination>("Destination")!=null){
             destination = arguments?.getParcelable<Destination>("Destination") as Destination
             binding.textDestinationSettingDestination.text = destination.addressName
+        }
+        if(arguments?.getParcelable<Destination>("StartingPoint")!=null){
+            startingPoint = arguments?.getParcelable<Destination>("StartingPoint") as Destination
+            binding.textDestinationSettingStart.text = startingPoint.addressName
         }
     }
 
@@ -172,16 +171,15 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
 
     private fun setOnClickListeners() {
         binding.textDestinationSettingStart.setOnClickListener {
-            binding.searchDestinationSetting.visibility = View.VISIBLE
-            binding.recyclerviewDestinationSettingSearch.visibility = View.VISIBLE
-            binding.textDestinationSettingStart.visibility = View.GONE
-            binding.imageDestinationSettingForward.visibility = View.GONE
-            binding.textDestinationSettingDestination.visibility = View.GONE
-            checkState = false
+            if(binding.textDestinationSettingDestination.text.toString()!=""){
+                findNavController().navigate(R.id.action_destinationSettingFragment_to_startPointSettingFragment
+                    ,bundleOf("Destination" to destination))
+            }else{
+                findNavController().navigate(R.id.action_destinationSettingFragment_to_startPointSettingFragment)
+            }
         }
         binding.textDestinationSettingDestination.setOnClickListener {
             binding.searchDestinationSetting.visibility = View.VISIBLE
-            binding.recyclerviewDestinationSettingSearch.visibility = View.VISIBLE
             binding.textDestinationSettingStart.visibility = View.GONE
             binding.imageDestinationSettingForward.visibility = View.GONE
             binding.textDestinationSettingDestination.visibility = View.GONE
@@ -260,6 +258,7 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
         destinationSearchListAdapter.updateList(list)
+        binding.recyclerviewDestinationSettingSearch.visibility = View.VISIBLE
     }
 
     private fun showFavoritesDialog(address: String) {

@@ -3,6 +3,7 @@ package com.example.taxi.di
 import android.app.Application
 import android.content.Context
 import com.example.taxi.utils.preference.PreferenceUtil
+import com.naver.maps.map.NaverMapSdk
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
