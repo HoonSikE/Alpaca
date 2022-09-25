@@ -33,9 +33,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     private fun setOnClickListeners(){
-        binding.textLoginSignup.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_joinFragment)
-        }
         binding.buttonLoginLogin.setOnClickListener {
             if (validation()) {
                 authViewModel.login(
@@ -43,6 +40,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     password = binding.editTextEmailLoginPw.text.toString()
                 )
             }
+        }
+        binding.textEmailLoginFindPW.setOnClickListener{
+            findNavController().navigate(R.id.action_loginFragment_to_findPWFragment)
+        }
+        binding.textLoginSignup.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_joinFragment)
         }
     }
 
