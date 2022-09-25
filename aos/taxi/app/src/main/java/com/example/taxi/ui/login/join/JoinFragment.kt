@@ -120,59 +120,57 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     }
 
     private fun validation(): Boolean {
-        var isValid = true
-
         if (binding.editTextJoinName.text.isNullOrEmpty()){
-            isValid = false
             toast("이름을 입력해 주세요.")
+            return false
         }
 
         if (binding.editTextJoinTel.text.isNullOrEmpty()){
-            isValid = false
             toast("핸드폰번호를 입력해 주세요.")
+            return false
         }
 
         if (binding.editTextJoinTel2.text.isNullOrEmpty()){
-            isValid = false
             toast("핸드폰번호를 입력해 주세요.")
+            return false
         }
 
         if (binding.editTextJoinTel3.text.isNullOrEmpty()){
-            isValid = false
             toast("핸드폰번호를 입력해 주세요.")
+            return false
         }
 
         if (binding.editTextJoinId.text.isNullOrEmpty()){
-            isValid = false
             toast("이메일을 입력해 주세요.")
+            return false
         }else{
             if (!binding.editTextJoinId.text.toString().isValidEmail()){
-                isValid = false
                 toast("이메일을 양식에 맞게 입력해 주세요.")
+                return false
             }
         }
         if (binding.editTextJoinPw.text.isNullOrEmpty()){
-            isValid = false
             toast("비밀번호를 입력해 주세요.")
+            return false
         }else{
             if (binding.editTextJoinPw.text.toString().length < 6){
-                isValid = false
                 toast("비밀번호를 6자리 이상 입력해 주세요.")
+                return false
             }
         }
         if (binding.editTextJoinPwCheck.text.isNullOrEmpty()){
-            isValid = false
             toast("비밀번호를 입력해 주세요.")
+            return false
         }else{
             if (binding.editTextJoinPwCheck.text.toString().length < 6){
-                isValid = false
                 toast("비밀번호를 6자리 이상 입력해 주세요.")
+                return false
             }
         }
 
         if(binding.editTextJoinPwCheck.text.toString() != binding.editTextJoinPw.text.toString()) {
-            isValid = false
             toast("비밀번호 확인에 실패했습니다. 다시 입력해주세요.")
+            return false
         }
 
         if (binding.editTextJoinHomeAddress.text.isNullOrEmpty()){
@@ -182,7 +180,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         if (binding.editTextJoinCompanyAddress.text.isNullOrEmpty()){
             binding.editTextJoinCompanyAddress.setText("")
         }
-        return isValid
+        return true
     }
 
     // 앨범에서 사진을 선택할 시 출력

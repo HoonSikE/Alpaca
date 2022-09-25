@@ -131,8 +131,16 @@
         android:id="@+id/findPWFragment"
         android:name="com.example.taxi.ui.find.pw.FindPWFragment"
         android:label="FindPWFragment"
-        tools:layout="@layout/fragment_find_pw"
-        />
+        tools:layout="@layout/fragment_find_pw">
+        <action
+            android:id="@+id/action_findPWFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/providerHomeFragment"
         android:name="com.example.taxi.ui.home.provider.ProviderHomeFragment"
