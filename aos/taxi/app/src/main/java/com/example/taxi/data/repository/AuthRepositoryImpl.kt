@@ -130,6 +130,7 @@ class AuthRepositoryImpl(
     }
 
     override fun forgotPassword(email: String, result: (UiState<String>) -> Unit) {
+        auth.setLanguageCode("ko-KR")
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
