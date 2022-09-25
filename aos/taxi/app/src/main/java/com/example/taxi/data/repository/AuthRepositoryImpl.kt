@@ -108,6 +108,18 @@ class AuthRepositoryImpl(
             }
     }
 
+    override fun reauthPassword(existingPassword: String, result: (UiState<String>) -> Unit){
+        val credential = EmailAuthProvider
+            .getCredential(ApplicationClass.userId, existingPassword)
+
+        auth.currentUser!!.reauthenticate(credential)
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    result.invoke(UiState.Success("User re-authenticated."))
+                }
+            }
+    }
+
     override fun updatePassword(newPassword: String, result: (UiState<String>) -> Unit) {
         auth.currentUser!!.updatePassword(newPassword)
             .addOnCompleteListener { task ->

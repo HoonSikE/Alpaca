@@ -26,6 +26,10 @@ class AuthViewModel @Inject constructor(
     val login: LiveData<UiState<String>>
         get() = _login
 
+    private val _reauthPassword = MutableLiveData<UiState<String>>()
+    val reauthPassword: LiveData<UiState<String>>
+        get() = _reauthPassword
+
     private val _updatePassword = MutableLiveData<UiState<String>>()
     val updatePassword: LiveData<UiState<String>>
         get() = _updatePassword
@@ -72,6 +76,12 @@ class AuthViewModel @Inject constructor(
             password
         ){
             _login.value = it
+        }
+    }
+    fun reauthPassword(existingPassword: String) {
+        _reauthPassword.value = UiState.Loading
+        repository.reauthPassword(existingPassword){
+            _reauthPassword.value = it
         }
     }
 
