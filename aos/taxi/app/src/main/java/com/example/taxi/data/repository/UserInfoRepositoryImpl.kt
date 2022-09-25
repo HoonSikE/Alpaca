@@ -92,4 +92,33 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
             }
     }
 
+    override fun deleteUserAddress(result: (UiState<String>) -> Unit){
+        val document = database.collection(FireStoreCollection.USERADDRESSINFO).document(ApplicationClass.prefs.userSeq.toString())
+        document.delete()
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success("User has been deleted successfully")
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
+
+    override fun deleteImage(result: (UiState<String>) -> Unit){
+        var storage = FirebaseStorage.getInstance()
+        var imgFileName = ApplicationClass.prefs.userSeq.toString() + ".png"
+
+        storage.getReference().child("user_profiles").child(imgFileName)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("addImageUpLoad", "Image has been uploaded successfully")
+            }.addOnFailureListener{
+                Log.d("addImageUpLoad", "Image has been uploaded fail")
+            }
+    }
 }

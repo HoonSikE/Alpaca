@@ -40,6 +40,11 @@ class AuthViewModel @Inject constructor(
     val addImageUpLoad: LiveData<UiState<User>>
         get() = _addImageUpLoad
 
+    // 유저 삭제
+    private val _deleteUserInfo = MutableLiveData<UiState<String>>()
+    val deleteUserInfo: LiveData<UiState<String>>
+        get() = _deleteUserInfo
+
     fun register(
         email: String,
         password: String,
@@ -94,6 +99,17 @@ class AuthViewModel @Inject constructor(
             user = user
         ) {
             _addImageUpLoad.value = it
+        }
+    }
+
+    fun withDrawal(result: () -> Unit){
+        repository.withDrawal(result)
+    }
+
+    fun deleteUserInfo(result: () -> Unit){
+        repository.deleteUserInfo(
+        ) {
+            _deleteUserInfo.value = it
         }
     }
 }
