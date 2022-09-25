@@ -133,6 +133,11 @@
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/drawable/search_regular.xml" value="0.4235" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/drawable/view_bottom.xml" value="0.4235" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/dialog_address.xml" value="0.3125" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/dialog_phone.xml" value="0.3125" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/dialog_tel.xml" value="0.3125" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_favorites.xml" value="0.3125" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_destination_search.xml" value="0.3125" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_email_login.xml" value="0.3677536231884058" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_join.xml" value="0.33" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_login.xml" value="0.25" />

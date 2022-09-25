@@ -11,7 +11,6 @@ class ApplicationClass: Application() {
         lateinit var userId: String
         private lateinit var application: ApplicationClass
         fun getInstance() : ApplicationClass = application
-
         lateinit var prefs: PreferenceUtil
     }
 

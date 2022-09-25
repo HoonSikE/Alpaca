@@ -22,34 +22,37 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     override fun init() {
         initData()
         setOnClickListeners()
-//        observerData()
+        observerData()
     }
 
     private fun initData() {
         val profileImage = ApplicationClass.prefs?.profileImage
-        if(profileImage != "")
+        if (profileImage != "")
             Glide.with(this).load(profileImage).into(binding.imageMyPageProfile)
-        println("profileImage: " + profileImage)
 
         binding.textMyPageName.text = ApplicationClass.prefs.name + "님, 안녕하세요!"
         binding.textMyPageCount.text = "회"
         binding.textMyPageClass.text = "None"
     }
 
-    private fun setOnClickListeners(){
-        binding.textUpdateUserInfo.setOnClickListener{
+    private fun setOnClickListeners() {
+        binding.textUpdateUserInfo.setOnClickListener {
             findNavController().navigate(R.id.updateUserInfoFragment)
         }
-        binding.textUpdatePassword.setOnClickListener{
+        binding.textUpdatePassword.setOnClickListener {
             findNavController().navigate(R.id.updatePasswordFragment)
         }
-        binding.textUpdateUserLogout.setOnClickListener{
+        binding.textUpdateUserLogout.setOnClickListener {
             authViewModel.logout {
                 findNavController().navigate(R.id.action_myPageFragment_to_loginFragment)
             }
         }
-        binding.textUserWithdrawal.setOnClickListener{
+        binding.textUserWithdrawal.setOnClickListener {
 
         }
+    }
+
+    private fun observerData() {
+
     }
 }

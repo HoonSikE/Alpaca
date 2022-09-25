@@ -286,7 +286,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_update_user_info_home_address" />
 
                 <TextView
-                    android:id="@+id/text_update_user_info_office_address"
+                    android:id="@+id/text_update_user_info_company_address"
                     style="@style/Body"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
@@ -296,7 +296,7 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:paddingLeft="48dp"
-                    android:text="Office Address"
+                    android:text="Company Address"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_update_user_info_office_address"
@@ -304,13 +304,13 @@
                     tools:layout_editor_absoluteY="193dp" />
 
                 <ImageView
-                    android:id="@+id/image_update_user_info_office_address"
+                    android:id="@+id/image_update_user_info_company_address"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/text_update_user_info_office_address"
-                    app:layout_constraintTop_toTopOf="@+id/text_update_user_info_office_address"
+                    app:layout_constraintStart_toStartOf="@+id/text_update_user_info_company_address"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_user_info_company_address"
                     app:srcCompat="@drawable/ic_company" />
 
                 <ImageView
@@ -318,9 +318,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:background="@drawable/edittext_regular"
-                    app:layout_constraintTop_toTopOf="@+id/text_update_user_info_office_address"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_update_user_info_office_address"
-                    app:layout_constraintEnd_toEndOf="@+id/text_update_user_info_office_address"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_user_info_company_address"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_update_user_info_company_address"
+                    app:layout_constraintEnd_toEndOf="@+id/text_update_user_info_company_address"
                     android:layout_marginRight="8dp"
                     app:srcCompat="@drawable/img_edit" />
 
@@ -339,7 +339,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_update_user_info_office_address"/>
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_info_company_address"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
