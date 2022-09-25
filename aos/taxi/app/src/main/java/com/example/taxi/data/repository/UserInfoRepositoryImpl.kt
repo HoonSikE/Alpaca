@@ -45,7 +45,7 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
                 result.invoke(
                     UiState.Success(addresInfo)
                 )
-                Log.d("getAddressInfo", "Address has been created successfully")
+                Log.d("addAddressInfo", "Address has been added successfully")
             }
             .addOnFailureListener {
                 result.invoke(
@@ -53,14 +53,15 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
                         it.localizedMessage
                     )
                 )
-                Log.d("getAddress", "Address has been created fail")
+                Log.d("addAddress", "Address has been added fail")
             }
     }
 
     override fun addImageUpLoad(user: User, result: (UiState<User>) -> Unit) {
         var storage = FirebaseStorage.getInstance()
-        var userSeq = ApplicationClass.prefs.userSeq.toString()
-        var imgFileName = userSeq + ".png"
+        var imgFileName = user.userSeq + ".png"
+
+        //ApplicationClass.prefs?.profileImage = user.profileImage
 
         storage.getReference().child("user_profiles").child(imgFileName)
             .putFile(user.profileImage.toUri())//어디에 업로드할지 지정
@@ -70,4 +71,25 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
                 Log.d("addImageUpLoad", "Image has been uploaded fail")
             }
     }
+
+    override fun updateUserTel(tel: String, result: (UiState<String>) -> Unit){
+        val document = database.collection(FireStoreCollection.USER).document(ApplicationClass.prefs.userSeq.toString())
+        document.update("tel", tel)
+            .addOnSuccessListener {
+                ApplicationClass.prefs.tel = tel
+                result.invoke(
+                    UiState.Success(tel)
+                )
+                Log.d("updateUserTel", "Tel has been updated successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateUserTel", "Tel has been updated fail")
+            }
+    }
+
 }

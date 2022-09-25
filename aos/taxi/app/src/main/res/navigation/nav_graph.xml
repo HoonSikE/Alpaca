@@ -388,7 +388,17 @@
         android:id="@+id/updateUserInfoFragment"
         android:name="com.example.taxi.ui.mypage.update_user.UpdateUserInfoFragment"
         android:label="UpdateUserInfoFragment"
-        tools:layout="@layout/fragment_update_user_info"/>
+        tools:layout="@layout/fragment_update_user_info">
+
+        <action
+            android:id="@+id/action_myPageFragment_to_updateUserInfoFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/userWithdrawalFragment"
         android:name="com.example.taxi.ui.mypage.with_drawal.UserWithdrawalFragment"

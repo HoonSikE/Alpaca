@@ -65,16 +65,18 @@ class PreferenceUtil(context: Context) {
             }
         }
 
-    var userSeq: String?
-        get() = prefs.getString(USER_SEQ, null)
-        set(value) {
-            prefs.edit().putString(USER_SEQ, value).apply()
-        }
-
     var name: String?
         get() = prefs.getString(NAME, null)
         set(value) {
             prefs.edit().putString(NAME, value).apply()
+        }
+
+    var profileImage: String?
+        get() = prefs.getString(PROFILEIMAGE, null)
+        set(value) {
+            if (value != null) {
+                prefs.edit().putString(PROFILEIMAGE, value).apply()
+            }
         }
 
     var tel: String?
@@ -91,11 +93,10 @@ class PreferenceUtil(context: Context) {
             }
         }
 
-    var profileImage: String?
-        get() = prefs.getString(PROFILEIMAGE, null)
+    var userSeq: String?
+        get() = prefs.getString(USER_SEQ, null)
         set(value) {
-            if (value != null) {
-                prefs.edit().putString(PROFILEIMAGE, value).apply()
-            }
+            prefs.edit().putString(USER_SEQ, value).apply()
         }
+
 }
