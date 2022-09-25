@@ -435,8 +435,15 @@
         android:id="@+id/updatePasswordFragment"
         android:name="com.example.taxi.ui.mypage.update_password.UpdatePasswordFragment"
         android:label="UpdatePasswordFragment"
-        tools:layout="@layout/fragment_update_password"
-        />
+        tools:layout="@layout/fragment_update_password">
+        <action
+            android:id="@+id/action_updatePasswordFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+    </fragment>
     <fragment
         android:id="@+id/boardingListFragment"
         android:name="com.example.taxi.ui.mypage.boarding_list.BoardingListFragment"

@@ -108,6 +108,14 @@ class AuthRepositoryImpl(
             }
     }
 
+    override fun updatePassword(newPassword: String, result: (UiState<String>) -> Unit) {
+        auth.currentUser!!.updatePassword(newPassword)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    result.invoke(UiState.Success("User password updated."))
+                }
+            }
+    }
 
     override fun forgotPassword(email: String, result: (UiState<String>) -> Unit) {
         auth.sendPasswordResetEmail(email)
