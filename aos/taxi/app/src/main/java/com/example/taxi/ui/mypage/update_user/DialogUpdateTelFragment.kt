@@ -9,7 +9,7 @@ import com.example.taxi.databinding.DialogTelBinding
 import com.example.taxi.utils.constant.isValidEmail
 import com.example.taxi.utils.view.toast
 
-class UpdateDialogTelFragment : DialogFragment() {
+class DialogUpdateTelFragment : DialogFragment() {
     private var _binding: DialogTelBinding? = null
     private val binding get() = _binding!!
 

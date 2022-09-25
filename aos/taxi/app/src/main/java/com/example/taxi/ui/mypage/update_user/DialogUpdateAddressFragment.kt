@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.taxi.R
 import com.example.taxi.databinding.DialogAddressBinding
 
-class UpdateDialogAddressFragment(val title : String) : DialogFragment() {
+class DialogUpdateAddressFragment(val title : String) : DialogFragment() {
     private var _binding: DialogAddressBinding? = null
     private val binding get() = _binding!!
 

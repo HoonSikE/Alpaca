@@ -2,13 +2,9 @@ package com.example.taxi.ui.mypage.update_user
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -18,7 +14,6 @@ import com.example.taxi.data.dto.user.User
 import com.example.taxi.data.dto.user.address_info.AddressInfo
 import com.example.taxi.databinding.FragmentUpdateUserInfoBinding
 import com.example.taxi.di.ApplicationClass
-import com.example.taxi.ui.login.AuthViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +52,7 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
             startActivityForResult(photoPickerInent, pickImageFromAlbum)
         }
         binding.imageUpdatePhoneImageButton.setOnClickListener{
-            val dialog = UpdateDialogTelFragment()
+            val dialog = DialogUpdateTelFragment()
             dialog.setOnOKClickedListener { content ->
                 binding.textUpdateUserInfoPhone.text = content
                 binding.textUpdateUserInfoPhone.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
@@ -65,18 +60,18 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
             dialog.show(childFragmentManager, "update tel")
         }
         binding.imageUpdateHomeAddressImageButton.setOnClickListener{
-            val dialog = UpdateDialogAddressFragment("home")
+            val dialog = DialogUpdateAddressFragment("home")
             dialog.setOnOKClickedListener { content ->
                 binding.textUpdateUserInfoHomeAddress.text = content
-                binding.textUpdateUserInfoPhone.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
+                binding.textUpdateUserInfoHomeAddress.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
             }
             dialog.show(childFragmentManager, "update home address")
         }
         binding.imageUpdateCompanyAddressImageButton.setOnClickListener{
-            val dialog = UpdateDialogAddressFragment("company")
+            val dialog = DialogUpdateAddressFragment("company")
             dialog.setOnOKClickedListener { content ->
                 binding.textUpdateUserInfoCompanyAddress.text = content
-                binding.textUpdateUserInfoPhone.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
+                binding.textUpdateUserInfoCompanyAddress.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
             }
             dialog.show(childFragmentManager, "update company address")
         }

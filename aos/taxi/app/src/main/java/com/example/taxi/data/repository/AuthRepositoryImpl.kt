@@ -4,6 +4,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.taxi.data.dto.user.User
+import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.SharedPrefConstants
 import com.example.taxi.utils.constant.UiState
@@ -90,6 +91,7 @@ class AuthRepositoryImpl(
     }
 
     override fun loginUser(email: String, password: String, result: (UiState<String>) -> Unit) {
+
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -154,4 +156,30 @@ class AuthRepositoryImpl(
         }
     }
 
+    override fun withDrawal(result: () -> Unit) {
+        auth.currentUser!!.delete().addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                auth.signOut()
+                appPreferences.edit().putString(SharedPrefConstants.USER_SESSION,null).apply()
+                result.invoke()
+            }
+        }
+    }
+
+    override fun deleteUserInfo(result: (UiState<String>) -> Unit) {
+        val document = database.collection(FireStoreCollection.USER).document(ApplicationClass.prefs.userSeq.toString())
+        document.delete()
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success("User has been deleted successfully")
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
 }
