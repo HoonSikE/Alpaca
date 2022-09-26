@@ -116,7 +116,11 @@ class AuthRepositoryImpl(
             .addOnCompleteListener { task ->
                 if(task.isSuccessful) {
                     result.invoke(UiState.Success("User re-authenticated."))
+                }else{
+                    result.invoke(UiState.Failure("Failed to store local session"))
                 }
+            }.addOnFailureListener{
+                result.invoke(UiState.Failure("Authentication failed, Check password"))
             }
     }
 
