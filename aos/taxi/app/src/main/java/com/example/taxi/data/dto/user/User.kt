@@ -11,5 +11,6 @@ data class User(
     val useCount: Int = 0,
     val userId: String = "",
     var userSeq: String = "",
+    @field:JvmField
     val isEachProvider: Boolean = false,
 ) : Parcelable

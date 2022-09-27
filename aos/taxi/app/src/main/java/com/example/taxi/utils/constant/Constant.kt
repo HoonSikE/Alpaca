@@ -10,6 +10,7 @@ const val HOME = "home"
 const val COMPANY = "company"
 const val CARNUMBER = "carNumber"
 const val RIDECOMFORTAVERAGE= "rideComfortAverage"
+const val FEE = "Fee"
 const val CARIMAGE = "carImage"
 const val CARNAME = "carName"
 const val LATITUDE = "latitude"
@@ -39,6 +40,8 @@ object FireStoreCollection{
     val TAXILIST = "TaxiList"
     val DISTANCE = "Distance"
     val CURRENTLOCATION = "CurrentLocation"
+    val USERLIST = "UserList"
+    val PROVIDER = "Provider"
 }
 
 object FireStoreDocumentField {

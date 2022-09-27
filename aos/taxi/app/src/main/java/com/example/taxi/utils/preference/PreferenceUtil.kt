@@ -48,6 +48,14 @@ class PreferenceUtil(context: Context) {
             }
         }
 
+    var fee : Int?
+        get() = taxi.getInt(FEE, 0)
+        set(value){
+            if (value != null) {
+                taxi.edit().putInt(FEE, value).apply()
+            }
+        }
+
     var carImage : String?
         get() = taxi.getString(CARIMAGE, null)
         set(value){

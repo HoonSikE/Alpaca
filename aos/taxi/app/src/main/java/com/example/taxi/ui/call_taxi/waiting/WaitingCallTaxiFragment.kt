@@ -6,12 +6,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
+import com.example.taxi.data.dto.provider.ProviderCar
 import com.example.taxi.data.dto.user.calltaxi.Taxi
 import com.example.taxi.data.dto.user.calltaxi.TaxiList
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.databinding.FragmentWaitingCallTaxiBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.call_taxi.CallTaxiViewModel
+import com.example.taxi.ui.home.provider.ProviderViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.view.toast
@@ -21,9 +23,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.layout.fragment_waiting_call_taxi) {
 
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
+    private val providerViewModel : ProviderViewModel by viewModels()
     private lateinit var startingPoint : Destination
     private lateinit var destination : Destination
     private lateinit var taxi : Taxi
+    private lateinit var providerCar : ProviderCar
 
     override fun init() {
         initData()
@@ -75,6 +79,26 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
                 }
             }
         }
+        providerViewModel.provider.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    Log.d("UiState.Success", "taxiListUpdate clear")
+                    providerCar = state.data.car!!
+                    providerCar.isEachInOperation = true
+                    providerViewModel.updateProvider(providerCar)
+                }
+            }
+        }
     }
 
     private fun setOnClickListeners(){
@@ -104,8 +128,7 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
         ApplicationClass.prefs.carName = taxi.carName
         taxiList.isEachInOperation = true
         callTaxiViewModel.updateTaxiList(taxiList)
-        //TODO : Provider isEachInOperation 업데이트
-
+        providerViewModel.getProvider()
         //TODO : LastDestination, Destination(FrequentDestination) 업데이트
         findNavController().navigate(R.id.action_waitingCallTaxiFragment_to_assignedTaxiInformationFragment)
     }
