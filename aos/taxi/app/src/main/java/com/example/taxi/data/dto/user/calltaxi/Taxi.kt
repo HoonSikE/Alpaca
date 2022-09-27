@@ -15,4 +15,6 @@ data class Taxi (
     var isEachDriving : Boolean = false,
     @field:JvmField
     var isEachInOperation : Boolean = false,
+    var userId : String = "",
+    var carName : String = ""
 ) : Parcelable

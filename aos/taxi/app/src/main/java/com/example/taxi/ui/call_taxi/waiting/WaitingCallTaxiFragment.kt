@@ -58,6 +58,23 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
                 }
             }
         }
+        callTaxiViewModel.taxiListUpdate.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    Log.d("UiState.Success", "taxiListUpdate clear")
+                }
+            }
+        }
     }
 
     private fun setOnClickListeners(){
@@ -66,18 +83,11 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
         }
     }
 
-    private fun sortTaxiList(taxiList: List<Taxi>) {
+    private fun sortTaxiList(taxiList: Taxi) {
         //TODO : 가까운 순으로 정렬하기
-        for(i in taxiList){
-            Log.d("isEachDriving",i.isEachDriving.toString())
-            Log.d("isEachInOperation",i.isEachInOperation.toString())
-            if(i.isEachDriving && !i.isEachInOperation){
-                taxi = i
-                break
-            }
-        }
+        taxi = taxiList
         binding.progressBarWaitingCallTaxiLoading.hide()
-            Log.d("taxi", taxi.toString())
+        Log.d("taxi", taxi.toString())
         ApplicationClass.prefs.carNumber = taxi.carNumber
         ApplicationClass.prefs.carImage = taxi.carImage
         ApplicationClass.prefs.rideComfortAverage = taxi.rideComfortAverage.toFloat()
@@ -90,7 +100,12 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
         ApplicationClass.prefs.startLongitude = startingPoint.longitude
         ApplicationClass.prefs.destinationLatitude = destination.latitude
         ApplicationClass.prefs.destinationLongitude = destination.longitude
-        //TODO : 차량 isEachInOperation 업데이트
+        ApplicationClass.prefs.providerId = taxi.userId
+        ApplicationClass.prefs.carName = taxi.carName
+        taxiList.isEachInOperation = true
+        callTaxiViewModel.updateTaxiList(taxiList)
+        //TODO : Provider isEachInOperation 업데이트
+
         //TODO : LastDestination, Destination(FrequentDestination) 업데이트
         findNavController().navigate(R.id.action_waitingCallTaxiFragment_to_assignedTaxiInformationFragment)
     }
