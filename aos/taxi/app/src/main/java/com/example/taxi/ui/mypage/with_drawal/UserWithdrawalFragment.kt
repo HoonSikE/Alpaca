@@ -25,8 +25,8 @@ class UserWithdrawalFragment : BaseFragment<FragmentUserWithDrawalBinding>(R.lay
                 val dialog = DialogUserWithDrawalFragment()
                 dialog.setOnOKClickedListener { content ->
                     authViewModel.deleteUserInfo{}
-                    updateUserInfoViewModel.deleteImage{}
-                    updateUserInfoViewModel.deleteUserAddress{}
+//                    updateUserInfoViewModel.deleteImage{}
+//                    updateUserInfoViewModel.deleteUserAddress{}
                     authViewModel.withDrawal {
                         toast("회원탈퇴가 완료되었습니다.")
                         findNavController().navigate(R.id.action_userWithdrawalFragment_to_loginFragment)

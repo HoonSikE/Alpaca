@@ -1,6 +1,5 @@
 package com.example.taxi.ui.call_taxi
 
-import android.graphics.Color.red
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.core.widget.EdgeEffectCompat.getDistance
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,16 +17,12 @@ import com.example.taxi.data.api.KakaoAPI
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.data.dto.user.destination.DestinationSearch
 import com.example.taxi.data.dto.user.destination.DestinationSearchDto
-import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.data.dto.user.route.Location
 import com.example.taxi.data.dto.user.route.RouteSetting
 import com.example.taxi.databinding.FragmentCallTaxiBinding
-import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.call_taxi.setting.DestinationSearchListAdapter
 import com.example.taxi.utils.constant.KakaoApi
 import com.example.taxi.utils.constant.UiState
-import com.example.taxi.utils.constant.hide
-import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -38,13 +32,13 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.overlay.PathOverlay
 import com.ssafy.daero.utils.view.getPxFromDp
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.NumberFormat
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -71,7 +65,7 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
         binding.imageCallTaxiForward.visibility = View.VISIBLE
         binding.textCallTaxiDestination.visibility = View.VISIBLE
         binding.searchCallTaxi.setQuery("", false)
-        destination = Destination(address,x,place,y)
+        destination = Destination(address,y,place,x)
         binding.textCallTaxiDestination.text = destination.addressName
         checkEnd()
     }
@@ -86,6 +80,7 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
     }
 
     override fun init() {
+        //TODO : 선불이면 Bootpay 처리
         initData()
         observerData()
         setOnClickListeners()
@@ -99,9 +94,6 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
             Log.d("출발지",startingPoint.toString())
             binding.textCallTaxiDestination.text = destination.addressName
             binding.textCallTaxiStart.text = startingPoint.addressName
-            findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
-                bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
-            )
         }
     }
 
@@ -146,13 +138,48 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
                         val pathNode = node.getJSONArray(i)
                         location.add(Location(pathNode.getDouble(1).toString(), pathNode.getDouble(0).toString()))
                     }
-                    Log.d("테스트11111", location.toString())
+                    callTaxiViewModel.getDistance()
                     deleteMarkers()
                     deletePaths()
                     drawMarkers(location)
                     drawPolyline(location)
                 }
             }
+        }
+        callTaxiViewModel.distance.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                    var str = ((state.data.toDouble()/1000.0) * 100.0).roundToInt() / 100.0
+                    binding.textCallTaxiDistance.text = str.toString() +"Km"
+                    getFee(str)
+                }
+            }
+        }
+    }
+
+    private fun getFee(distance: Double){
+        var distance = distance
+        val numberFormat: NumberFormat = NumberFormat.getInstance()
+        if(distance <= 3){
+            val str = numberFormat.format(3000)
+            binding.textCallTaxiCash.text = str + " 원"
+        }else{
+            distance -= 3
+            var res = distance/0.16
+            var fee = 3000 + (res.toInt()*100)
+            val str = numberFormat.format(fee)
+            binding.textCallTaxiCash.text = str + " 원"
         }
     }
 
@@ -242,6 +269,14 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
             binding.imageCallTaxiForward.visibility = View.GONE
             binding.textCallTaxiDestination.visibility = View.GONE
             checkState = true
+        }
+        binding.imageCallTaxiFirstPayment.setOnClickListener {
+
+        }
+        binding.imageCallTaxiLatePayment.setOnClickListener {
+            findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
+                bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
+            )
         }
         binding.searchCallTaxi.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -359,6 +394,7 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
     }
 
     private fun getRoute() {
+        callTaxiViewModel.getDistance()
         if(arguments?.getParcelable<Destination>("Destination")!=null && arguments?.getParcelable<Destination>("StartingPoint")!=null){
             destination = arguments?.getParcelable<Destination>("Destination") as Destination
             startingPoint = arguments?.getParcelable<Destination>("StartingPoint") as Destination

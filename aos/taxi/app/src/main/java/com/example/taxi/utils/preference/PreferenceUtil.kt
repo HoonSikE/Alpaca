@@ -54,6 +54,12 @@ class PreferenceUtil(context: Context) {
             taxi.edit().putString(CARIMAGE, value).apply()
         }
 
+    var carName : String?
+        get() = taxi.getString(CARNAME, null)
+        set(value){
+            taxi.edit().putString(CARNAME, value).apply()
+        }
+
     var latitude : String?
         get() = taxi.getString(LATITUDE, null)
         set(value){
@@ -88,6 +94,12 @@ class PreferenceUtil(context: Context) {
             if (value != null) {
                 taxi.edit().putBoolean(ISEACHINOPERATION, value).apply()
             }
+        }
+
+    var providerId : String?
+        get() = taxi.getString(PROVIDERID, null)
+        set(value){
+            taxi.edit().putString(PROVIDERID, value).apply()
         }
 
     var name: String?

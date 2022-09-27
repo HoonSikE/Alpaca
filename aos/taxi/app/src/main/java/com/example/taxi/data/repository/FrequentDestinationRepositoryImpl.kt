@@ -11,7 +11,7 @@ import com.example.taxi.utils.constant.UiState
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class FrequentFrequentDestinationRepositoryImpl(
+class FrequentDestinationRepositoryImpl(
     private val database: FirebaseFirestore
 ) : FrequentDestinationRepository {
 

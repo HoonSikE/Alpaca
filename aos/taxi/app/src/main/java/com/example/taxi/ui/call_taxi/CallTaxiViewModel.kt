@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.taxi.data.dto.user.calltaxi.Taxi
+import com.example.taxi.data.dto.user.calltaxi.TaxiList
+import com.example.taxi.data.dto.user.driving.CurrentLocation
 import com.example.taxi.data.dto.user.route.Location
 import com.example.taxi.data.dto.user.route.RouteSetting
 import com.example.taxi.data.repository.RouteRepository
@@ -23,9 +25,21 @@ class CallTaxiViewModel @Inject constructor(
     val routeSetting: LiveData<UiState<RouteSetting>>
         get() = _routeSetting
 
-    private val _taxiList = MutableLiveData<UiState<List<Taxi>>>()
-    val taxiList: LiveData<UiState<List<Taxi>>>
+    private val _taxiList = MutableLiveData<UiState<Taxi>>()
+    val taxiList: LiveData<UiState<Taxi>>
         get() = _taxiList
+
+    private val _taxiListUpdate = MutableLiveData<UiState<Taxi>>()
+    val taxiListUpdate: LiveData<UiState<Taxi>>
+        get() = _taxiListUpdate
+
+    private val _distance = MutableLiveData<UiState<Int>>()
+    val distance: LiveData<UiState<Int>>
+        get() = _distance
+
+    private val _currentLocation = MutableLiveData<UiState<CurrentLocation>>()
+    val currentLocation: LiveData<UiState<CurrentLocation>>
+        get() = _currentLocation
 
     fun getRoute() {
         _route.value = UiState.Loading
@@ -42,5 +56,19 @@ class CallTaxiViewModel @Inject constructor(
         repository.getTaxiList { _taxiList.value = it }
     }
 
+    fun getDistance() {
+        _distance.value = UiState.Loading
+        repository.getDistance { _distance.value = it }
+    }
+
+    fun updateTaxiList(taxiList : Taxi) {
+        _taxiListUpdate.value = UiState.Loading
+        repository.updateTaxiList(taxiList) { _taxiListUpdate.value = it }
+    }
+
+    fun getCurrentLocation(){
+        _currentLocation.value = UiState.Loading
+        repository.getCurrentLocation { _currentLocation.value = it }
+    }
 
 }

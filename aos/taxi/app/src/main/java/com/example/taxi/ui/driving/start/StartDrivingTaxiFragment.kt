@@ -47,6 +47,7 @@ class StartDrivingTaxiFragment : BaseFragment<FragmentStartDrivingTaxiBinding>(R
         }
         binding.buttonStartDrivingTaxiStart.setOnClickListener {
             //사진 다 넣었는지 확인하기
+            //TODO : DrivingTaxiFragment로 이동
         }
     }
 
