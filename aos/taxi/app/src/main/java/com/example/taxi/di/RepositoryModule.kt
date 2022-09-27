@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import com.example.taxi.data.repository.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -20,7 +19,7 @@ object RepositoryModule {
     fun provideFrequentDestinationRepository(
         database: FirebaseFirestore
     ): FrequentDestinationRepository {
-        return FrequentFrequentDestinationRepositoryImpl(database)
+        return FrequentDestinationRepositoryImpl(database)
     }
 
     @Provides

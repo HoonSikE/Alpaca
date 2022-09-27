@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.taxi.data.dto.user.calltaxi.Taxi
 import com.example.taxi.data.dto.user.calltaxi.TaxiList
 import com.example.taxi.data.dto.user.destination.FrequentDestination
+import com.example.taxi.data.dto.user.driving.CurrentLocation
+import com.example.taxi.data.dto.user.route.Distance
 import com.example.taxi.data.dto.user.route.Location
 import com.example.taxi.data.dto.user.route.Route
 import com.example.taxi.data.dto.user.route.RouteSetting
@@ -16,12 +18,20 @@ class RouteRepositoryImpl(
     private val database: FirebaseFirestore
 ) : RouteRepository {
     override fun getRoute(result: (UiState<List<String>>) -> Unit) {
-        database.collection(FireStoreCollection.ROUTE).document("Route")
-            .get()
-            .addOnSuccessListener { document ->
-                Log.d("getRoute", "DocumentSnapshot data: ${document.data}")
-                if (document != null) {
-                    val route = document.toObject(Route::class.java)
+        database.collection(FireStoreCollection.ROUTE).document("12가3456")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w("getRoute", "listen:error", e)
+                    result.invoke(
+                        UiState.Failure(
+                            e.localizedMessage
+                        )
+                    )
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    Log.d("getRoute", "DocumentSnapshot data: ${snapshot.data}")
+                    val route = snapshot.toObject(Route::class.java)
                     if(route != null){
                         val locations = route.route
                         result.invoke(
@@ -32,13 +42,32 @@ class RouteRepositoryImpl(
                     Log.d("getRoute", "No such document")
                 }
             }
-            .addOnFailureListener {
-                Log.d("getRoute", "Fail get document")
-                result.invoke(
-                    UiState.Failure(
-                        it.localizedMessage
+    }
+
+    override fun getDistance(result: (UiState<Int>) -> Unit) {
+        database.collection(FireStoreCollection.DISTANCE).document("12가3456")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w("getCurrentLocation", "listen:error", e)
+                    result.invoke(
+                        UiState.Failure(
+                            e.localizedMessage
+                        )
                     )
-                )
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null) {
+                    Log.d("getDistance", "DocumentSnapshot data: ${snapshot.data}")
+                    val distance = snapshot.toObject(Distance::class.java)
+                    if(distance != null){
+                        result.invoke(
+                            UiState.Success(distance.dis)
+                        )
+                    }
+                } else {
+                    Log.d("getDistance", "No such document")
+                }
             }
     }
 
@@ -65,28 +94,17 @@ class RouteRepositoryImpl(
             }
     }
 
-    override fun getTaxiList(result: (UiState<List<Taxi>>) -> Unit) {
+    override fun getTaxiList(result: (UiState<Taxi>) -> Unit) {
         database.collection(FireStoreCollection.TAXILIST).document("Alpaca")
             .get()
             .addOnSuccessListener { document ->
                 Log.d("getTaxiList", "DocumentSnapshot data: ${document.data}")
                 if (document != null) {
-                    val taxiList = document.toObject(TaxiList::class.java)
+                    val taxiList = document.toObject(Taxi::class.java)
                     if(taxiList != null){
-                        val taxiList = taxiList.taxiList
-                        val newTaxiList = mutableListOf<Taxi>()
-                        if(taxiList != null){
-                            for(des in taxiList){
-                                val taxi = Taxi(carImage = des.carImage, carNumber = des.carNumber,
-                                isEachDriving = des.isEachDriving, isEachInOperation = des.isEachInOperation,
-                                rideComfortAverage = des.rideComfortAverage, cleanlinessAverage = des.cleanlinessAverage,
-                                position = des.position)
-                                newTaxiList.add(taxi)
-                            }
-                            result.invoke(
-                                UiState.Success(newTaxiList)
-                            )
-                        }
+                        result.invoke(
+                            UiState.Success(taxiList)
+                        )
                     }
                 } else {
                     Log.d("getTaxiList", "No such document")
@@ -101,4 +119,54 @@ class RouteRepositoryImpl(
                 )
             }
     }
+
+    override fun updateTaxiList(
+        taxiList: Taxi,
+        result: (UiState<Taxi>) -> Unit
+    ) {
+        val document = database.collection(FireStoreCollection.TAXILIST).document("Alpaca")
+        document
+            .update("taxiList",taxiList)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(taxiList)
+                )
+                Log.d("updateTaxiList", "Destination has been created successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateTaxiList", "Destination has been created fail")
+            }
+    }
+
+    override fun getCurrentLocation(result: (UiState<CurrentLocation>) -> Unit) {
+        database.collection(FireStoreCollection.CURRENTLOCATION).document("Ego_0")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w("getCurrentLocation", "listen:error", e)
+                    result.invoke(
+                        UiState.Failure(
+                            e.localizedMessage
+                        )
+                    )
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    Log.d("getCurrentLocation", "DocumentSnapshot data: ${snapshot.data}")
+                    val currentLocation = snapshot.toObject(CurrentLocation::class.java)
+                    if(currentLocation != null){
+                        result.invoke(
+                            UiState.Success(currentLocation)
+                        )
+                    }
+                } else {
+                    Log.d("getCurrentLocation", "No such document")
+                }
+            }
+    }
+
 }

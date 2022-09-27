@@ -1,13 +1,24 @@
 package com.example.taxi.ui.call_taxi.location
 
-import com.example.taxi.R
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.location.Address
+import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
+import com.example.taxi.data.dto.user.driving.CurrentLocation
 import com.example.taxi.data.dto.user.route.Location
 import com.example.taxi.data.dto.user.route.RouteSetting
 import com.example.taxi.databinding.FragmentLocationTrackingTaxiBinding
@@ -21,6 +32,10 @@ import com.naver.maps.map.overlay.*
 import com.ssafy.daero.utils.view.getPxFromDp
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
+import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 
 @AndroidEntryPoint
@@ -47,10 +62,18 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
     }
 
     override fun init() {
+        //TODO : 출발지에 도착하면 startDrivingTaxiFragment로 이동
+        initView()
         observerData()
         setOnClickListeners()
     }
 
+    private fun initView(){
+        binding.textLocationTrackingTaxiName.text = ApplicationClass.prefs.carName
+        Glide.with(requireContext())
+            .load(ApplicationClass.prefs.carImage)
+            .into(binding.imageLocationTrackingTaxiCar);
+    }
 
     private fun observerData(){
         callTaxiViewModel.routeSetting.observe(viewLifecycleOwner) { state ->
@@ -100,6 +123,69 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                 }
             }
         }
+        callTaxiViewModel.currentLocation.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                    updateMarker(state.data)
+                }
+            }
+        }
+    }
+
+    private fun updateMarker(location: CurrentLocation){
+        binding.textLocationTrackingTaxiAddress.text = getAddress(location.lati, location.long)
+        markers[markers.lastIndex].map = null
+        markers.removeAt(markers.lastIndex)
+        markers.add(createTaxiMarker(Location(location.lati.toString(), location.long.toString())))
+        var str = ((location.dis/1000.0) * 100.0).roundToInt() / 100.0
+        infoWindow.adapter = rootView?.let {
+            MarkerInfoAdapter(requireContext(),
+                it, str.toString()+"Km", location.time)
+        }!!
+        infoWindow.open(markers[markers.lastIndex])
+
+        naverMap?.moveCamera(
+            CameraUpdate.scrollTo(
+                LatLng(
+                    location.lati,
+                    location.long
+                )
+            )
+        )
+
+    }
+
+    private fun getAddress(lat: Double, lng: Double): String {
+        val geoCoder = Geocoder(requireContext(), Locale.KOREA)
+        val address: ArrayList<Address>
+        var addressResult = "주소를 가져 올 수 없습니다."
+        try {
+            //세번째 파라미터는 좌표에 대해 주소를 리턴 받는 갯수로
+            //한좌표에 대해 두개이상의 이름이 존재할수있기에 주소배열을 리턴받기 위해 최대갯수 설정
+            address = geoCoder.getFromLocation(lat, lng, 1) as ArrayList<Address>
+            if (address.size > 0) {
+                // 주소 받아오기
+                val currentLocationAddress = address[0].getAddressLine(0)
+                    .toString()
+                addressResult = currentLocationAddress
+
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return addressResult
     }
 
     private fun deleteMarkers() {
@@ -147,8 +233,8 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
             position = LatLng(location.lati.toDouble(), location.long.toDouble())    // 마커 좌표
             icon = OverlayImage.fromResource(R.drawable.ic_marker)
             iconTintColor = requireActivity().getColor(R.color.primaryColor)// 마커 색깔
-            width = requireContext().getPxFromDp(40f)   // 마커 가로 크기
-            height = requireContext().getPxFromDp(40f)  // 마커 세로 크기
+            width = requireContext().getPxFromDp(48f)   // 마커 가로 크기
+            height = requireContext().getPxFromDp(48f)  // 마커 세로 크기
             zIndex = 0  // 마커 높이
             onClickListener = Overlay.OnClickListener {     // 마커 클릭 리스너
                 return@OnClickListener true
@@ -160,14 +246,34 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
 
     private fun createTaxiMarker(location: Location): Marker {
         return Marker().apply {
+            Glide.with(requireContext())
+                .asBitmap()
+                .load(ApplicationClass.prefs.carImage)
+                .apply(RequestOptions().centerCrop().circleCrop())
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        this.apply {
+                            icon = OverlayImage.fromBitmap(
+                                Bitmap.createScaledBitmap(
+                                    resource,
+                                    requireContext().getPxFromDp(64f),
+                                    requireContext().getPxFromDp(64f),
+                                    true
+                                )
+                            )
+                        }
+                    }
+                    override fun onLoadCleared(placeholder: Drawable?) {}
+                })
             position = LatLng(location.lati.toDouble(), location.long.toDouble())    // 마커 좌표
-            icon = OverlayImage.fromResource(R.drawable.ic_local_taxi)
-            iconTintColor = requireActivity().getColor(R.color.greenTextColor)// 마커 색깔
-            width = requireContext().getPxFromDp(40f)   // 마커 가로 크기
-            height = requireContext().getPxFromDp(40f)  // 마커 세로 크기
+            width = requireContext().getPxFromDp(48f)   // 마커 가로 크기
+            height = requireContext().getPxFromDp(48f)  // 마커 세로 크기
             zIndex = 0  // 마커 높이
             isHideCollidedMarkers = true    // 겹치면 다른 마커 숨기기
-            map = naverMap  // 지도에 마커 표시
+            map = naverMap
         }
     }
 
@@ -187,10 +293,15 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                 })
             }
         }
+        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun setOnClickListeners() {
-
+        binding.imgLocationTrackingTaxiCall.setOnClickListener {
+            val tt: Intent =
+                Intent(Intent.ACTION_DIAL, Uri.parse("tel:01077777777"))
+            startActivity(tt)
+        }
     }
 
     private fun initNaverMap() {
@@ -228,39 +339,10 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         callTaxiViewModel.addRouteSetting(
             RouteSetting(destination = Location(
                 lati = ApplicationClass.prefs.startLatitude.toString(), long = ApplicationClass.prefs.startLongitude.toString()),
-                startingPoint = Location(lati = ApplicationClass.prefs.latitude.toString(), long = ApplicationClass.prefs.longitude.toString()),
+                startingPoint = Location(lati = "0", long = "0"),
                 checkState = true
             )
         )
     }
-
-//    fun getMarkerBitmapFromView(drawable: Drawable?, context: Context): Bitmap? {
-//        val customMarkerView: View =
-//            (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-//                com.example.taxi.R.layout.item_taxi_marker,
-//                null
-//            )
-//        val markerImage =
-//            customMarkerView.findViewById<View>(R.id.user_marker_icon) as CircleImageView
-//        customMarkerView.background =
-//            context.resources.getDrawable(R.drawable.circle_profile)
-//        markerImage.setImageDrawable(drawable)
-//        customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-//        customMarkerView.layout(
-//            0,
-//            0,
-//            customMarkerView.measuredWidth,
-//            customMarkerView.measuredHeight
-//        )
-//        customMarkerView.buildDrawingCache()
-//        val returnedBitmap = Bitmap.createBitmap(
-//            customMarkerView.measuredWidth, customMarkerView.measuredHeight,
-//            Bitmap.Config.ARGB_8888
-//        )
-//        val canvas = Canvas(returnedBitmap)
-//        customMarkerView.draw(canvas)
-//        return returnedBitmap
-//    }
-
 
 }

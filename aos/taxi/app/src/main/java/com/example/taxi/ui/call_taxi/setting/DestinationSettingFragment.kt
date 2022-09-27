@@ -13,9 +13,9 @@ import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.api.KakaoAPI
 import com.example.taxi.data.dto.mypage.Favorites
 import com.example.taxi.data.dto.user.destination.Destination
-import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.data.dto.user.destination.DestinationSearch
 import com.example.taxi.data.dto.user.destination.DestinationSearchDto
+import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.databinding.FragmentDestinationSettingBinding
 import com.example.taxi.ui.home.user.DestinationListAdapter
 import com.example.taxi.ui.home.user.FavoritesAdapter
@@ -32,10 +32,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.roundToInt
-import kotlin.math.sqrt
+import kotlin.math.*
 
 @AndroidEntryPoint
 class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBinding>(R.layout.fragment_destination_setting) {
@@ -67,7 +64,7 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
         binding.imageDestinationSettingForward.visibility = View.VISIBLE
         binding.textDestinationSettingDestination.visibility = View.VISIBLE
         binding.searchDestinationSetting.setQuery("", false)
-        destination = Destination(address,x,place,y)
+        destination = Destination(address,y,place,x)
         binding.textDestinationSettingDestination.text = destination.addressName
         checkEnd()
     }
@@ -240,13 +237,29 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     private fun getDistance(list : List<DestinationSearch>) {
         if(startingPoint!=null){
             for(i in list){
-                var newX = ( kotlin.math.cos(startingPoint.latitude.toDouble()) * 6400 * 2 * 3.14 / 360 ) * abs(startingPoint.longitude.toDouble() - i.x.toDouble())
-                var newY = 111 * abs(startingPoint.longitude.toDouble() - i.y.toDouble())
 
-                i.distance = ((sqrt(newX.pow(2)+newY.pow(2)) * 100.0).roundToInt() / 100.0).toString()+"Km"
+                var theta = startingPoint.longitude.toDouble() - i.x.toDouble()
+                var dist =
+                    sin(deg2rad(startingPoint.latitude.toDouble())) * sin(deg2rad(i.y.toDouble())) +
+                            cos(deg2rad(startingPoint.latitude.toDouble())) * cos(deg2rad(i.y.toDouble())
+                    ) * cos(deg2rad(theta))
+                dist = acos(dist)
+                dist = rad2deg(dist)
+                dist *= 60 * 1.1515
+                dist *= 1.609344
+                dist = (dist * 100.0).roundToInt() / 100.0
+                i.distance = dist.toString()+"Km"
             }
         }
         initSearchAdapter(list)
+    }
+
+    private fun deg2rad(deg: Double): Double {
+        return deg * Math.PI / 180.0
+    }
+
+    private fun rad2deg(rad: Double): Double {
+        return rad * 180 / Math.PI
     }
 
     private fun initSearchAdapter(list : List<DestinationSearch>){
