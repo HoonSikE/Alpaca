@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="24dp"
-                android:text="게시글 수정" />
+                android:text="알파카" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 

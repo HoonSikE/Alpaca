@@ -51,6 +51,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     private var paths = mutableListOf<PathOverlay>()
     private var infoWindow = InfoWindow()
     private var rootView: ViewGroup? = null
+    private var fee = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -341,15 +342,20 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         var distance = distance
         val numberFormat: NumberFormat = NumberFormat.getInstance()
         if(distance <= 3){
-            val str = numberFormat.format(3000)
-            binding.textDrivingTaxiFee.text = str + " 원"
+            var feeNum = numberFormat.format(3000)
+            binding.textDrivingTaxiFee.text = feeNum + " 원"
         }else{
             distance -= 3
             var res = distance/0.16
-            var fee = 3000 + (res.toInt()*100)
-            val str = numberFormat.format(fee)
-            binding.textDrivingTaxiFee.text = str + " 원"
+            fee = 3000 + (res.toInt()*100)
+            var feeNum = numberFormat.format(fee)
+            binding.textDrivingTaxiFee.text = feeNum + " 원"
         }
+    }
+
+    private fun arrivalDestination(){
+        //TODO : 도착 시 endDrivingFragment로 이동
+        ApplicationClass.prefs.fee = fee
     }
 
 }
