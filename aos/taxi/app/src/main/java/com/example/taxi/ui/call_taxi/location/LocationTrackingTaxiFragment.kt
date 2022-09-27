@@ -72,7 +72,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         binding.textLocationTrackingTaxiName.text = ApplicationClass.prefs.carName
         Glide.with(requireContext())
             .load(ApplicationClass.prefs.carImage)
-            .into(binding.imageLocationTrackingTaxiCar);
+            .into(binding.imageLocationTrackingTaxiCar)
     }
 
     private fun observerData(){
@@ -137,7 +137,9 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                 }
                 is UiState.Success -> {
                     //binding.progressBar.hide()
-                    updateMarker(state.data)
+                    if(markers.size > 0){
+                        updateMarker(state.data)
+                    }
                 }
             }
         }
@@ -291,9 +293,9 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                     coords = list  // 경로 좌표
                     map = naverMap
                 })
+                callTaxiViewModel.getCurrentLocation()
             }
         }
-        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun setOnClickListeners() {

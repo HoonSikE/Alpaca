@@ -80,7 +80,6 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
     }
 
     override fun init() {
-        //TODO : 선불이면 Bootpay 처리
         initData()
         observerData()
         setOnClickListeners()
@@ -270,10 +269,12 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
             binding.textCallTaxiDestination.visibility = View.GONE
             checkState = true
         }
-        binding.imageCallTaxiFirstPayment.setOnClickListener {
-
-        }
         binding.imageCallTaxiLatePayment.setOnClickListener {
+            findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
+                bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
+            )
+        }
+        binding.textCallTaxiLatePayment.setOnClickListener {
             findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
                 bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
             )
