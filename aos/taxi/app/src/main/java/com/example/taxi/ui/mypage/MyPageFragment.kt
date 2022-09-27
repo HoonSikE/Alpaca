@@ -36,9 +36,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun setOnClickListeners() {
-        binding.textUpdateUserInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_myPageFragment_to_updateUserInfoFragment)
-        }
         binding.textUpdatePassword.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_updatePasswordFragment)
         }
@@ -49,6 +46,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         }
         binding.textUserWithdrawal.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_userWithdrawalFragment)
+        }
+        // Bootpay Test용
+        binding.imageMovePayment.setOnClickListener {
+            findNavController().navigate(R.id.action_myPageFragment_to_paymentFragment)
         }
     }
 
