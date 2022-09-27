@@ -416,6 +416,15 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"
             />
+
+        <action
+            android:id="@+id/action_myPageFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
     </fragment>
     <fragment
         android:id="@+id/updateUserInfoFragment"
