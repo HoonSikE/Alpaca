@@ -13,5 +13,7 @@ data class BoardedTaxi (
     val carName: String = "",
     val carNumber: String = "",
     val cleanlinessAverage: Double = 0.0,
-    val rideComfortAverage: Double = 0.0
+    val rideComfortAverage: Double = 0.0,
+    val timeRequired: String = "",
+    val distance: Double = 0.0
 ) : Parcelable
