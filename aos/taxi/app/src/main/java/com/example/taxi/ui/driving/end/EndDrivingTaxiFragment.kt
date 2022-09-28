@@ -9,6 +9,8 @@ import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.provider.ProviderCar
 import com.example.taxi.data.dto.provider.TaxiUser
 import com.example.taxi.data.dto.provider.UserList
+import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
+import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxiList
 import com.example.taxi.data.dto.user.calltaxi.Taxi
 import com.example.taxi.data.dto.user.calltaxi.TaxiList
 import com.example.taxi.data.dto.user.destination.Destination
@@ -29,15 +31,16 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
     private val providerViewModel : ProviderViewModel by viewModels()
     private val userHomeViewModel : UserHomeViewModel by viewModels()
+    private val endDrivingViewModel : EndDrivingViewModel by viewModels()
     private var revenue: Int = 0
     private var fee = 0
     private lateinit var providerCar: ProviderCar
     private var frequentDestination = mutableListOf<FrequentDestination>()
     private var destinations = mutableListOf<Destination>()
     private var userList = mutableListOf<TaxiUser>()
+    private var boardedTaxiList = mutableListOf<BoardedTaxi>()
 
     override fun init() {
-        //TODO : 이용한 택시 목록 추가
         initData()
         setOnClickListeners()
         observerData()
@@ -54,6 +57,7 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         providerViewModel.getUserList()
         providerViewModel.getProvider()
         callTaxiViewModel.getTaxiList()
+        endDrivingViewModel.getBoardedTaxiList()
     }
 
     private fun setOnClickListeners(){
@@ -279,11 +283,53 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
                 }
             }
         }
+        endDrivingViewModel.boardedTaxiList.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                    boardedTaxiList = state.data.taxiList as MutableList<BoardedTaxi>
+                }
+            }
+        }
+        endDrivingViewModel.updateBoardedTaxiList.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                }
+            }
+        }
     }
 
     private fun sortTaxiList(taxiList: Taxi) {
         taxiList.isEachInOperation = false
         callTaxiViewModel.updateTaxiList(taxiList)
+        boardedTaxiList.add(BoardedTaxi(fee, ApplicationClass.prefs.destinationName.toString(),
+            ApplicationClass.prefs.startName.toString(), ApplicationClass.prefs.time!!.toInt(),
+            ApplicationClass.prefs.carImage.toString(), ApplicationClass.prefs.carName.toString(),
+            ApplicationClass.prefs.carNumber.toString(), ApplicationClass.prefs.cleanlinessAverage!!.toDouble(),
+            ApplicationClass.prefs.rideComfortAverage!!.toDouble()
+        ))
+        endDrivingViewModel.updateBoardedTaxiList(boardedTaxiList)
         var check = false
         for(i in frequentDestination){
             if(i.addressName == ApplicationClass.prefs.destinationName){
