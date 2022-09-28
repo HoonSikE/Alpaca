@@ -22,7 +22,7 @@ class UserWithdrawalFragment : BaseFragment<FragmentUserWithDrawalBinding>(R.lay
     private fun setOnClickListeners() {
         binding.buttonUserWithdrawal.setOnClickListener{
             if(binding.switchUserWithdrawalSwitch.isChecked){
-                val dialog = DialogUserWithDrawalFragment()
+                val dialog = UserWithDrawalDialogFragment()
                 dialog.setOnOKClickedListener { content ->
                     authViewModel.deleteUserInfo{}
 //                    updateUserInfoViewModel.deleteImage{}

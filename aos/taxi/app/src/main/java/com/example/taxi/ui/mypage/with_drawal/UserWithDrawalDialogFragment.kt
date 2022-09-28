@@ -5,27 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
-import com.example.taxi.databinding.DialogWithDrawalBinding
-import com.example.taxi.ui.login.AuthViewModel
-import com.example.taxi.utils.view.toast
+import com.example.taxi.databinding.DlgWithDrawalBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DialogUserWithDrawalFragment() : DialogFragment() {
-    private var _binding: DialogWithDrawalBinding? = null
+class UserWithDrawalDialogFragment() : DialogFragment() {
+    private var _binding: DlgWithDrawalBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var listener : DialogWithDrawalOKClickedListener
-
+    private lateinit var listener : WithDrawalDialogOKClickedListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = DialogWithDrawalBinding.inflate(inflater, container, false)
+        _binding = DlgWithDrawalBinding.inflate(inflater, container, false)
         val view = binding.root
 
         //ok 버튼 동작
-        binding.buttonDialogUserWithDrawal.setOnClickListener {
-            listener.onOKClicked(binding.buttonDialogUserWithDrawal.text.toString())
+        binding.buttonDlgUserWithDrawal.setOnClickListener {
+            listener.onOKClicked(binding.buttonDlgUserWithDrawal.text.toString())
             dismiss()
         }
         return view
@@ -36,12 +32,12 @@ class DialogUserWithDrawalFragment() : DialogFragment() {
         _binding = null
     }
 
-    interface DialogWithDrawalOKClickedListener {
+    interface WithDrawalDialogOKClickedListener {
         fun onOKClicked(content : String)
     }
 
     fun setOnOKClickedListener(listener: (String) -> Unit) {
-        this.listener = object: DialogWithDrawalOKClickedListener {
+        this.listener = object: WithDrawalDialogOKClickedListener {
             override fun onOKClicked(content: String) {
                 listener(content)
             }

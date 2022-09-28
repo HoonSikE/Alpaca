@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BoardingListFragment : BaseFragment<FragmentBoardingListBinding>(R.layout.fragment_boarding_list) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 
 }

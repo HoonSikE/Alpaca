@@ -113,6 +113,13 @@
         tools:layout="@layout/fragment_join"
         >
         <action
+            android:id="@+id/action_joinFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
             android:id="@+id/action_joinFragment_to_userHomeFragment"
             app:destination="@id/userHomeFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -122,6 +129,35 @@
 
         <action
             android:id="@+id/action_joinFragment_to_providerHomeFragment"
+            app:destination="@id/providerHomeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+
+        <action
+            android:id="@+id/action_joinFragment_to_joinProviderFragment"
+            app:destination="@id/joinProviderFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+    <fragment
+        android:id="@+id/joinProviderFragment"
+        android:name="com.example.taxi.ui.login.join.JoinProviderFragment"
+        android:label="joinProviderFragment"
+        tools:layout="@layout/fragment_join_provider"
+        >
+        <action
+            android:id="@+id/action_joinProviderFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_joinProviderFragment_to_providerHomeFragment"
             app:destination="@id/providerHomeFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
