@@ -9,10 +9,11 @@
         android:layout_width="wrap_content"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_backgound">
 
         <TextView
-            android:id="@+id/text_dialog_user_with_drawal"
+            android:id="@+id/text_dlg_user_with_drawal"
             style="@style/SubHeadSemiBoldPrimaryColor"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
@@ -32,9 +33,9 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/text_dialog_user_with_drawal"
-            app:layout_constraintTop_toTopOf="@+id/text_dialog_user_with_drawal"
-            app:layout_constraintBottom_toBottomOf="@+id/text_dialog_user_with_drawal"
+            app:layout_constraintEnd_toStartOf="@+id/text_dlg_user_with_drawal"
+            app:layout_constraintTop_toTopOf="@+id/text_dlg_user_with_drawal"
+            app:layout_constraintBottom_toBottomOf="@+id/text_dlg_user_with_drawal"
             app:srcCompat="@drawable/ic_withdrawal" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +49,7 @@
             android:paddingBottom="16dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/text_dialog_user_with_drawal"
+            app:layout_constraintTop_toBottomOf="@+id/text_dlg_user_with_drawal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="8dp"
@@ -56,7 +57,7 @@
             android:layout_marginEnd="8dp">
 
             <TextView
-                android:id="@+id/text_dialog_user_with_drawal1"
+                android:id="@+id/text_dlg_user_with_drawal1"
                 style="@style/DialogTheme"
                 android:inputType="text"
                 android:layout_width="wrap_content"
@@ -67,7 +68,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                android:id="@+id/text_dialog_user_with_drawal2"
+                android:id="@+id/text_dlg_user_with_drawal2"
                 style="@style/DialogTheme"
                 android:inputType="text"
                 android:layout_width="wrap_content"
@@ -76,32 +77,32 @@
                 android:textColor="@color/red"
                 android:textStyle="bold"
                 android:gravity="center"
-                app:layout_constraintTop_toTopOf="@+id/text_dialog_user_with_drawal1"
-                app:layout_constraintBottom_toBottomOf="@+id/text_dialog_user_with_drawal1"
-                app:layout_constraintStart_toEndOf="@+id/text_dialog_user_with_drawal1"
+                app:layout_constraintTop_toTopOf="@+id/text_dlg_user_with_drawal1"
+                app:layout_constraintBottom_toBottomOf="@+id/text_dlg_user_with_drawal1"
+                app:layout_constraintStart_toEndOf="@+id/text_dlg_user_with_drawal1"
                 />
 
             <TextView
-                android:id="@+id/text_dialog_user_with_drawal3"
+                android:id="@+id/text_dlg_user_with_drawal3"
                 style="@style/DialogTheme"
                 android:inputType="text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="됩니다."
                 android:gravity="center"
-                app:layout_constraintTop_toTopOf="@+id/text_dialog_user_with_drawal1"
-                app:layout_constraintBottom_toBottomOf="@+id/text_dialog_user_with_drawal1"
-                app:layout_constraintStart_toEndOf="@+id/text_dialog_user_with_drawal2"
+                app:layout_constraintTop_toTopOf="@+id/text_dlg_user_with_drawal1"
+                app:layout_constraintBottom_toBottomOf="@+id/text_dlg_user_with_drawal1"
+                app:layout_constraintStart_toEndOf="@+id/text_dlg_user_with_drawal2"
                 />
 
             <TextView
-                android:id="@+id/text_dialog_user_with_drawal4"
+                android:id="@+id/text_dlg_user_with_drawal4"
                 style="@style/DialogTheme"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="탈퇴하시겠습니까?"
-                app:layout_constraintTop_toBottomOf="@+id/text_dialog_user_with_drawal1"
+                app:layout_constraintTop_toBottomOf="@+id/text_dlg_user_with_drawal1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
@@ -109,7 +110,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/button_dialog_user_with_drawal"
+            android:id="@+id/button_dlg_user_with_drawal"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_regular"

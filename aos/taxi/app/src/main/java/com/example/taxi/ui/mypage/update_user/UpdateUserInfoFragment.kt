@@ -52,7 +52,7 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
             startActivityForResult(photoPickerInent, pickImageFromAlbum)
         }
         binding.imageUpdatePhoneImageButton.setOnClickListener{
-            val dialog = DialogUpdateTelFragment()
+            val dialog = UpdateTelDialogFragment()
             dialog.setOnOKClickedListener { content ->
                 binding.textUpdateUserInfoPhone.text = content
                 binding.textUpdateUserInfoPhone.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
@@ -60,7 +60,7 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
             dialog.show(childFragmentManager, "update tel")
         }
         binding.imageUpdateHomeAddressImageButton.setOnClickListener{
-            val dialog = DialogUpdateAddressFragment("home")
+            val dialog = UpdateAddressDialogFragment("home")
             dialog.setOnOKClickedListener { content ->
                 binding.textUpdateUserInfoHomeAddress.text = content
                 binding.textUpdateUserInfoHomeAddress.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
@@ -68,13 +68,14 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
             dialog.show(childFragmentManager, "update home address")
         }
         binding.imageUpdateCompanyAddressImageButton.setOnClickListener{
-            val dialog = DialogUpdateAddressFragment("company")
+            val dialog = UpdateAddressDialogFragment("company")
             dialog.setOnOKClickedListener { content ->
                 binding.textUpdateUserInfoCompanyAddress.text = content
                 binding.textUpdateUserInfoCompanyAddress.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
             }
             dialog.show(childFragmentManager, "update company address")
         }
+        /** 윗부분은 text만 바꾸는것이고 밑에가 DB에 넣는 부분임 */
         binding.buttonUserUpdateInfo.setOnClickListener{
             // 이미지 추가
             val user = User("", uriPhoto.toString(), "", 0, "", ApplicationClass.prefs.userSeq.toString(), false)

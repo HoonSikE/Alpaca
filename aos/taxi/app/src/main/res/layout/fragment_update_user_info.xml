@@ -95,44 +95,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/image_update_user_image_button" />
 
-                <!--Name-->
-                <TextView
-                    android:id="@+id/text_label_update_user_info_name"
-                    style="@style/SubHeadSemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:text="이름"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_image" />
-
-                <TextView
-                    android:id="@+id/text_update_user_info_name"
-                    style="@style/Body"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/textview_regular"
-                    android:ems="10"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="48dp"
-                    android:text="Name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_update_user_info_name" />
-
-                <ImageView
-                    android:id="@+id/image_update_user_info_name"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/text_update_user_info_name"
-                    app:layout_constraintTop_toTopOf="@+id/text_update_user_info_name"
-                    app:srcCompat="@drawable/ic_profile" />
-
                 <!--Email-->
                 <TextView
                     android:id="@+id/text_label_update_user_info_email"
@@ -140,10 +102,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:text="이메일 아이디"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_info_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_image" />
 
                 <TextView
                     android:id="@+id/text_update_user_info_email"
@@ -156,7 +118,7 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:paddingLeft="48dp"
-                    android:text="Email"
+                    android:hint="Email"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_update_user_info_email" />
@@ -171,6 +133,44 @@
                     app:layout_constraintTop_toTopOf="@+id/text_update_user_info_email"
                     app:srcCompat="@drawable/ic_email" />
 
+                <!--Name-->
+                <TextView
+                    android:id="@+id/text_label_update_user_info_name"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="이름"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_info_email" />
+
+                <TextView
+                    android:id="@+id/text_update_user_info_name"
+                    style="@style/Body"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/textview_regular"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="48dp"
+                    android:hint="Name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_update_user_info_name" />
+
+                <ImageView
+                    android:id="@+id/image_update_user_info_name"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_update_user_info_name"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_user_info_name"
+                    app:srcCompat="@drawable/ic_profile" />
+
                 <!--phone number-->
                 <TextView
                     android:id="@+id/text_label_update_user_info_phone"
@@ -181,7 +181,7 @@
                     android:layout_marginTop="24dp"
                     android:text="전화번호"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_info_email" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_info_name" />
 
                 <TextView
                     android:id="@+id/text_update_user_info_phone"
@@ -194,7 +194,7 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:paddingLeft="48dp"
-                    android:text="Phone Number"
+                    android:hint="Phone Number"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_update_user_info_phone"
@@ -215,12 +215,11 @@
                     android:id="@+id/image_update_phone_image_button"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:background="@drawable/edittext_regular"
                     app:layout_constraintTop_toTopOf="@+id/text_update_user_info_phone"
                     app:layout_constraintBottom_toBottomOf="@+id/text_update_user_info_phone"
                     app:layout_constraintEnd_toEndOf="@+id/text_update_user_info_phone"
                     android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/img_edit" />
+                    app:srcCompat="@drawable/ic_edit" />
 
                 <!--home address-->
                 <TextView
@@ -245,7 +244,7 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:paddingLeft="48dp"
-                    android:text="Home Address"
+                    android:hint="Home Address"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_update_user_info_home_address"
@@ -266,12 +265,11 @@
                     android:id="@+id/image_update_home_address_image_button"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:background="@drawable/edittext_regular"
                     app:layout_constraintTop_toTopOf="@+id/text_update_user_info_home_address"
                     app:layout_constraintBottom_toBottomOf="@+id/text_update_user_info_home_address"
                     app:layout_constraintEnd_toEndOf="@+id/text_update_user_info_home_address"
                     android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/img_edit" />
+                    app:srcCompat="@drawable/ic_edit" />
 
                 <!--office address-->
                 <TextView
@@ -296,7 +294,7 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:paddingLeft="48dp"
-                    android:text="Company Address"
+                    android:hint="Company Address"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_update_user_info_office_address"
@@ -317,12 +315,11 @@
                     android:id="@+id/image_update_company_address_image_button"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:background="@drawable/edittext_regular"
                     app:layout_constraintTop_toTopOf="@+id/text_update_user_info_company_address"
                     app:layout_constraintBottom_toBottomOf="@+id/text_update_user_info_company_address"
                     app:layout_constraintEnd_toEndOf="@+id/text_update_user_info_company_address"
                     android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/img_edit" />
+                    app:srcCompat="@drawable/ic_edit" />
 
                 <!--button-->
                 <Button
