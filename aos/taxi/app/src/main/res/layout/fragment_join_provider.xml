@@ -105,6 +105,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/image_join_user_image" />
+                <!-- 이메일 아이디 -->
+                <TextView
+                    android:id="@+id/text_join_id"
+                    style="@style/SubHeadSemiBoldPrimaryColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="* 이메일 아이디"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_join_user_image" />
 
                 <TextView
                     android:id="@+id/text_required_input"
@@ -119,18 +130,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_join_user_image" />
 
-                <!-- 이메일 아이디 -->
-                <TextView
-                    android:id="@+id/text_join_id"
-                    style="@style/SubHeadSemiBoldPrimaryColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="* 이메일 아이디"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_join_user_image" />
-
                 <EditText
                     android:id="@+id/editText_join_id"
                     style="@style/Body"
@@ -141,7 +140,7 @@
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
                     android:hint="이메일을 입력하세요"
-                    android:paddingLeft="48dp"
+                    android:paddingLeft="16dp"
                     android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"
                     android:textColorHint="@color/hintGray"
@@ -149,17 +148,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_id" />
 
-                <ImageView
-                    android:id="@+id/image_join_user_info_email"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/editText_join_id"
-                    app:layout_constraintTop_toTopOf="@+id/editText_join_id"
-                    app:srcCompat="@drawable/ic_email" />
-
-                <!-- 비밀번호 -->
                 <TextView
                     android:id="@+id/text_join_pw"
                     style="@style/SubHeadSemiBoldPrimaryColor"
@@ -170,6 +158,7 @@
                     android:text="* 비밀번호"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/editText_join_id"
+
                     />
 
                 <EditText
@@ -182,23 +171,13 @@
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
                     android:hint="비밀번호를 입력하세요"
-                    android:paddingLeft="48dp"
+                    android:paddingLeft="16dp"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:textColorHint="@color/hintGray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_pw" />
-
-                <ImageView
-                    android:id="@+id/image_join_user_password"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/editText_join_pw"
-                    app:layout_constraintTop_toTopOf="@+id/editText_join_pw"
-                    app:srcCompat="@drawable/ic_lock_close" />
 
                 <TextView
                     android:id="@+id/text_join_pw_check"
@@ -222,7 +201,7 @@
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
                     android:hint="비밀번호를 재입력하세요"
-                    android:paddingLeft="48dp"
+                    android:paddingLeft="16dp"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:textColorHint="@color/hintGray"
@@ -230,17 +209,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_pw_check" />
 
-                <ImageView
-                    android:id="@+id/image_join_user_password2"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/editText_join_pw_check"
-                    app:layout_constraintTop_toTopOf="@+id/editText_join_pw_check"
-                    app:srcCompat="@drawable/ic_lock_close" />
-
-                <!-- 이름 -->
                 <TextView
                     android:id="@+id/text_join_name"
                     style="@style/SubHeadSemiBoldPrimaryColor"
@@ -251,6 +219,7 @@
                     android:text="* 이름"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/editText_join_pw_check"
+
                     />
 
                 <EditText
@@ -263,7 +232,7 @@
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
                     android:hint="이름을 입력하세요"
-                    android:paddingLeft="48dp"
+                    android:paddingLeft="16dp"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:textColorHint="@color/hintGray"
@@ -271,17 +240,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_name" />
 
-                <ImageView
-                    android:id="@+id/image_join_user_info_name"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/editText_join_name"
-                    app:layout_constraintTop_toTopOf="@+id/editText_join_name"
-                    app:srcCompat="@drawable/ic_profile" />
-
-                <!-- 전화번호 -->
                 <TextView
                     android:id="@+id/text_join_tel"
                     style="@style/SubHeadSemiBoldPrimaryColor"
@@ -393,24 +351,13 @@
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
                     android:hint="집 주소를 입력하세요"
-                    android:paddingLeft="48dp"
+                    android:paddingLeft="16dp"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:textColorHint="@color/hintGray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_home_address" />
-
-                <ImageView
-                    android:id="@+id/image_join_user_info_home_address"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/editText_join_home_address"
-                    app:layout_constraintTop_toTopOf="@+id/editText_join_home_address"
-                    app:srcCompat="@drawable/ic_home" />
-
 
                 <!-- Office Address -->
                 <TextView
@@ -434,23 +381,13 @@
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
                     android:hint="회사 주소를 입력하세요"
-                    android:paddingLeft="48dp"
+                    android:paddingLeft="16dp"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:textColorHint="@color/hintGray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_company_address" />
-
-                <ImageView
-                    android:id="@+id/image_join_user_info_company_address"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/editText_join_company_address"
-                    app:layout_constraintTop_toTopOf="@+id/editText_join_company_address"
-                    app:srcCompat="@drawable/ic_company" />
 
                 <!-- toggle provider -->
                 <TextView
