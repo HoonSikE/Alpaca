@@ -128,6 +128,7 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
             .get()
             .addOnSuccessListener { document ->
                 if(document != null){
+//                    val map = document.toObject(Map::class.java)
                     val boardedTaxiList = document.toObject(BoardedTaxiList::class.java)
                     if(boardedTaxiList != null){
                         result.invoke(
@@ -152,6 +153,24 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
     override fun updateBoardedTaxiList(boardedTaxi: List<BoardedTaxi>, result: (UiState<List<BoardedTaxi>>) -> Unit){
         val document = database.collection(FireStoreCollection.BOARDEDTAXILIST).document(ApplicationClass.prefs.userSeq.toString())
         document.update("taxiList", boardedTaxi)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(boardedTaxi)
+                )
+                Log.d("updateBoardedTaxiList", "BoardedTaxiList has been updated successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateBoardedTaxiList", "BoardedTaxiList has been updated fail")
+            }
+    }
+    override fun updateBoardedTaxiListDetail(boardedTaxi: BoardedTaxi, index: Int, result: (UiState<BoardedTaxi>) -> Unit){
+        val document = database.collection(FireStoreCollection.BOARDEDTAXILIST).document(ApplicationClass.prefs.userSeq.toString())
+        document.update("taxiList." + index.toString(), boardedTaxi)
             .addOnSuccessListener {
                 result.invoke(
                     UiState.Success(boardedTaxi)
