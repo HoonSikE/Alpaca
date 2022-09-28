@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.core.net.toUri
 import com.example.taxi.data.dto.user.User
 import com.example.taxi.data.dto.user.address_info.AddressInfo
+import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
+import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxiList
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.UiState
@@ -121,4 +123,49 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
                 Log.d("addImageUpLoad", "Image has been uploaded fail")
             }
     }
+    override fun getBoardedTaxiList(result: (UiState<BoardedTaxiList>) -> Unit) {
+        database.collection(FireStoreCollection.BOARDEDTAXILIST).document(ApplicationClass.prefs.userSeq.toString())
+            .get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    val boardedTaxiList = document.toObject(BoardedTaxiList::class.java)
+                    if(boardedTaxiList != null){
+                        result.invoke(
+                            UiState.Success(boardedTaxiList)
+                        )
+                    }
+                }else {
+                    Log.d("getBoardedTaxiList", "No such document")
+                }
+
+            }
+            .addOnFailureListener {
+                Log.d("getBoardedTaxiList", "Fail get document")
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
+
+    override fun updateBoardedTaxiList(boardedTaxi: List<BoardedTaxi>, result: (UiState<List<BoardedTaxi>>) -> Unit){
+        val document = database.collection(FireStoreCollection.BOARDEDTAXILIST).document(ApplicationClass.prefs.userSeq.toString())
+        document.update("taxiList", boardedTaxi)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(boardedTaxi)
+                )
+                Log.d("updateBoardedTaxiList", "BoardedTaxiList has been updated successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateBoardedTaxiList", "BoardedTaxiList has been updated fail")
+            }
+    }
+
 }

@@ -198,6 +198,7 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
         ApplicationClass.prefs.isEachInOperation = !taxi.isEachInOperation
         ApplicationClass.prefs.startLatitude = startingPoint.latitude
         ApplicationClass.prefs.startLongitude = startingPoint.longitude
+        ApplicationClass.prefs.startName = startingPoint.addressName
         ApplicationClass.prefs.destinationLatitude = destination.latitude
         ApplicationClass.prefs.destinationLongitude = destination.longitude
         ApplicationClass.prefs.destinationName = destination.addressName

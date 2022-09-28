@@ -140,7 +140,8 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
                 is UiState.Success -> {
                     //binding.progressBar.hide()
                     distance = state.data.dis.toInt()
-                    if(distance < 30){
+                    ApplicationClass.prefs.time = state.data.time.toInt()
+                        if(distance < 30){
                         arrivalDestination()
                     }
                     updateMarker(state.data)
