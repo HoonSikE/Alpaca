@@ -541,7 +541,15 @@
         android:id="@+id/taxiAssessmentFragment"
         android:name="com.example.taxi.ui.mypage.boarding_list.select_taxi_details.taxi_assessment.TaxiAssessmentFragment"
         android:label="TaxiAssessmentFragment"
-        tools:layout="@layout/fragment_taxi_assessment"/>
+        tools:layout="@layout/fragment_taxi_assessment">
+        <action
+            android:id="@+id/action_taxiAssessmentFragment_to_taxiDetailFragment"
+            app:destination="@id/taxiDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+    </fragment>
     <fragment
         android:id="@+id/chatBotFragment"
         android:name="com.example.taxi.ui.mypage.chatbot.ChatBotFragment"
