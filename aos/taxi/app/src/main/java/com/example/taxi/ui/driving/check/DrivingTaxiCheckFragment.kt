@@ -63,6 +63,7 @@ class DrivingTaxiCheckFragment : BaseFragment<FragmentDrivingTaxiCheckBinding>(R
         }
         binding.buttonDrivingTaxiCheck.setOnClickListener {
             //TODO : 이미지 업로드
+            requireActivity().onBackPressed()
         }
     }
 

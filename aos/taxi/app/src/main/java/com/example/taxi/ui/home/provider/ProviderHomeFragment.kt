@@ -17,6 +17,7 @@ import com.example.taxi.data.dto.provider.UserList
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.databinding.FragmentProviderHomeBinding
 import com.example.taxi.di.ApplicationClass
+import com.example.taxi.ui.driving.start.StartDrivingLockDialogFragment
 import com.example.taxi.ui.home.user.FavoritesAdapter
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.view.toast
@@ -106,7 +107,8 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
 
     private fun setOnClickListeners() {
         binding.textProviderHomeDeadLine.setOnClickListener {
-            //TODO : TimePicker로 다이얼로그 구현
+            showDialog()
+            providerViewModel.getProvider()
         }
         binding.switchProviderHomeIsEachDriving.setOnCheckedChangeListener(
             CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
@@ -151,4 +153,9 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         }
     }
+
+    private fun showDialog() {
+            ProviderDialogFragment().show(childFragmentManager, "ProviderDialogFragment")
+    }
+
 }

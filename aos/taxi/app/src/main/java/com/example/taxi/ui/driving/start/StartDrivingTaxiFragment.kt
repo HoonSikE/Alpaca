@@ -46,8 +46,7 @@ class StartDrivingTaxiFragment : BaseFragment<FragmentStartDrivingTaxiBinding>(R
             findNavController().navigate(R.id.action_startDrivingTaxiFragment_to_DrivingTaxiCheckFragment)
         }
         binding.buttonStartDrivingTaxiStart.setOnClickListener {
-            //사진 다 넣었는지 확인하기
-            //TODO : DrivingTaxiFragment로 이동
+            findNavController().navigate(R.id.action_startDrivingTaxiFragment_to_drivingTaxiFragment)
         }
     }
 

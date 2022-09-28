@@ -126,7 +126,7 @@ class RouteRepositoryImpl(
     ) {
         val document = database.collection(FireStoreCollection.TAXILIST).document("Alpaca")
         document
-            .update("taxiList",taxiList)
+            .update("isEachInOperation",taxiList.isEachInOperation)
             .addOnSuccessListener {
                 result.invoke(
                     UiState.Success(taxiList)

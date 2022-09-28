@@ -7,12 +7,17 @@ import com.bumptech.glide.Glide
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.provider.ProviderCar
+import com.example.taxi.data.dto.provider.TaxiUser
+import com.example.taxi.data.dto.provider.UserList
 import com.example.taxi.data.dto.user.calltaxi.Taxi
 import com.example.taxi.data.dto.user.calltaxi.TaxiList
+import com.example.taxi.data.dto.user.destination.Destination
+import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.databinding.FragmentEndDrivingTaxiBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.call_taxi.CallTaxiViewModel
 import com.example.taxi.ui.home.provider.ProviderViewModel
+import com.example.taxi.ui.home.user.UserHomeViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.view.toast
@@ -23,19 +28,32 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
 
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
     private val providerViewModel : ProviderViewModel by viewModels()
+    private val userHomeViewModel : UserHomeViewModel by viewModels()
     private var revenue: Int = 0
+    private var fee = 0
+    private lateinit var providerCar: ProviderCar
+    private var frequentDestination = mutableListOf<FrequentDestination>()
+    private var destinations = mutableListOf<Destination>()
+    private var userList = mutableListOf<TaxiUser>()
 
     override fun init() {
+        //TODO : 이용한 택시 목록 추가
         initData()
         setOnClickListeners()
         observerData()
     }
 
     private fun initData() {
+        fee = ApplicationClass.prefs.fee!!
         if(ApplicationClass.prefs.carImage != ""){
             Glide.with(this).load(ApplicationClass.prefs.carImage).into(binding.imageEndTaxiCar)
         }
         binding.textEndTaxi.text = ApplicationClass.prefs.carNumber
+        userHomeViewModel.getDestinations()
+        userHomeViewModel.getLastDestinations()
+        providerViewModel.getUserList()
+        providerViewModel.getProvider()
+        callTaxiViewModel.getTaxiList()
     }
 
     private fun setOnClickListeners(){
@@ -45,16 +63,97 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         }
         binding.buttonEndTaxiStart.setOnClickListener {
             //사진 다 넣었는지 확인하기
-            //TODO : RATINGBAR 값 업데이트
-            //TODO : 이전 프래그먼트에서 요금 얼마인지 받아오기
             //TODO : 후불일때 처리
             //TODO : 후불 처리되면 다시 홈으로
-            callTaxiViewModel.getTaxiList()
-            findNavController().navigate(R.id.action_endDrivingTaxiFragment_to_userHomeFragment)
+            var resRide = 0.0
+            var resClean = 0.0
+            userList.add(TaxiUser(ApplicationClass.userId, binding.ratingEndTaxiRideComfort.rating.toDouble(),
+                ApplicationClass.prefs.profileImage.toString(), binding.ratingEndTaxiCleanliness.rating.toDouble()))
+            for(i in userList){
+                resRide += i.rideComfort
+                resClean += i.cleanliness
+            }
+            resRide /= userList.size
+            resClean /= userList.size
+            providerCar.cleanlinessAverage = resClean
+            providerCar.rideComfortAverage = resRide
+            providerViewModel.updateProvider(providerCar)
+            var userLists = UserList(userList)
+            providerViewModel.updateUserList(userLists)
         }
     }
 
     private fun observerData() {
+        userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                    frequentDestination = state.data as MutableList<FrequentDestination>
+                }
+            }
+        }
+        userHomeViewModel.updateDestinations.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                }
+            }
+        }
+        userHomeViewModel.lastDestinations.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                    destinations = state.data as MutableList<Destination>
+                }
+            }
+        }
+        userHomeViewModel.updateLastDestinations.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                }
+            }
+        }
         callTaxiViewModel.taxiList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
@@ -103,6 +202,7 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
                 }
                 is UiState.Success -> {
                     Log.d("UiState.Success", "taxiListUpdate clear")
+                    providerCar = state.data.car!!
                     revenue = state.data.revenue
                     revenue += ApplicationClass.prefs.fee!!
                     providerViewModel.updateRevenue(revenue)
@@ -126,13 +226,94 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
                 }
             }
         }
+        providerViewModel.providerCar.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    Log.d("UiState.Success", "revenueUpdate clear")
+                }
+            }
+        }
+        providerViewModel.userList.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                    userList = state.data.user as MutableList<TaxiUser>
+                }
+            }
+        }
+        providerViewModel.upadteUserList.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    //binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    //binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    //binding.progressBar.hide()
+                    findNavController().navigate(R.id.action_endDrivingTaxiFragment_to_userHomeFragment)
+                }
+            }
+        }
     }
 
     private fun sortTaxiList(taxiList: Taxi) {
         taxiList.isEachInOperation = false
         callTaxiViewModel.updateTaxiList(taxiList)
-        providerViewModel.getProvider()
-        //TODO : LastDestination, Destination(FrequentDestination) 업데이트
+        var check = false
+        for(i in frequentDestination){
+            if(i.addressName == ApplicationClass.prefs.destinationName){
+                i.count += 1
+                check = true
+                break
+            }
+        }
+        if(!check){
+            frequentDestination.add(FrequentDestination(ApplicationClass.prefs.destinationAddress.toString(), ApplicationClass.prefs.destinationLatitude.toString(),
+                1,ApplicationClass.prefs.destinationName.toString(),ApplicationClass.prefs.destinationLongitude.toString()))
+            userHomeViewModel.updateDestinations(frequentDestination)
+        }
+        check = false
+        for(i in 0 until destinations.size){
+            if(destinations[i].addressName == ApplicationClass.prefs.destinationName){
+                val des = destinations[i]
+                destinations.removeAt(i)
+                destinations.add(des)
+                check = true
+                break
+            }
+        }
+        if(!check){
+            destinations.add(
+                Destination(ApplicationClass.prefs.destinationAddress.toString(), ApplicationClass.prefs.destinationLatitude.toString()
+                    ,ApplicationClass.prefs.destinationName.toString(),ApplicationClass.prefs.destinationLongitude.toString())
+            )
+            userHomeViewModel.updateLastDestinations(destinations)
+        }
     }
 
 

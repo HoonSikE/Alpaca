@@ -33,13 +33,17 @@ class ProviderViewModel @Inject constructor(
     val userList: LiveData<UiState<UserList>>
         get() = _userList
 
+    private val _upadteUserList = MutableLiveData<UiState<UserList>>()
+    val upadteUserList: LiveData<UiState<UserList>>
+        get() = _upadteUserList
+
     fun getProvider(){
         _provider.value = UiState.Loading
         repository.getProvider { _provider.value = it }
     }
 
     fun updateProvider(providerCar: ProviderCar) {
-        _provider.value = UiState.Loading
+        _providerCar.value = UiState.Loading
         repository.updateProvider(providerCar) { _providerCar.value = it }
     }
 
@@ -51,6 +55,11 @@ class ProviderViewModel @Inject constructor(
     fun getUserList() {
         _userList.value = UiState.Loading
         repository.getUserList { _userList.value = it }
+    }
+
+    fun updateUserList(revenue : UserList){
+        _upadteUserList.value = UiState.Loading
+        repository.updateUserList(revenue) { _upadteUserList.value = it }
     }
 
 }
