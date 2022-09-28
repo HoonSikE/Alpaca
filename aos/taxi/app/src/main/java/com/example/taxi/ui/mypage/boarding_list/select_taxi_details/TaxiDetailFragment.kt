@@ -1,5 +1,6 @@
 package com.example.taxi.ui.mypage.boarding_list.select_taxi_details
 
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.taxi.R
@@ -43,7 +44,8 @@ class TaxiDetailFragment : BaseFragment<FragmentTaxiDetailBinding>(R.layout.frag
 
     private fun setOnClickListeners() {
         binding.layoutBoardingTaxiDetailAssessment.setOnClickListener{
-            findNavController().navigate(R.id.action_taxiDetailFragment_to_taxiAssessmentFragment)
+            val idx = arguments?.getInt("index") as Int
+            findNavController().navigate(R.id.action_taxiDetailFragment_to_taxiAssessmentFragment, bundleOf("BoardedTaxi" to boardedTaxi, "index" to idx))
         }
         binding.buttonBoardingTaxiPersonChat.setOnClickListener{
             findNavController().navigate(R.id.action_taxiDetailFragment_to_personalChatFragment)
