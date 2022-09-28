@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TaxiDetailFragment : BaseFragment<FragmentTaxiDetailBinding>(R.layout.fragment_taxi_detail) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 
 }

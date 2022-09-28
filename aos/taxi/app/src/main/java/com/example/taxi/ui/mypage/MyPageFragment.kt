@@ -99,9 +99,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 //                    boardedTaxiList = state.data.taxiList as MutableList<BoardedTaxi>
                     boardedTaxiList = state.data
                     initAdapter(boardedTaxiList)
-                    println("boardedTaxiListboardedTaxiListboardedTaxiListboardedTaxiListboardedTaxiListboardedTaxiList")
-                    println(boardedTaxiList)
-                    println(boardedTaxiList.toString())
                 }
             }
         }
