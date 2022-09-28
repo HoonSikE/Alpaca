@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.taxi.R
-import com.example.taxi.data.dto.provider.TaxiUser
 import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
-import com.example.taxi.databinding.ItemTaxiListBinding
-import com.example.taxi.databinding.ItemUserListBinding
+import com.example.taxi.databinding.ItemTaxiImgListBinding
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 
 class MyPageAdapter: RecyclerView.Adapter<MyPageAdapter.BoaredTaxiListViewHolder>() {
@@ -29,7 +27,7 @@ class MyPageAdapter: RecyclerView.Adapter<MyPageAdapter.BoaredTaxiListViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoaredTaxiListViewHolder {
         return BoaredTaxiListViewHolder(
-            ItemTaxiListBinding.inflate(
+            ItemTaxiImgListBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -47,7 +45,7 @@ class MyPageAdapter: RecyclerView.Adapter<MyPageAdapter.BoaredTaxiListViewHolder
         return boardedTaxiList.size
     }
 
-    class BoaredTaxiListViewHolder(private val binding: ItemTaxiListBinding) :
+    class BoaredTaxiListViewHolder(private val binding: ItemTaxiImgListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: BoardedTaxi) {
