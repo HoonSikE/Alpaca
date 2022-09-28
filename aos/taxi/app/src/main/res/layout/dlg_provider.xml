@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_backgound">
+
+
+
+    <TextView
+        android:id="@+id/text_dlg_provider_description"
+        style="@style/Head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:gravity="center"
+        android:text="마감 시간 설정"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_dlg_provider_time_picker"
+        />
+
+    <TimePicker
+        android:id="@+id/button_dlg_provider_time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/text_dlg_provider_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_dlg_provider_cancel"
+        style="@style/SubHead"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_regular"
+        android:backgroundTint="@color/lightGray"
+        android:text="취소"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_dlg_provider_provider"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_dlg_provider_time_picker" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_dlg_provider_provider"
+        style="@style/SubHead"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/button_regular"
+        android:text="확인"
+        app:layout_constraintBottom_toBottomOf="@id/button_dlg_provider_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_dlg_provider_cancel"
+        app:layout_constraintTop_toTopOf="@id/button_dlg_provider_cancel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

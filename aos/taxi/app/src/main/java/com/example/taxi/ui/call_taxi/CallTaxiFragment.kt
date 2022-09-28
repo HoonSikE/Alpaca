@@ -230,7 +230,6 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
             height = requireContext().getPxFromDp(40f)  // 마커 세로 크기
             zIndex = 0  // 마커 높이
             onClickListener = Overlay.OnClickListener {     // 마커 클릭 리스너
-                // todo: location_seq 이용해서 트립스탬프 상세화면으로 이동
                 return@OnClickListener true
             }
             isHideCollidedMarkers = true    // 겹치면 다른 마커 숨기기

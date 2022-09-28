@@ -10,4 +10,5 @@ interface ProviderRepository {
     fun updateProvider(provider: ProviderCar, result: (UiState<ProviderCar>) -> Unit)
     fun updateRevenue(revenue: Int, result: (UiState<Int>) -> Unit)
     fun getUserList (result: (UiState<UserList>) -> Unit)
+    fun updateUserList(userList: UserList, result: (UiState<UserList>) -> Unit)
 }

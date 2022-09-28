@@ -22,6 +22,18 @@ class PreferenceUtil(context: Context) {
             destination.edit().putString(DESTINATIONLONGITUDE, value).apply()
         }
 
+    var destinationName : String?
+        get() = destination.getString(DESTINATIONNAME, null)
+        set(value){
+            destination.edit().putString(DESTINATIONNAME, value).apply()
+        }
+
+    var destinationAddress : String?
+        get() = destination.getString(DESTINATIONADDRESS, null)
+        set(value){
+            destination.edit().putString(DESTINATIONADDRESS, value).apply()
+        }
+
     var startLatitude : String?
         get() = destination.getString(STARTLATITUDE, null)
         set(value){
