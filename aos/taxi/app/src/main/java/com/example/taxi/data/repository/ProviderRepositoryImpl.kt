@@ -80,7 +80,7 @@ class ProviderRepositoryImpl(
     }
 
     override fun getUserList(result: (UiState<UserList>) -> Unit) {
-        database.collection(FireStoreCollection.USERLIST).document(ApplicationClass.userId)
+        database.collection(FireStoreCollection.USERLIST).document(ApplicationClass.prefs.providerId.toString())
             .get()
             .addOnSuccessListener { document ->
                 Log.d("getUserList", "DocumentSnapshot data: ${document.data}")
@@ -102,6 +102,26 @@ class ProviderRepositoryImpl(
                         it.localizedMessage
                     )
                 )
+            }
+    }
+
+    override fun updateUserList(userList: UserList, result: (UiState<UserList>) -> Unit) {
+        val document = database.collection(FireStoreCollection.USERLIST).document(ApplicationClass.prefs.providerId.toString())
+        document
+            .update("user",userList)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(userList)
+                )
+                Log.d("updateRevenue", "Destination has been created successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateRevenue", "Destination has been created fail")
             }
     }
 }

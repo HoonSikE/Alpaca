@@ -21,6 +21,8 @@ const val ISEACHINOPERATION = "isEachInOperation"
 const val PROVIDERID = "providerId"
 const val DESTINATIONLATITUDE = "destinationLatitude"
 const val DESTINATIONLONGITUDE = "destinationLongitude"
+const val DESTINATIONNAME = "destinationName"
+const val DESTINATIONADDRESS = "destinationAddress"
 const val STARTLATITUDE = "startLatitude"
 const val STARTLONGITUDE = "startLongitude"
 
@@ -32,6 +34,7 @@ const val END = 91
 
 object FireStoreCollection{
     val DESTINATION = "Destination"
+    val LASTDESTINATION = "LastDestination"
     val FAVORITES = "Favorites"
     val USER = "User"
     val USERADDRESSINFO = "UserAddressInfo"

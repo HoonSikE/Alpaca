@@ -25,6 +25,8 @@
             android:layout_height="160dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/view_radius"
+            android:ellipsize="end"
+            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
@@ -69,11 +71,13 @@
 
         <TextView
             android:id="@+id/text_location_tracking_taxi_address"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="현재주소를 나타냄"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             style="@style/BodySemiBoldWhite"
             android:textColor="@color/gray"
             android:elevation="5dp"

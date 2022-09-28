@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -43,7 +44,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
     OnMapReadyCallback {
 
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
-    var checkState = true
+    var distance = 0
     private var naverMap: NaverMap? = null
     private var uiSettings: UiSettings? = null
     private var markers = mutableListOf<Marker>()
@@ -62,7 +63,6 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
     }
 
     override fun init() {
-        //TODO : 출발지에 도착하면 startDrivingTaxiFragment로 이동
         initView()
         observerData()
         setOnClickListeners()
@@ -138,6 +138,10 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                 is UiState.Success -> {
                     //binding.progressBar.hide()
                     if(markers.size > 0){
+                        distance = state.data.dis.toInt()
+                        if(distance < 30){
+                            findNavController().navigate(R.id.action_locationTrackingTaxiFragment_to_startDrivingTaxiFragment)
+                        }
                         updateMarker(state.data)
                     }
                 }
@@ -153,7 +157,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         var str = ((location.dis/1000.0) * 100.0).roundToInt() / 100.0
         infoWindow.adapter = rootView?.let {
             MarkerInfoAdapter(requireContext(),
-                it, str.toString()+"Km", location.time)
+                it, str.toString()+"Km", location.time.toString()+"분")
         }!!
         infoWindow.open(markers[markers.lastIndex])
 

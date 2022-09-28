@@ -3,6 +3,9 @@ package com.example.taxi.data.repository
 import android.util.Log
 import com.example.taxi.data.dto.mypage.Favorites
 import com.example.taxi.data.dto.mypage.FavoritesDto
+import com.example.taxi.data.dto.provider.ProviderCar
+import com.example.taxi.data.dto.user.destination.Destination
+import com.example.taxi.data.dto.user.destination.DestinationDto
 import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.data.dto.user.destination.FrequentDestinationDto
 import com.example.taxi.di.ApplicationClass
@@ -46,6 +49,26 @@ class FrequentDestinationRepositoryImpl(
                         it.localizedMessage
                     )
                 )
+            }
+    }
+
+    override fun updateDestination(provider: List<FrequentDestination>, result: (UiState<List<FrequentDestination>>) -> Unit) {
+        val document = database.collection(FireStoreCollection.DESTINATION).document(ApplicationClass.userId)
+        document
+            .update("destination",provider)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(provider)
+                )
+                Log.d("updateDestination", "Destination has been created successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateDestination", "Destination has been created fail")
             }
     }
 
@@ -103,8 +126,65 @@ class FrequentDestinationRepositoryImpl(
             }
     }
 
-    override fun addFavorites(frequentDestination: FrequentDestination, result: (UiState<Favorites>) -> Unit) {
+    override fun addFavorites(
+        frequentDestination: FrequentDestination,
+        result: (UiState<Favorites>) -> Unit
+    ) {
         TODO("Not yet implemented")
+    }
+
+    override fun getLastDestination(result: (UiState<List<Destination>>) -> Unit) {
+        database.collection(FireStoreCollection.LASTDESTINATION).document(ApplicationClass.userId)
+            .get()
+            .addOnSuccessListener { document ->
+                Log.d("getLastDestination", "DocumentSnapshot data: ${document.data}")
+                if (document != null) {
+                    val destinationDto = document.toObject(DestinationDto::class.java)
+                    if(destinationDto != null){
+                        val destinations = destinationDto.destination
+                        val newDestination = mutableListOf<Destination>()
+                        if(destinations != null){
+                            for(des in destinations){
+                                val destination = Destination(des.address, des.latitude, des.addressName, des.longitude)
+                                newDestination.add(destination)
+                            }
+                            result.invoke(
+                                UiState.Success(newDestination)
+                            )
+                        }
+                    }
+                } else {
+                    Log.d("getLastDestination", "No such document")
+                }
+            }
+            .addOnFailureListener {
+                Log.d("getLastDestination", "Fail get document")
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
+
+    override fun updateLastDestination(provider: List<Destination>, result: (UiState<List<Destination>>) -> Unit) {
+        val document = database.collection(FireStoreCollection.LASTDESTINATION).document(ApplicationClass.userId)
+        document
+            .update("destination",provider)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(provider)
+                )
+                Log.d("updateDestination", "Destination has been created successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateDestination", "Destination has been created fail")
+            }
     }
 
 }

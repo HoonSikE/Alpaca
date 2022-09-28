@@ -11,7 +11,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -44,7 +46,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     OnMapReadyCallback {
 
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
-    var checkState = true
+    var distance = 0
     private var naverMap: NaverMap? = null
     private var uiSettings: UiSettings? = null
     private var markers = mutableListOf<Marker>()
@@ -64,7 +66,6 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     }
 
     override fun init() {
-        //TODO : 도착지에 도착하면 endDrivingTaxiFragment로 이동
         initView()
         observerData()
     }
@@ -138,6 +139,10 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
                 }
                 is UiState.Success -> {
                     //binding.progressBar.hide()
+                    distance = state.data.dis.toInt()
+                    if(distance < 30){
+                        arrivalDestination()
+                    }
                     updateMarker(state.data)
                 }
             }
@@ -153,7 +158,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         binding.textDrivingTaxiDistance.text = str.toString() +"Km"
         infoWindow.adapter = rootView?.let {
             MarkerInfoAdapter(requireContext(),
-                it, str.toString()+"Km", location.time)
+                it, str.toString()+"Km", location.time.toString()+"분")
         }!!
         infoWindow.open(markers[markers.lastIndex])
         naverMap?.moveCamera(
@@ -354,8 +359,8 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     }
 
     private fun arrivalDestination(){
-        //TODO : 도착 시 endDrivingFragment로 이동
         ApplicationClass.prefs.fee = fee
+        findNavController().navigate(R.id.action_drivingTaxiFragment_to_endDrivingTaxiFragment)
     }
 
 }
