@@ -46,6 +46,12 @@ class PreferenceUtil(context: Context) {
             destination.edit().putString(STARTLONGITUDE, value).apply()
         }
 
+    var startName : String?
+        get() = destination.getString(STARTNAME, null)
+        set(value){
+            destination.edit().putString(STARTNAME, value).apply()
+        }
+
     var carNumber : String?
         get() = taxi.getString(CARNUMBER, null)
         set(value){
@@ -65,6 +71,14 @@ class PreferenceUtil(context: Context) {
         set(value){
             if (value != null) {
                 taxi.edit().putInt(FEE, value).apply()
+            }
+        }
+
+    var time : Int?
+        get() = taxi.getInt(TIME, 0)
+        set(value){
+            if (value != null) {
+                taxi.edit().putInt(TIME, value).apply()
             }
         }
 
