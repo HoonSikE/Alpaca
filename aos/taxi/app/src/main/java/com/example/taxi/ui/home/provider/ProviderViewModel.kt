@@ -42,6 +42,11 @@ class ProviderViewModel @Inject constructor(
         repository.getProvider { _provider.value = it }
     }
 
+    fun addProvider(provider: Provider) {
+        _provider.value = UiState.Loading
+        repository.addProvider(provider) { _provider.value = it }
+    }
+
     fun updateProvider(providerCar: ProviderCar) {
         _providerCar.value = UiState.Loading
         repository.updateProvider(providerCar) { _providerCar.value = it }
