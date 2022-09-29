@@ -63,12 +63,25 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
         var storage = FirebaseStorage.getInstance()
         var imgFileName = user.userSeq + ".png"
 
-        //ApplicationClass.prefs?.profileImage = user.profileImage
-
         storage.getReference().child("user_profiles").child(imgFileName)
             .putFile(user.profileImage.toUri())//어디에 업로드할지 지정
-            .addOnSuccessListener {
-                Log.d("addImageUpLoad", "Image has been uploaded successfully")
+            .addOnSuccessListener { taskSnapshot ->
+                taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { it ->
+                    ApplicationClass.prefs.profileImage = it.toString()
+                    // firestore 업데이트
+                    database.collection(FireStoreCollection.USER)
+                        .document(ApplicationClass.prefs.userSeq.toString())
+                        .update("profileImage", it)
+                        .addOnCompleteListener { task ->
+                            Log.d("addImageUpLoad", "Image has been uploaded success")
+                        }.addOnFailureListener { task ->
+                            result.invoke(
+                                UiState.Failure(
+                                    task.localizedMessage
+                                )
+                            )
+                        }
+                }
             }.addOnFailureListener{
                 Log.d("addImageUpLoad", "Image has been uploaded fail")
             }
