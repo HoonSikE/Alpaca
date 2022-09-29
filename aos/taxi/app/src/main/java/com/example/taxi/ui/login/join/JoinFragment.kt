@@ -55,8 +55,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                 )
                 // 주소정보 추가
                 addressInfo = AddressInfo(
-                    binding.editTextJoinHomeAddress.text.toString(),
-                    binding.editTextJoinCompanyAddress.text.toString()
+                    binding.editTextJoinCompanyAddress.text.toString(),
+                    binding.editTextJoinHomeAddress.text.toString()
                 )
                 observer()
             }
@@ -87,12 +87,11 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                             ApplicationClass.prefs.userSeq = user.userSeq
                             ApplicationClass.prefs.tel = user.tel
                             ApplicationClass.prefs.useCount = user.useCount
-                            ApplicationClass.prefs.profileImage = user.profileImage
 
                             // 이미지 추가
-                            authViewModel.addImageUpLoad(
-                                user = user
-                            )
+//                            authViewModel.addImageUpLoad(
+//                                user = user
+//                            )
 
                             // 주소정보 추가 (userSeq값 할당 후 실행)
                             authViewModel.addAddressInfo(
