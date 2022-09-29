@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ProviderCar (
     var carImage : String = "",
+    var carName : String = "",
     var carNumber : String = "",
     var cleanlinessAverage : Double = 0.0,
     var deadLine: String = "",

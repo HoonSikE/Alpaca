@@ -78,10 +78,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         binding.textUserWithdrawal.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_userWithdrawalFragment)
         }
-        // Bootpay Test용
-        binding.imageMovePayment.setOnClickListener {
-            findNavController().navigate(R.id.action_myPageFragment_to_paymentFragment)
-        }
     }
 
     private fun observerData() {
