@@ -22,10 +22,6 @@ class EndDrivingViewModel @Inject constructor(
     val updateBoardedTaxiList: LiveData<UiState<List<BoardedTaxi>>>
         get() = _updateBoardedTaxiList
 
-    private val _updateBoardedTaxiListDetail = MutableLiveData<UiState<BoardedTaxi>>()
-    val updateBoardedTaxiListDetail: LiveData<UiState<BoardedTaxi>>
-        get() = _updateBoardedTaxiListDetail
-
     fun getBoardedTaxiList() {
         _boardedTaxiList.value = UiState.Loading
         userinfoRepository.getBoardedTaxiList { _boardedTaxiList.value = it }
@@ -34,10 +30,5 @@ class EndDrivingViewModel @Inject constructor(
     fun updateBoardedTaxiList(taxiList: List<BoardedTaxi>){
         _updateBoardedTaxiList.value = UiState.Loading
         userinfoRepository.updateBoardedTaxiList(taxiList) { _updateBoardedTaxiList.value = it }
-    }
-
-    fun updateBoardedTaxiListDetail(boardedTaxi: BoardedTaxi, index: Int){
-        _updateBoardedTaxiListDetail.value = UiState.Loading
-        userinfoRepository.updateBoardedTaxiListDetail(boardedTaxi, index) { _updateBoardedTaxiListDetail.value = it }
     }
 }

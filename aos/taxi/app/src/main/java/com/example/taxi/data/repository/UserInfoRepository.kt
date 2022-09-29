@@ -17,10 +17,5 @@ interface UserInfoRepository {
         boardedTaxi: List<BoardedTaxi>,
         result: (UiState<List<BoardedTaxi>>) -> Unit
     )
-    fun updateBoardedTaxiListDetail(
-        boardedTaxi: BoardedTaxi,
-        index: Int,
-        result: (UiState<BoardedTaxi>) -> Unit
-    )
     fun getBoardedTaxiList(result: (UiState<BoardedTaxiList>) -> Unit)
 }
