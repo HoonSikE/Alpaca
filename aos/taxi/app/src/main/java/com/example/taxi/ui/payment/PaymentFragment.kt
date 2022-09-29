@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
+import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
 import com.example.taxi.databinding.FragmentPaymentBinding
 import com.example.taxi.di.ApplicationClass
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,9 +17,13 @@ import kr.co.bootpay.android.models.Payload
 
 @AndroidEntryPoint
 class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_payment) {
+    private lateinit var boardedTaxi: BoardedTaxi
+
     override fun init() {
+//        boardedTaxi = arguments?.getParcelable<BoardedTaxi>("BoardedTaxi") as BoardedTaxi
+        totalPayment()
 //        initData()
-        setOnClickListeners()
+//        setOnClickListeners()
 //        observerData()
     }
 
@@ -27,9 +32,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
 //    }
 
     private fun setOnClickListeners(){
-        binding.imagePayment.setOnClickListener{
-            totalPayment()
-        }
+//        binding.imagePayment.setOnClickListener{
+//            totalPayment()
+//        }
     }
 
     private fun totalPayment(){
@@ -98,6 +103,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
                     Log.d("done", data)
                 }
             }).requestPayment()
+        requireActivity().onBackPressed()
     }
 
     fun getBootUser(): BootUser? {
