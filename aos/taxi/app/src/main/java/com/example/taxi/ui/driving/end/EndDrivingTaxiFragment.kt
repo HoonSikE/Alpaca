@@ -67,8 +67,6 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         }
         binding.buttonEndTaxiStart.setOnClickListener {
             //사진 다 넣었는지 확인하기
-            //TODO : 후불일때 처리
-            //TODO : 후불 처리되면 다시 홈으로
             var resRide = 0.0
             var resClean = 0.0
             userList.add(TaxiUser(ApplicationClass.userId, binding.ratingEndTaxiRideComfort.rating.toDouble(),
@@ -84,6 +82,7 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
             providerViewModel.updateProvider(providerCar)
             var userLists = UserList(userList)
             providerViewModel.updateUserList(userLists)
+            findNavController().navigate(R.id.action_endDrivingTaxiFragment_to_paymentFragment)
         }
     }
 
