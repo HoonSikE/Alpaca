@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_chat_bot) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 
 }
