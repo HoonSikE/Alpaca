@@ -81,10 +81,12 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
         /** 윗부분은 text만 바꾸는것이고 밑에가 DB에 넣는 부분임 */
         binding.buttonUserUpdateInfo.setOnClickListener{
             // 이미지 추가
-            val user = User("", uriPhoto.toString(), "", 0, "", ApplicationClass.prefs.userSeq.toString(), false)
-            updateUserInfoViewModel.addImageUpLoad(
-                user = user
-            )
+            if(uriPhoto.toString() != ""){
+                val user = User("", uriPhoto.toString(), "", 0, "", ApplicationClass.prefs.userSeq.toString(), false)
+                updateUserInfoViewModel.addImageUpLoad(
+                    user = user
+                )
+            }
 
             // 사진 추가
             updateUserInfoViewModel.updateUserTel(

@@ -29,7 +29,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     lateinit var addressInfo : AddressInfo
     // 사진 업로드
     var pickImageFromAlbum = 0
-    var uriPhoto : Uri? = null
+    var uriPhoto : Uri? = "".toUri()
 
     override fun init() {
         setOnClickListeners()
@@ -67,7 +67,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         authViewModel.register.observe(viewLifecycleOwner) { state ->
             when(state){
                 is UiState.Loading -> {
-                    binding.buttonJoinLogin.setText("")
+                    binding.buttonJoinLogin.setText("Loading")
                     binding.progressBarJoinLoading.show()
                 }
                 is UiState.Failure -> {
@@ -88,17 +88,15 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                             ApplicationClass.prefs.tel = user.tel
                             ApplicationClass.prefs.useCount = user.useCount
 
-                            // 이미지 추가
-//                            authViewModel.addImageUpLoad(
-//                                user = user
-//                            )
-
                             // 주소정보 추가 (userSeq값 할당 후 실행)
                             authViewModel.addAddressInfo(
                                 addressInfo = addressInfo
                             )
                             ApplicationClass.prefs.isEachProvider = user.isEachProvider
-                            findNavController().navigate(R.id.action_loginFragment_to_userHomeFragment)
+                            if(isEachProvider)
+                                findNavController().navigate(R.id.action_joinFragment_to_joinProviderFragment)
+                            else
+                                findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
                         }
                     }
                 }

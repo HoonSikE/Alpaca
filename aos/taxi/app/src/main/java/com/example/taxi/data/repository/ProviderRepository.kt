@@ -7,6 +7,7 @@ import com.example.taxi.utils.constant.UiState
 
 interface ProviderRepository {
     fun getProvider(result: (UiState<Provider>) -> Unit)
+    fun addProvider(provider: Provider, result: (UiState<Provider>) -> Unit)
     fun updateProvider(provider: ProviderCar, result: (UiState<ProviderCar>) -> Unit)
     fun updateRevenue(revenue: Int, result: (UiState<Int>) -> Unit)
     fun getUserList (result: (UiState<UserList>) -> Unit)
