@@ -127,38 +127,39 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
     }
 
     override fun deleteImage(result: (UiState<String>) -> Unit){
-        if(ApplicationClass.prefs.profileImage != ""){
+        if(ApplicationClass.prefs.profileImage != "") {
             var storage = FirebaseStorage.getInstance()
             var imgFileName = ApplicationClass.prefs.userSeq.toString() + ".png"
 
-        storage.reference.child("user_profiles").child(imgFileName)
-            .delete()
-            .addOnSuccessListener {
-                Log.d("addImageUpLoad", "Image has been uploaded successfully")
-            }.addOnFailureListener{
-                Log.d("addImageUpLoad", "Image has been uploaded fail")
-            storage.getReference().child("user_profiles").child(imgFileName)
+            storage.reference.child("user_profiles").child(imgFileName)
                 .delete()
                 .addOnSuccessListener {
                     Log.d("addImageUpLoad", "Image has been uploaded successfully")
-                }.addOnFailureListener{
+                }.addOnFailureListener {
                     Log.d("addImageUpLoad", "Image has been uploaded fail")
-                }
-
-            if(ApplicationClass.prefs.isEachProvider == true){
-                if(ApplicationClass.prefs.carImage != ""){
-                    var storage = FirebaseStorage.getInstance()
-                    var imgFileName = ApplicationClass.prefs.providerId.toString() + ".png"
-
-                    storage.getReference().child("provider_car_profiles").child(imgFileName)
+                    storage.getReference().child("user_profiles").child(imgFileName)
                         .delete()
                         .addOnSuccessListener {
                             Log.d("addImageUpLoad", "Image has been uploaded successfully")
-                        }.addOnFailureListener{
+                        }.addOnFailureListener {
                             Log.d("addImageUpLoad", "Image has been uploaded fail")
                         }
+
+                    if (ApplicationClass.prefs.isEachProvider == true) {
+                        if (ApplicationClass.prefs.carImage != "") {
+                            var storage = FirebaseStorage.getInstance()
+                            var imgFileName = ApplicationClass.prefs.providerId.toString() + ".png"
+
+                            storage.getReference().child("provider_car_profiles").child(imgFileName)
+                                .delete()
+                                .addOnSuccessListener {
+                                    Log.d("addImageUpLoad", "Image has been uploaded successfully")
+                                }.addOnFailureListener {
+                                    Log.d("addImageUpLoad", "Image has been uploaded fail")
+                                }
+                        }
+                    }
                 }
-            }
         }
     }
     override fun getBoardedTaxiList(result: (UiState<BoardedTaxiList>) -> Unit) {

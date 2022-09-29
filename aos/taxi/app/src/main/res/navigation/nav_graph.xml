@@ -358,11 +358,26 @@
             />
     </fragment>
     <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.taxi.ui.mypage.favorites.FavoritesFragment"
+        android:label="FavoritesFragment"
+        tools:layout="@layout/fragment_favorites"
+        />
+    <fragment
         android:id="@+id/myPageFragment"
         android:name="com.example.taxi.ui.mypage.MyPageFragment"
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_my_page"
         >
+        <action
+            android:id="@+id/action_myPageFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+
         <action
             android:id="@+id/action_myPageFragment_to_boardingListFragment"
             app:destination="@id/boardingListFragment"
