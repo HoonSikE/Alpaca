@@ -1,5 +1,7 @@
 package com.example.taxi.data.repository
 
+import com.example.taxi.data.dto.common.InsideCarList
+import com.example.taxi.data.dto.common.PhotoList
 import com.example.taxi.data.dto.user.User
 import com.example.taxi.data.dto.user.address_info.AddressInfo
 import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
@@ -18,4 +20,11 @@ interface UserInfoRepository {
         result: (UiState<List<BoardedTaxi>>) -> Unit
     )
     fun getBoardedTaxiList(result: (UiState<BoardedTaxiList>) -> Unit)
+    fun getInsideCarList(result: (UiState<InsideCarList>) -> Unit)
+    fun addImageListUpLoad(
+        count: Int,
+        chk: Boolean,
+        photoList: List<PhotoList>,
+        result: (UiState<String>) -> Unit
+    )
 }
