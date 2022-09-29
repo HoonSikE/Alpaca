@@ -17,38 +17,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/image_user_home_back"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:srcCompat="@drawable/ic_back_destination"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:elevation="10dp"
-                app:tint="@color/primaryColor" />
-
             <TextView
                 style="@style/HeadBold"
                 android:textColor="@color/primaryColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="24dp"
                 android:text="알파카" />
 
+            <ImageView
+                android:id="@+id/image_move_my_page"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_profile" />
+
+            <ImageView
+                android:id="@+id/image_move_provider"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_local_taxi" />
+
+
         </com.google.android.material.appbar.MaterialToolbar>
-
-
-        <!--마이페이지 테스트용-->
-        <ImageView
-            android:id="@+id/image_move_my_page"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginRight="10dp"
-            app:srcCompat="@drawable/ic_profile" />
 
         <View
             android:layout_width="match_parent"
@@ -83,7 +78,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     >
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/image_user_home_profile"
                         android:layout_width="80dp"
                         android:layout_height="80dp"

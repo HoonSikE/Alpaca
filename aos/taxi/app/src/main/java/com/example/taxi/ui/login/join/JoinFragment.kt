@@ -98,11 +98,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                             authViewModel.addAddressInfo(
                                 addressInfo = addressInfo
                             )
-                            if(isEachProvider){
-                                findNavController().navigate(R.id.action_joinFragment_to_providerHomeFragment)
-                            }else{
-                                findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
-                            }
+                            ApplicationClass.prefs.isEachProvider = user.isEachProvider
+                            findNavController().navigate(R.id.action_loginFragment_to_userHomeFragment)
                         }
                     }
                 }
