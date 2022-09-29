@@ -170,4 +170,12 @@ class PreferenceUtil(context: Context) {
             prefs.edit().putString(USER_SEQ, value).apply()
         }
 
+    var isEachProvider : Boolean?
+        get() = prefs.getBoolean(ISEACHPROVIDER, false)
+        set(value){
+            if (value != null) {
+                prefs.edit().putBoolean(ISEACHPROVIDER, value).apply()
+            }
+        }
+
 }

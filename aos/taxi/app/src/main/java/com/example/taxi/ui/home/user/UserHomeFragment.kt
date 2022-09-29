@@ -54,6 +54,11 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun initAdapter() {
+        if(ApplicationClass.prefs.isEachProvider == true){
+            binding.imageMoveProvider.show()
+        }else{
+            binding.imageMoveProvider.hide()
+        }
         userHomeViewModel.getDestinations()
         destinationListAdapter = DestinationListAdapter().apply {
             onItemClickListener = destinationOnClickListener
@@ -130,6 +135,9 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
         binding.imageMoveMyPage.setOnClickListener{
             findNavController().navigate(R.id.action_userHomeFragment_to_myPageFragment)
         }
+        binding.imageMoveProvider.setOnClickListener {
+            findNavController().navigate(R.id.action_userHomeFragment_to_providerHomeFragment)
+        }
         binding.buttonUserHomeCallTaxi.setOnClickListener {
             findNavController().navigate(R.id.action_userHomeFragment_to_startPointSettingFragment)
         }
@@ -140,6 +148,7 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private val favoritesListener: (address: String) -> Unit = {
+        //TODO : 즐겨찾기 삭제
         //userHomeViewModel.deleteFavorites()
     }
 

@@ -22,6 +22,7 @@ import com.example.taxi.ui.home.provider.ProviderViewModel
 import com.example.taxi.ui.home.user.UserHomeViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -90,17 +91,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     frequentDestination = state.data as MutableList<FrequentDestination>
                 }
             }
@@ -108,34 +109,34 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         userHomeViewModel.updateDestinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                 }
             }
         }
         userHomeViewModel.lastDestinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     destinations = state.data as MutableList<Destination>
                 }
             }
@@ -143,33 +144,34 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         userHomeViewModel.updateLastDestinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                 }
             }
         }
         callTaxiViewModel.taxiList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     sortTaxiList(state.data)
                 }
             }
@@ -177,16 +179,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         callTaxiViewModel.taxiListUpdate.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     Log.d("UiState.Success", "taxiListUpdate clear")
                 }
             }
@@ -194,16 +197,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         providerViewModel.provider.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     Log.d("UiState.Success", "taxiListUpdate clear")
                     providerCar = state.data.car!!
                     revenue = state.data.revenue
@@ -215,16 +219,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         providerViewModel.revenue.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     Log.d("UiState.Success", "revenueUpdate clear")
                 }
             }
@@ -232,16 +237,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         providerViewModel.providerCar.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     Log.d("UiState.Success", "revenueUpdate clear")
                 }
             }
@@ -249,17 +255,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         providerViewModel.userList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     userList = state.data.user as MutableList<TaxiUser>
                 }
             }
@@ -267,17 +273,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         providerViewModel.upadteUserList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     findNavController().navigate(R.id.action_endDrivingTaxiFragment_to_userHomeFragment)
                 }
             }
@@ -285,17 +291,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         endDrivingViewModel.boardedTaxiList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     boardedTaxiList = state.data.taxiList as MutableList<BoardedTaxi>
                 }
             }
@@ -303,17 +309,17 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         endDrivingViewModel.updateBoardedTaxiList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                 }
             }
         }

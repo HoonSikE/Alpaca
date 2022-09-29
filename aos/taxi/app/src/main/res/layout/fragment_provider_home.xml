@@ -17,13 +17,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/image_user_home_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:srcCompat="@drawable/ic_back_destination"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                app:tint="@color/primaryColor" />
+
+
             <TextView
                 style="@style/HeadBold"
                 android:textColor="@color/primaryColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="8dp"
                 android:text="알파카" />
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -280,6 +291,16 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/black"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
