@@ -26,14 +26,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_user_home) {
     private lateinit var destinationListAdapter: DestinationListAdapter
     private lateinit var favoritesAdapter: FavoritesAdapter
+    private var favorites : MutableList<Favorites> = mutableListOf()
     private val userHomeViewModel : UserHomeViewModel by viewModels()
     private var destinationLatitude:Double = 0.0
     private var destinationLongitude:Double = 0.0
     private var destinationPlace: String = ""
     private var destinationAddress: String = ""
     private lateinit var destination: Destination
+    private var addressFavorites = ""
 
     private val favoritesDeleteClickListener: (View, String) -> Unit = { _, address ->
+        addressFavorites = address
         showFavoritesDialog(address)
     }
 
@@ -122,8 +125,8 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                 }
                 is UiState.Success -> {
                     //binding.progressBar.hide()
-                    val list : MutableList<Favorites> = state.data.toMutableList()
-                    favoritesAdapter.updateList(list)
+                    favorites = state.data.toMutableList()
+                    favoritesAdapter.updateList(favorites)
                     binding.recyclerviewUserHomeFavorites.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textUserHomeNoContentFavorites.hide()
                 }
@@ -148,8 +151,18 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private val favoritesListener: (address: String) -> Unit = {
-        //TODO : 즐겨찾기 삭제
-        //userHomeViewModel.deleteFavorites()
+        if(favorites.size < 2) {
+            userHomeViewModel.deleteFavorites()
+        }else{
+            for(i in 0 until favorites.size){
+                if(favorites[i].address == addressFavorites) {
+                    favorites.removeAt(i)
+                    userHomeViewModel.updateFavorites(favorites)
+                }
+            }
+
+        }
+        userHomeViewModel.getFavorites()
     }
 
     @SuppressLint("ResourceAsColor")

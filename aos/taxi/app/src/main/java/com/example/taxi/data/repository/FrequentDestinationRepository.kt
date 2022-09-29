@@ -15,4 +15,6 @@ interface FrequentDestinationRepository {
         provider: List<Destination>,
         result: (UiState<List<Destination>>) -> Unit
     )
+    fun deleteFavorites(result: (UiState<String>) -> Unit)
+    fun updateFavorites(favorites: List<Favorites>, result: (UiState<String>) -> Unit)
 }
