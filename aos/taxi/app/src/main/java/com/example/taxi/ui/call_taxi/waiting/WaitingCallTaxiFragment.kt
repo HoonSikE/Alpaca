@@ -42,13 +42,11 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
     }
 
     private fun initData() {
-        callTaxiViewModel.getTaxiList()
         if(arguments?.getParcelable<Destination>("Destination")!=null && arguments?.getParcelable<Destination>("StartingPoint")!=null){
             destination = arguments?.getParcelable<Destination>("Destination") as Destination
             startingPoint = arguments?.getParcelable<Destination>("StartingPoint") as Destination
         }
         userHomeViewModel.getDestinations()
-        userHomeViewModel.getLastDestinations()
     }
 
     private fun observerData() {
@@ -67,6 +65,7 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     frequentDestination = state.data as MutableList<FrequentDestination>
+                    userHomeViewModel.getLastDestinations()
                 }
             }
         }
@@ -102,24 +101,24 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     destinations = state.data as MutableList<Destination>
+                    callTaxiViewModel.getTaxiList()
                 }
             }
         }
         userHomeViewModel.updateLastDestinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
-                    findNavController().navigate(R.id.action_waitingCallTaxiFragment_to_assignedTaxiInformationFragment)
+                    binding.progressBar.hide()
                 }
             }
         }
@@ -239,6 +238,7 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
             )
             userHomeViewModel.updateLastDestinations(destinations)
         }
+        findNavController().navigate(R.id.action_waitingCallTaxiFragment_to_assignedTaxiInformationFragment)
     }
 
 }

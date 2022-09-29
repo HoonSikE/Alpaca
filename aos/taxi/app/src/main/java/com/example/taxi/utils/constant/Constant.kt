@@ -41,6 +41,7 @@ object FireStoreCollection{
     val LASTDESTINATION = "LastDestination"
     val FAVORITES = "Favorites"
     val USER = "User"
+    val INSIDECARLIST = "InsideCarList"
     val USERADDRESSINFO = "UserAddressInfo"
     val ROUTE = "Route"
     val ROUTESETTING = "RouteSetting"
