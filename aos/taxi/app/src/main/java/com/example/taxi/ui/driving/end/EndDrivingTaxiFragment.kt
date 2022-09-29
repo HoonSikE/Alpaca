@@ -1,6 +1,7 @@
 package com.example.taxi.ui.driving.end
 
 import android.util.Log
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -64,7 +65,7 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
     private fun setOnClickListeners(){
 
         binding.buttonEndTaxiPhoto.setOnClickListener {
-            findNavController().navigate(R.id.action_endDrivingTaxiFragment_to_drivingTaxiCheckFragment)
+            findNavController().navigate(R.id.action_endDrivingTaxiFragment_to_drivingTaxiCheckFragment, bundleOf("checkState" to false))
         }
         binding.buttonEndTaxiStart.setOnClickListener {
             //사진 다 넣었는지 확인하기
