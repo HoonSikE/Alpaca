@@ -20,6 +20,7 @@ import com.example.taxi.data.dto.user.destination.DestinationSearchDto
 import com.example.taxi.data.dto.user.route.Location
 import com.example.taxi.data.dto.user.route.RouteSetting
 import com.example.taxi.databinding.FragmentCallTaxiBinding
+import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.call_taxi.setting.DestinationSearchListAdapter
 import com.example.taxi.utils.constant.KakaoApi
 import com.example.taxi.utils.constant.UiState
@@ -161,6 +162,7 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
                     //binding.progressBar.hide()
                     var str = ((state.data.toDouble()/1000.0) * 100.0).roundToInt() / 100.0
                     binding.textCallTaxiDistance.text = str.toString() +"Km"
+                    ApplicationClass.prefs.distance = str.toFloat()
                     getFee(str)
                 }
             }

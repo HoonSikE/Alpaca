@@ -324,10 +324,10 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
         taxiList.isEachInOperation = false
         callTaxiViewModel.updateTaxiList(taxiList)
         boardedTaxiList.add(BoardedTaxi(fee, ApplicationClass.prefs.destinationName.toString(),
-            ApplicationClass.prefs.startName.toString(), ApplicationClass.prefs.time!!.toInt(),
-            ApplicationClass.prefs.carImage.toString(), ApplicationClass.prefs.carName.toString(),
-            ApplicationClass.prefs.carNumber.toString(), ApplicationClass.prefs.cleanlinessAverage!!.toDouble(),
-            ApplicationClass.prefs.rideComfortAverage!!.toDouble()
+            ApplicationClass.prefs.startName.toString(), ApplicationClass.prefs.carImage.toString(),
+            ApplicationClass.prefs.carName.toString(), ApplicationClass.prefs.carNumber.toString(),
+            ApplicationClass.prefs.cleanlinessAverage!!.toDouble(), ApplicationClass.prefs.rideComfortAverage!!.toDouble(),
+            ApplicationClass.prefs.distance!!.toDouble()
         ))
         endDrivingViewModel.updateBoardedTaxiList(boardedTaxiList)
         var check = false
