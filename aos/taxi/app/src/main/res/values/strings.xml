@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">taxi</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_withdrawal_sub_text1">지금까지 \"알파카\"를 이용해주셔서\n감사합니다. 회원탈퇴하면 서비스 내 </string>
     <string name="user_withdrawal_sub_text2">계정 정보 및 탑승 내역이 삭제되고\n복구할 수 없습니다.</string>
