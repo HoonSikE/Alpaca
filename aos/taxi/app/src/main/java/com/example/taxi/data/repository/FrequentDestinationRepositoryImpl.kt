@@ -126,6 +126,42 @@ class FrequentDestinationRepositoryImpl(
             }
     }
 
+    override fun updateFavorites(favorites: List<Favorites>, result: (UiState<String>) -> Unit) {
+        val document = database.collection(FireStoreCollection.FAVORITES).document(ApplicationClass.userId)
+        document
+            .update("favorites",favorites)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success("Destination has been created successfully")
+                )
+                Log.d("updateFavorites", "Destination has been created successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateFavorites", "Destination has been created fail")
+            }
+    }
+
+    override fun deleteFavorites(result: (UiState<String>) -> Unit){
+        val document = database.collection(FireStoreCollection.FAVORITES).document(ApplicationClass.userId)
+        document.delete()
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success("User has been deleted successfully")
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
 
     override fun getLastDestination(result: (UiState<List<Destination>>) -> Unit) {
         database.collection(FireStoreCollection.LASTDESTINATION).document(ApplicationClass.userId)

@@ -36,6 +36,14 @@ class UserHomeViewModel @Inject constructor(
     val favorites: LiveData<UiState<List<Favorites>>>
         get() = _favorites
 
+    private val _updateFavorites = MutableLiveData<UiState<String>>()
+    val updateFavorites: LiveData<UiState<String>>
+        get() = _updateFavorites
+
+    private val _deleteFavorites = MutableLiveData<UiState<String>>()
+    val deleteFavorites: LiveData<UiState<String>>
+        get() = _deleteFavorites
+
     fun getDestinations() {
         _destinations.value = UiState.Loading
         repository.getDestination { _destinations.value = it }
@@ -59,5 +67,15 @@ class UserHomeViewModel @Inject constructor(
     fun getFavorites() {
         _favorites.value = UiState.Loading
         repository.getFavorites { _favorites.value = it }
+    }
+
+    fun updateFavorites(favorites: List<Favorites>) {
+        _updateFavorites.value = UiState.Loading
+        repository.updateFavorites(favorites) { _updateFavorites.value = it }
+    }
+
+    fun deleteFavorites() {
+        _deleteFavorites.value = UiState.Loading
+        repository.deleteFavorites { _deleteFavorites.value = it }
     }
 }
