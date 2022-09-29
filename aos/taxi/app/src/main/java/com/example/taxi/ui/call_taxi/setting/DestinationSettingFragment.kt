@@ -120,10 +120,10 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
         userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
@@ -132,7 +132,7 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
                     binding.textDestinationSettingNoContentDestination.show()
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     val list : MutableList<FrequentDestination> = state.data.toMutableList()
                     destinationListAdapter.updateList(list)
                     binding.recyclerviewDestinationSettingDestinationList.setBackgroundResource(R.drawable.layout_recycler)
@@ -144,10 +144,10 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
         userHomeViewModel.favorites.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
@@ -156,7 +156,7 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
                     binding.textDestinationSettingNoContentFavorites.show()
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     val list : MutableList<Favorites> = state.data.toMutableList()
                     favoritesAdapter.updateList(list)
                     binding.recyclerviewDestinationSettingFavorites.setBackgroundResource(R.drawable.layout_recycler)
@@ -215,7 +215,7 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
                 call: Call<DestinationSearchDto>,
                 response: Response<DestinationSearchDto>
             ) {
-                // 통신 성공 (검색 결과는 response.body()에 담겨있음)
+                //통신 성공 (검색 결과는 response.body()에 담겨있음)
                 Log.d("Test", "Raw: ${response.raw()}")
                 Log.d("Test", "Body: ${response.body()}")
                 if(response.body()!!.documents != null){

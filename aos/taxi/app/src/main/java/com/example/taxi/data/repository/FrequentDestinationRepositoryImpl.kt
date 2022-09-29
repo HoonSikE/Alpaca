@@ -126,12 +126,6 @@ class FrequentDestinationRepositoryImpl(
             }
     }
 
-    override fun addFavorites(
-        frequentDestination: FrequentDestination,
-        result: (UiState<Favorites>) -> Unit
-    ) {
-        TODO("Not yet implemented")
-    }
 
     override fun getLastDestination(result: (UiState<List<Destination>>) -> Unit) {
         database.collection(FireStoreCollection.LASTDESTINATION).document(ApplicationClass.userId)

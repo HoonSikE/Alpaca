@@ -52,17 +52,17 @@ class AssignedTaxiInformationFragment : BaseFragment<FragmentAssignedTaxiInforma
         userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     frequentDestination = state.data as MutableList<FrequentDestination>
                 }
             }
@@ -70,34 +70,34 @@ class AssignedTaxiInformationFragment : BaseFragment<FragmentAssignedTaxiInforma
         userHomeViewModel.updateDestinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                 }
             }
         }
         userHomeViewModel.lastDestinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     destination = state.data as MutableList<Destination>
                 }
             }
@@ -105,17 +105,17 @@ class AssignedTaxiInformationFragment : BaseFragment<FragmentAssignedTaxiInforma
         userHomeViewModel.updateLastDestinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                 }
             }
         }
