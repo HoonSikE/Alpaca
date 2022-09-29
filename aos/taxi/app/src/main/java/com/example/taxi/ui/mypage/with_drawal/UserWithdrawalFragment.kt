@@ -20,6 +20,9 @@ class UserWithdrawalFragment : BaseFragment<FragmentUserWithDrawalBinding>(R.lay
         setOnClickListeners()
     }
     private fun setOnClickListeners() {
+        binding.imgUserWithdrawalBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         binding.buttonUserWithdrawal.setOnClickListener{
             if(binding.switchUserWithdrawalSwitch.isChecked){
                 val dialog = UserWithDrawalDialogFragment()

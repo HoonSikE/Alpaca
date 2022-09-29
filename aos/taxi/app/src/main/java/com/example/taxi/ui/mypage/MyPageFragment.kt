@@ -61,6 +61,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun setOnClickListeners() {
+        binding.imageMyPageBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         binding.textUpdateUserInfo.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_updateUserInfoFragment)
         }

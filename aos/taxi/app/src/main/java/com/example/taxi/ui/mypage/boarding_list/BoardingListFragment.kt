@@ -38,6 +38,9 @@ class BoardingListFragment : BaseFragment<FragmentBoardingListBinding>(R.layout.
     }
 
     private fun observerData() {
+        binding.imgBoardingListBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         endDrivingViewModel.boardedTaxiList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {

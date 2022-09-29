@@ -18,6 +18,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/image_my_page_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:srcCompat="@drawable/ic_back_destination"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                app:tint="@color/primaryColor" />
+
             <TextView
                 style="@style/HeadBold"
                 android:textColor="@color/primaryColor"

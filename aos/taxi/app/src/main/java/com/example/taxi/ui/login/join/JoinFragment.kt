@@ -36,6 +36,9 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     }
 
     private fun setOnClickListeners(){
+        binding.imgJoinBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         binding.imageJoinUserImageButton.setOnClickListener{
             // Open Album
             var photoPickerInent = Intent(Intent.ACTION_PICK)

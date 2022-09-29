@@ -45,6 +45,9 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
     }
 
     private fun setOnClickListeners() {
+        binding.imgJoinBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         binding.imageUpdateUserImageButton.setOnClickListener{
             // Open Album
             var photoPickerInent = Intent(Intent.ACTION_PICK)
