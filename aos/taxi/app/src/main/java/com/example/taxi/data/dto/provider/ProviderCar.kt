@@ -6,14 +6,14 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ProviderCar (
-    var carNumber : String = "",
-    var rideComfortAverage : Double = 0.0,
     var carImage : String = "",
-    var position: Location = Location("",""),
+    var carNumber : String = "",
     var cleanlinessAverage : Double = 0.0,
     var deadLine: String = "",
     @field:JvmField
     var isEachDriving : Boolean = false,
     @field:JvmField
     var isEachInOperation : Boolean = false,
+    var position: Location = Location("",""),
+    var rideComfortAverage : Double = 0.0,
 ) : Parcelable
