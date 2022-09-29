@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.mypage.Favorites
@@ -74,10 +75,10 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
         userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
@@ -86,7 +87,10 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                     binding.textUserHomeNoContentDestination.show()
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
+                    Glide.with(requireContext())
+                        .load(ApplicationClass.prefs.profileImage)
+                        .into(binding.imageUserHomeProfile)
                     binding.textUserHomeName.text = ApplicationClass.prefs.name + "님, 안녕하세요"
                     binding.textUserHomeCount.text = ApplicationClass.prefs.useCount.toString() + "회"
                     setLevel()

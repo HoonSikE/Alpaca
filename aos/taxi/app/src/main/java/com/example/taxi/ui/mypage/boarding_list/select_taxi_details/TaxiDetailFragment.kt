@@ -36,7 +36,6 @@ class TaxiDetailFragment : BaseFragment<FragmentTaxiDetailBinding>(R.layout.frag
             binding.ratingBoardingTaxiDetailCleanliness.rating = boardedTaxi.cleanlinessAverage.toFloat()
             binding.textBoardingTaxiStart.text = boardedTaxi.StartingPoint
             binding.textBoardingTaxiDestination.text = boardedTaxi.Destination
-            binding.textBoardingTaxiTimeRequired.text = boardedTaxi.timeRequired
             binding.textBoardingTaxiDistance.text = boardedTaxi.distance.toString() + "km"
             binding.textBoardingTaxiCost.text = boardedTaxi.Cost.toString() + "원"
         }

@@ -74,11 +74,11 @@ class PreferenceUtil(context: Context) {
             }
         }
 
-    var time : Int?
-        get() = taxi.getInt(TIME, 0)
+    var distance : Float?
+        get() = taxi.getFloat(DISTANCE, 0.0F)
         set(value){
             if (value != null) {
-                taxi.edit().putInt(TIME, value).apply()
+                taxi.edit().putFloat(DISTANCE, value).apply()
             }
         }
 
