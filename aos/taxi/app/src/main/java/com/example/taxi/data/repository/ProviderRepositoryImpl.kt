@@ -1,6 +1,7 @@
 package com.example.taxi.data.repository
 
 import android.util.Log
+import androidx.core.net.toUri
 import com.example.taxi.data.dto.provider.Provider
 import com.example.taxi.data.dto.provider.ProviderCar
 import com.example.taxi.data.dto.provider.UserList
@@ -9,6 +10,7 @@ import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.UiState
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class ProviderRepositoryImpl(
     private val database: FirebaseFirestore
@@ -39,6 +41,53 @@ class ProviderRepositoryImpl(
             }
     }
 
+    override fun addProvider(provider: Provider, result: (UiState<Provider>) -> Unit){
+        if(provider.car?.carImage != ""){
+            var storage = FirebaseStorage.getInstance()
+            var imgFileName = ApplicationClass.prefs.providerId + ".png"
+
+            provider.car?.carImage?.let {
+                storage.getReference().child("provider_car_profiles").child(imgFileName)
+                    .putFile(it.toUri())//어디에 업로드할지 지정
+                    .addOnSuccessListener { taskSnapshot ->
+                        taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { it ->
+                            ApplicationClass.prefs.carImage = it.toString()
+                            provider.car?.carImage = it.toString()
+                            // firestore 업데이트
+                            database.collection(FireStoreCollection.PROVIDER)
+                                .document(ApplicationClass.prefs.providerId.toString())
+                                .set(provider)
+                                .addOnSuccessListener { task ->
+                                    result.invoke(UiState.Success(provider))
+                                }.addOnFailureListener { task ->
+                                    result.invoke(
+                                        UiState.Failure(
+                                            task.localizedMessage
+                                        )
+                                    )
+                                }
+                        }
+                    }.addOnFailureListener{
+                        Log.d("addImageUpLoad", "Image has been uploaded fail")
+                    }
+            }
+        }else{
+            val document = database.collection(FireStoreCollection.PROVIDER).document(ApplicationClass.prefs.providerId.toString())
+            document
+                .set(provider)
+//            .update("car",provider)
+                .addOnSuccessListener {
+                    result.invoke(UiState.Success(provider))
+                    Log.d("updateProvider", "Destination has been created successfully")
+                }
+                .addOnFailureListener {
+                    result.invoke(
+                        UiState.Failure(it.localizedMessage)
+                    )
+                    Log.d("updateProvider", "Destination has been created fail")
+                }
+        }
+    }
     override fun updateProvider(provider: ProviderCar, result: (UiState<ProviderCar>) -> Unit) {
         val document = database.collection(FireStoreCollection.PROVIDER).document(ApplicationClass.prefs.providerId.toString())
         document
