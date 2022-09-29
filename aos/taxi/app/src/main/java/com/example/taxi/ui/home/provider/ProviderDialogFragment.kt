@@ -15,9 +15,11 @@ import com.example.taxi.data.dto.provider.Provider
 import com.example.taxi.databinding.DlgProviderBinding
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.view.toast
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.bootpay.android.constants.BootpayConstant.confirm
 
-class ProviderDialogFragment() : DialogFragment() {
+@AndroidEntryPoint
+class ProviderDialogFragment(val confirm : () -> Unit) : DialogFragment() {
 
     private var _binding: DlgProviderBinding? = null
     private val binding get() = _binding!!
@@ -77,6 +79,7 @@ class ProviderDialogFragment() : DialogFragment() {
                 }
                 is UiState.Success -> {
                     Log.d("UiState.Success", "providerCar clear")
+                    confirm()
                     dismiss()
                 }
             }
@@ -88,11 +91,22 @@ class ProviderDialogFragment() : DialogFragment() {
         binding.buttonDlgProviderCancel.setOnClickListener { dismiss() }
         binding.buttonDlgProviderTimePicker.setOnTimeChangedListener{ timePicker, hour, minute -> // 오전 / 오후 를 확인하기 위한 if 문
             var hour = hour
+            var minuteString = ""
             if (hour > 12) {
                 hour -= 12
-                str = "PM $hour:$minute"
+                if(minute < 10){
+                    minuteString = "0$minute"
+                    str = "PM $hour:$minuteString"
+                }else{
+                    str = "PM $hour:$minute"
+                }
             } else {
-                str = "AM $hour:$minute"
+                if(minute < 10){
+                    minuteString = "0$minute"
+                    str = "AM $hour:$minuteString"
+                }else{
+                    str = "AM $hour:$minute"
+                }
             }
         }
     }

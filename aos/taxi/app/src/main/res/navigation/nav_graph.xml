@@ -19,6 +19,13 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"/>
         <action
+            android:id="@+id/action_userHomeFragment_to_providerHomeFragment"
+            app:destination="@id/providerHomeFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+        <action
             android:id="@+id/action_userHomeFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment"
             app:enterAnim="@anim/from_right"
@@ -76,13 +83,6 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"/>
         <action
-            android:id="@+id/action_loginFragment_to_findIDFragment"
-            app:destination="@id/findIDFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"/>
-        <action
             android:id="@+id/action_loginFragment_to_userHomeFragment"
             app:destination="@id/userHomeFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -98,13 +98,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             />
-        <action
-            android:id="@+id/action_loginFragment_to_choiceHomeFragment"
-            app:destination="@id/choiceHomeFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/joinFragment"
@@ -164,12 +157,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
-    <fragment
-        android:id="@+id/findIDFragment"
-        android:name="com.example.taxi.ui.find.id.FindIDFragment"
-        android:label="FindIDFragment"
-        tools:layout="@layout/fragment_find_id"
-        />
     <fragment
         android:id="@+id/findPWFragment"
         android:name="com.example.taxi.ui.find.pw.FindPWFragment"
@@ -579,28 +566,5 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/choiceHomeFragment"
-        android:name="com.example.taxi.ui.home.ChoiceHomeFragment"
-        android:label="ChoiceHomeFragment"
-        tools:layout="@layout/fragment_choice_home"
-        >
-        <action
-            android:id="@+id/action_choiceHomeFragment_to_userHomeFragment"
-            app:destination="@id/userHomeFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"
-            />
-        <action
-            android:id="@+id/action_choiceHomeFragment_to_providerHomeFragment"
-            app:destination="@id/providerHomeFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"
-            />
     </fragment>
 </navigation>

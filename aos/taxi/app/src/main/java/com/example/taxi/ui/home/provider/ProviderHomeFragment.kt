@@ -14,12 +14,11 @@ import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.provider.Provider
 import com.example.taxi.data.dto.provider.TaxiUser
 import com.example.taxi.data.dto.provider.UserList
-import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.databinding.FragmentProviderHomeBinding
 import com.example.taxi.di.ApplicationClass
-import com.example.taxi.ui.driving.start.StartDrivingLockDialogFragment
-import com.example.taxi.ui.home.user.FavoritesAdapter
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
@@ -53,16 +52,17 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
         providerViewModel.userList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     userList = state.data
                     initAdapter(state.data)
                 }
@@ -71,16 +71,17 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
         providerViewModel.provider.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     provider = state.data
                     initView()
                 }
@@ -89,16 +90,17 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
         providerViewModel.providerCar.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     Log.d("UiState.Success", "providerCar clear")
                 }
             }
@@ -109,6 +111,9 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
         binding.textProviderHomeDeadLine.setOnClickListener {
             showDialog()
             providerViewModel.getProvider()
+        }
+        binding.imageUserHomeBack.setOnClickListener {
+            requireActivity().onBackPressed()
         }
         binding.switchProviderHomeIsEachDriving.setOnCheckedChangeListener(
             CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
@@ -155,7 +160,11 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
     }
 
     private fun showDialog() {
-            ProviderDialogFragment().show(childFragmentManager, "ProviderDialogFragment")
+            ProviderDialogFragment(providerListener).show(childFragmentManager, "ProviderDialogFragment")
+    }
+
+    private val providerListener: () -> Unit = {
+        providerViewModel.getProvider()
     }
 
 }
