@@ -25,8 +25,8 @@ class BoardingListFragment : BaseFragment<FragmentBoardingListBinding>(R.layout.
     private lateinit var boardingListAdapter: BoardingListAdapter
     private lateinit var boardedTaxiList: BoardedTaxiList
 
-    private val onClickListener: (View, Int) -> Unit = { _, idx ->
-        findNavController().navigate(R.id.action_boardingListFragment_to_taxiDetailFragment, bundleOf("BoardedTaxi" to boardedTaxiList.taxiList[idx], "index" to idx))
+    private val onClickListener: (View, Int) -> Unit = { _, index ->
+        findNavController().navigate(R.id.action_boardingListFragment_to_taxiDetailFragment, bundleOf("BoardedTaxi" to boardedTaxiList.taxiList[index], "index" to index))
     }
 
     override fun init() {

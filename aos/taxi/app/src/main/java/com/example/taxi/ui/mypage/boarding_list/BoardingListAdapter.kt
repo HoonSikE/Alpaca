@@ -59,7 +59,7 @@ class BoardingListAdapter: RecyclerView.Adapter<BoardingListAdapter.BoaredTaxiLi
                     .load(R.drawable.img_car)
                     .into(binding.imageMyPageBoardTaxi)
             }
-            binding.textMyPageBoardTaxiNumber2.text = data.carNumber
+            binding.textMyPageBoardTaxiNumber.text = data.carNumber
             binding.ratingMyPageBoardTaxiRideComfort.rating = data.rideComfortAverage.toFloat()
             binding.ratingMyPageBoardTaxiCleanliness.rating = data.cleanlinessAverage.toFloat()
         }

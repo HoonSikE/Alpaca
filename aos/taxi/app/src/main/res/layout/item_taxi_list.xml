@@ -41,43 +41,43 @@
 
                 <ImageView
                     android:id="@+id/image_my_page_board_taxi_label"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_number1"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_number1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/image_my_page_board_taxi"
                     app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi"
                     app:srcCompat="@drawable/ic_taxi_number" />
 
                 <TextView
-                    android:id="@+id/text_my_page_board_taxi_number1"
+                    android:id="@+id/text_my_page_board_taxi_number_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="택시 번호 : "
-                    android:paddingLeft="8dp"
-                    android:layout_marginTop="8dp"
                     style="@style/SubHead"
-                    app:layout_constraintTop_toTopOf="@+id/image_my_page_board_taxi"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/image_my_page_board_taxi_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_my_page_board_taxi_label"
                     app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi_label"
                     />
 
                 <TextView
-                    android:id="@+id/text_my_page_board_taxi_number2"
+                    android:id="@+id/text_my_page_board_taxi_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12가 1234"
                     style="@style/SubHead"
-                    app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_number1"
-                    app:layout_constraintStart_toEndOf="@+id/text_my_page_board_taxi_number1"
+                    app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_number_label"
+                    app:layout_constraintStart_toEndOf="@+id/text_my_page_board_taxi_number_label"
                     />
 
-                <ImageView
+<!--                <ImageView
                     android:id="@+id/image_my_page_board_taxi_ride_comfort_label"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_ride_comfort"
                     app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_ride_comfort"
                     app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi"
-                    app:srcCompat="@drawable/ic_taxi_comfort" />
+                    app:srcCompat="@drawable/ic_taxi_comfort" />-->
 
                 <TextView
                     android:id="@+id/text_my_page_board_taxi_ride_comfort"
@@ -88,7 +88,7 @@
                     style="@style/SubHead"
                     app:layout_constraintTop_toTopOf="@+id/image_my_page_board_taxi"
                     app:layout_constraintBottom_toBottomOf="@+id/image_my_page_board_taxi"
-                    app:layout_constraintStart_toStartOf="@+id/text_my_page_board_taxi_number1"
+                    app:layout_constraintStart_toStartOf="@+id/image_my_page_board_taxi_label"
                     />
 
                 <RatingBar
@@ -105,14 +105,14 @@
                     android:layout_marginLeft="4dp"
                     />
 
-                <ImageView
+<!--                <ImageView
                     android:id="@+id/image_my_page_board_taxi_cleanliness_label"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_cleanliness"
                     app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_cleanliness"
                     app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi"
-                    app:srcCompat="@drawable/ic_taxi_clean" />
+                    app:srcCompat="@drawable/ic_taxi_clean" />-->
 
                 <TextView
                     android:id="@+id/text_my_page_board_taxi_cleanliness"
@@ -122,7 +122,7 @@
                     android:paddingLeft="8dp"
                     style="@style/SubHead"
                     app:layout_constraintBottom_toBottomOf="@+id/image_my_page_board_taxi"
-                    app:layout_constraintStart_toStartOf="@+id/text_my_page_board_taxi_number1"
+                    app:layout_constraintStart_toStartOf="@+id/image_my_page_board_taxi_label"
                     />
 
                 <RatingBar
