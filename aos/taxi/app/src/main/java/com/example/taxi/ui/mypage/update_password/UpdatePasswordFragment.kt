@@ -30,6 +30,9 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(R.lay
         }
     }
     private fun observerData() {
+        binding.imgUserPasswordUpdateBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         authViewModel.reauthPassword.observe(viewLifecycleOwner){ state ->
             when(state){
                 is UiState.Loading -> {

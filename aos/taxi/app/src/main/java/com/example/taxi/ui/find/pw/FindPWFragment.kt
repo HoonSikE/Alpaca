@@ -29,6 +29,9 @@ class FindPWFragment : BaseFragment<FragmentFindPwBinding>(R.layout.fragment_fin
     }
 
     private fun observerData() {
+        binding.imgFindPwBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         authViewModel.forgotPassword.observe(viewLifecycleOwner){ state ->
             when(state) {
                 is UiState.Loading -> {

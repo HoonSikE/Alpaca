@@ -132,6 +132,12 @@ dependencies {
     // Recyclerview
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+
+    //SwitchButton
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
+    // Bootpay
+    implementation 'io.github.bootpay:android:4.0.8'
 }
 
 kapt {

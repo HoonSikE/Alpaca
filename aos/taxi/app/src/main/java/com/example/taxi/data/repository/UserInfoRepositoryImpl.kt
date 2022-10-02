@@ -1,9 +1,14 @@
 package com.example.taxi.data.repository
 
+import android.net.Uri
 import android.util.Log
 import androidx.core.net.toUri
+import com.example.taxi.data.dto.common.InsideCarList
+import com.example.taxi.data.dto.common.PhotoList
 import com.example.taxi.data.dto.user.User
 import com.example.taxi.data.dto.user.address_info.AddressInfo
+import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
+import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxiList
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.UiState
@@ -11,7 +16,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfoRepository{
-//class UserInfoRepositoryImpl(private val database: FirebaseFirestore, private val storage: FirebaseStorage) : UserInfoRepository{
     override fun getAddressInfo(result: (UiState<AddressInfo>) -> Unit) {
         database.collection(FireStoreCollection.USERADDRESSINFO).document(ApplicationClass.prefs.userSeq.toString())
             .get()
@@ -61,12 +65,25 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
         var storage = FirebaseStorage.getInstance()
         var imgFileName = user.userSeq + ".png"
 
-        //ApplicationClass.prefs?.profileImage = user.profileImage
-
-        storage.getReference().child("user_profiles").child(imgFileName)
+        storage.reference.child("user_profiles").child(imgFileName)
             .putFile(user.profileImage.toUri())//어디에 업로드할지 지정
-            .addOnSuccessListener {
-                Log.d("addImageUpLoad", "Image has been uploaded successfully")
+            .addOnSuccessListener { taskSnapshot ->
+                taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { it ->
+                    ApplicationClass.prefs.profileImage = it.toString()
+                    // firestore 업데이트
+                    database.collection(FireStoreCollection.USER)
+                        .document(ApplicationClass.prefs.userSeq.toString())
+                        .update("profileImage", it)
+                        .addOnCompleteListener { task ->
+                            Log.d("addImageUpLoad", "Image has been uploaded success")
+                        }.addOnFailureListener { task ->
+                            result.invoke(
+                                UiState.Failure(
+                                    task.localizedMessage
+                                )
+                            )
+                        }
+                }
             }.addOnFailureListener{
                 Log.d("addImageUpLoad", "Image has been uploaded fail")
             }
@@ -110,15 +127,180 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
     }
 
     override fun deleteImage(result: (UiState<String>) -> Unit){
-        var storage = FirebaseStorage.getInstance()
-        var imgFileName = ApplicationClass.prefs.userSeq.toString() + ".png"
+        if(ApplicationClass.prefs.profileImage != "") {
+            var storage = FirebaseStorage.getInstance()
+            var imgFileName = ApplicationClass.prefs.userSeq.toString() + ".png"
 
-        storage.getReference().child("user_profiles").child(imgFileName)
-            .delete()
+            storage.reference.child("user_profiles").child(imgFileName)
+                .delete()
+                .addOnSuccessListener {
+                    Log.d("addImageUpLoad", "Image has been uploaded successfully")
+                }.addOnFailureListener {
+                    Log.d("addImageUpLoad", "Image has been uploaded fail")
+                    storage.getReference().child("user_profiles").child(imgFileName)
+                        .delete()
+                        .addOnSuccessListener {
+                            Log.d("addImageUpLoad", "Image has been uploaded successfully")
+                        }.addOnFailureListener {
+                            Log.d("addImageUpLoad", "Image has been uploaded fail")
+                        }
+
+                    if (ApplicationClass.prefs.isEachProvider == true) {
+                        if (ApplicationClass.prefs.carImage != "") {
+                            var storage = FirebaseStorage.getInstance()
+                            var imgFileName = ApplicationClass.prefs.providerId.toString() + ".png"
+
+                            storage.getReference().child("provider_car_profiles").child(imgFileName)
+                                .delete()
+                                .addOnSuccessListener {
+                                    Log.d("addImageUpLoad", "Image has been uploaded successfully")
+                                }.addOnFailureListener {
+                                    Log.d("addImageUpLoad", "Image has been uploaded fail")
+                                }
+                        }
+                    }
+                }
+        }
+    }
+    override fun getBoardedTaxiList(result: (UiState<BoardedTaxiList>) -> Unit) {
+        database.collection(FireStoreCollection.BOARDEDTAXILIST).document(ApplicationClass.userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+//                    val map = document.toObject(Map::class.java)
+                    val boardedTaxiList = document.toObject(BoardedTaxiList::class.java)
+                    if(boardedTaxiList != null){
+                        result.invoke(
+                            UiState.Success(boardedTaxiList)
+                        )
+                    }
+                }else {
+                    Log.d("getBoardedTaxiList", "No such document")
+                }
+
+            }
+            .addOnFailureListener {
+                Log.d("getBoardedTaxiList", "Fail get document")
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
+
+    override fun updateBoardedTaxiList(boardedTaxi: List<BoardedTaxi>, result: (UiState<List<BoardedTaxi>>) -> Unit){
+        val document = database.collection(FireStoreCollection.BOARDEDTAXILIST).document(ApplicationClass.userId)
+        document.update("taxiList", boardedTaxi)
             .addOnSuccessListener {
-                Log.d("addImageUpLoad", "Image has been uploaded successfully")
-            }.addOnFailureListener{
+                result.invoke(
+                    UiState.Success(boardedTaxi)
+                )
+                Log.d("updateBoardedTaxiList", "BoardedTaxiList has been updated successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateBoardedTaxiList", "BoardedTaxiList has been updated fail")
+            }
+    }
+
+    override fun getInsideCarList(result: (UiState<InsideCarList>) -> Unit) {
+        database.collection(FireStoreCollection.INSIDECARLIST).document(ApplicationClass.userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+//                    val map = document.toObject(Map::class.java)
+                    val insideCarList = document.toObject(InsideCarList::class.java)
+                    if(insideCarList != null){
+                        result.invoke(
+                            UiState.Success(insideCarList)
+                        )
+                    }
+                }else {
+                    Log.d("getInsideCarList", "No such document")
+                }
+
+            }
+            .addOnFailureListener {
+                Log.d("getInsideCarList", "Fail get document")
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
+
+    override fun addImageListUpLoad(count: Int, chk: Boolean, photoList: List<PhotoList>, result: (UiState<String>) -> Unit) {
+        var storage = FirebaseStorage.getInstance()
+        var list : MutableList<String> = mutableListOf()
+        var cnt = 0
+        for(i in photoList){
+            if(i.carNumber == ApplicationClass.prefs.carNumber){
+                if(chk){
+                    for(j in 0 until i.start.size){
+                        var imgFileName = ApplicationClass.userId + ApplicationClass.prefs.carNumber + j.toString() + ".png"
+                        storage.reference.child("insideCarList").child(imgFileName)
+                            .putFile(i.start[j].toUri())//어디에 업로드할지 지정
+                            .addOnSuccessListener { taskSnapshot ->
+                                taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { it ->
+                                    list.add(it.toString())
+                                    cnt++
+                                    if(cnt == count){
+                                        addList(list, photoList,chk)
+                                    }
+                                }
+                            }.addOnFailureListener{
+                                Log.d("addImageUpLoad", "Image has been uploaded fail")
+                            }
+                    }
+
+                }else{
+                    for(j in 0 until i.end.size){
+                        var imgFileName = ApplicationClass.userId + ApplicationClass.prefs.carNumber + j.toString() + ".png"
+                        storage.reference.child("insideCarList").child(imgFileName)
+                            .putFile(i.end[j].toUri())//어디에 업로드할지 지정
+                            .addOnSuccessListener { taskSnapshot ->
+                                taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { it ->
+                                    list.add(it.toString())
+                                    cnt++
+                                    if(cnt == count){
+                                        addList(list, photoList,chk)
+                                    }
+                                }
+                            }.addOnFailureListener{
+                                Log.d("addImageUpLoad", "Image has been uploaded fail")
+                            }
+                    }
+                }
+                break
+            }
+        }
+        UiState.Success("Image has been uploaded success")
+    }
+
+    fun addList(list : MutableList<String>, photoList: List<PhotoList>, chk: Boolean) {
+        for(i in photoList) {
+            if (i.carNumber == ApplicationClass.prefs.carNumber) {
+                if(chk){
+                    i.start = list
+                }else{
+                    i.end = list
+                }
+            }
+        }
+        database.collection(FireStoreCollection.INSIDECARLIST)
+            .document(ApplicationClass.userId)
+            .update("photoList", photoList)
+            .addOnCompleteListener { task ->
+                Log.d("addImageUpLoad", "Image has been uploaded success")
+            }.addOnFailureListener { task ->
                 Log.d("addImageUpLoad", "Image has been uploaded fail")
             }
+
     }
 }

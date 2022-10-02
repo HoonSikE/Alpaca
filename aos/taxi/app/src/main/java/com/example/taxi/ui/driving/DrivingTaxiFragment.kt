@@ -11,7 +11,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -26,6 +28,8 @@ import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.call_taxi.CallTaxiViewModel
 import com.example.taxi.ui.call_taxi.location.MarkerInfoAdapter
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -44,13 +48,14 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     OnMapReadyCallback {
 
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
-    var checkState = true
+    var distance = 0
     private var naverMap: NaverMap? = null
     private var uiSettings: UiSettings? = null
     private var markers = mutableListOf<Marker>()
     private var paths = mutableListOf<PathOverlay>()
     private var infoWindow = InfoWindow()
     private var rootView: ViewGroup? = null
+    private var fee = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,7 +68,6 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     }
 
     override fun init() {
-        //TODO : 도착지에 도착하면 endDrivingTaxiFragment로 이동
         initView()
         observerData()
     }
@@ -79,17 +83,17 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         callTaxiViewModel.routeSetting.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     toast("경로를 설정 중입니다. 잠시만 기다려 주세요.")
                     callTaxiViewModel.getRoute()
                 }
@@ -98,17 +102,17 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         callTaxiViewModel.route.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     val json = requireActivity().assets.open("node_set.json").reader().readText()
                     val node = JSONObject(json)
                     val location = mutableListOf<Location>()
@@ -126,17 +130,21 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         callTaxiViewModel.currentLocation.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
+                    distance = state.data.dis.toInt()
+                        if(distance < 30){
+                        arrivalDestination()
+                    }
                     updateMarker(state.data)
                 }
             }
@@ -152,7 +160,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         binding.textDrivingTaxiDistance.text = str.toString() +"Km"
         infoWindow.adapter = rootView?.let {
             MarkerInfoAdapter(requireContext(),
-                it, str.toString()+"Km", location.time)
+                it, str.toString()+"Km", location.time.toString()+"분")
         }!!
         infoWindow.open(markers[markers.lastIndex])
         naverMap?.moveCamera(
@@ -341,15 +349,20 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         var distance = distance
         val numberFormat: NumberFormat = NumberFormat.getInstance()
         if(distance <= 3){
-            val str = numberFormat.format(3000)
-            binding.textDrivingTaxiFee.text = str + " 원"
+            var feeNum = numberFormat.format(3000)
+            binding.textDrivingTaxiFee.text = feeNum + " 원"
         }else{
             distance -= 3
             var res = distance/0.16
-            var fee = 3000 + (res.toInt()*100)
-            val str = numberFormat.format(fee)
-            binding.textDrivingTaxiFee.text = str + " 원"
+            fee = 3000 + (res.toInt()*100)
+            var feeNum = numberFormat.format(fee)
+            binding.textDrivingTaxiFee.text = feeNum + " 원"
         }
+    }
+
+    private fun arrivalDestination(){
+        ApplicationClass.prefs.fee = fee
+        findNavController().navigate(R.id.action_drivingTaxiFragment_to_endDrivingTaxiFragment)
     }
 
 }

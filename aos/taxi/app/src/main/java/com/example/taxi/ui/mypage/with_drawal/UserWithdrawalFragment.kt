@@ -20,13 +20,17 @@ class UserWithdrawalFragment : BaseFragment<FragmentUserWithDrawalBinding>(R.lay
         setOnClickListeners()
     }
     private fun setOnClickListeners() {
+        binding.imgUserWithdrawalBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         binding.buttonUserWithdrawal.setOnClickListener{
             if(binding.switchUserWithdrawalSwitch.isChecked){
-                val dialog = DialogUserWithDrawalFragment()
+                val dialog = UserWithDrawalDialogFragment()
                 dialog.setOnOKClickedListener { content ->
                     authViewModel.deleteUserInfo{}
-//                    updateUserInfoViewModel.deleteImage{}
-//                    updateUserInfoViewModel.deleteUserAddress{}
+                    updateUserInfoViewModel.deleteImage{}
+                    updateUserInfoViewModel.deleteUserAddress{}
+
                     authViewModel.withDrawal {
                         toast("회원탈퇴가 완료되었습니다.")
                         findNavController().navigate(R.id.action_userWithdrawalFragment_to_loginFragment)

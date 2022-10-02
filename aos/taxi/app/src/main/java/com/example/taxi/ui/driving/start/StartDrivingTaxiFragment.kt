@@ -1,13 +1,23 @@
 package com.example.taxi.ui.driving.start
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
+import com.example.taxi.data.dto.common.InsideCarList
+import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
 import com.example.taxi.databinding.FragmentStartDrivingTaxiBinding
 import com.example.taxi.di.ApplicationClass
+import com.example.taxi.ui.driving.end.EndDrivingViewModel
 import com.example.taxi.ui.home.user.FavoritesDialogFragment
+import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
+import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,11 +53,10 @@ class StartDrivingTaxiFragment : BaseFragment<FragmentStartDrivingTaxiBinding>(R
             }
         }
         binding.buttonStartDrivingTaxiPhoto.setOnClickListener {
-            findNavController().navigate(R.id.action_startDrivingTaxiFragment_to_DrivingTaxiCheckFragment)
+            findNavController().navigate(R.id.action_startDrivingTaxiFragment_to_DrivingTaxiCheckFragment, bundleOf("checkState" to true))
         }
         binding.buttonStartDrivingTaxiStart.setOnClickListener {
-            //사진 다 넣었는지 확인하기
-            //TODO : DrivingTaxiFragment로 이동
+            findNavController().navigate(R.id.action_startDrivingTaxiFragment_to_drivingTaxiFragment)
         }
     }
 

@@ -1,31 +1,29 @@
-package com.example.taxi.ui.mypage.with_drawal
+package com.example.taxi.ui.login.join
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
-import com.example.taxi.databinding.DialogWithDrawalBinding
-import com.example.taxi.ui.login.AuthViewModel
-import com.example.taxi.utils.view.toast
+import com.example.taxi.databinding.DlgEmailVerificationBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DialogUserWithDrawalFragment() : DialogFragment() {
-    private var _binding: DialogWithDrawalBinding? = null
+class EmailVerficationDialogFragment(val email: String) : DialogFragment() {
+    private var _binding: DlgEmailVerificationBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var listener : DialogWithDrawalOKClickedListener
-
+    private lateinit var listener : EmailVerficationDialogOKClickedListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = DialogWithDrawalBinding.inflate(inflater, container, false)
+        _binding = DlgEmailVerificationBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.textDlgEmailVerfication1.text = email
+
         //ok 버튼 동작
-        binding.buttonDialogUserWithDrawal.setOnClickListener {
-            listener.onOKClicked(binding.buttonDialogUserWithDrawal.text.toString())
+        binding.buttonDlgEmailVerfication.setOnClickListener {
+            listener.onOKClicked(binding.buttonDlgEmailVerfication.text.toString())
             dismiss()
         }
         return view
@@ -36,12 +34,12 @@ class DialogUserWithDrawalFragment() : DialogFragment() {
         _binding = null
     }
 
-    interface DialogWithDrawalOKClickedListener {
+    interface EmailVerficationDialogOKClickedListener {
         fun onOKClicked(content : String)
     }
 
     fun setOnOKClickedListener(listener: (String) -> Unit) {
-        this.listener = object: DialogWithDrawalOKClickedListener {
+        this.listener = object: EmailVerficationDialogOKClickedListener {
             override fun onOKClicked(content: String) {
                 listener(content)
             }

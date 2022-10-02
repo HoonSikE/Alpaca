@@ -69,9 +69,11 @@
 
         <TextView
             android:id="@+id/text_driving_taxi_address"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="현재주소를 나타냄"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             style="@style/BodySemiBoldWhite"
@@ -146,6 +148,17 @@
             app:layout_constraintTop_toBottomOf="@+id/image_driving_taxi_car"
             app:layout_constraintEnd_toEndOf="@id/back_driving_taxi"
             />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/black"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

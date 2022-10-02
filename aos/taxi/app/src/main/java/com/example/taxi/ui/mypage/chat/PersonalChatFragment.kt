@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.fragment_personal_chat) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 
 }

@@ -43,11 +43,17 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun userInfoRepository(
+    fun provideProviderRepository(
         database: FirebaseFirestore
-//        storage: FirebaseStorage
+    ): ProviderRepository {
+        return ProviderRepositoryImpl(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserInfoRepository(
+        database: FirebaseFirestore
     ) : UserInfoRepository{
         return UserInfoRepositoryImpl(database)
-//        return UserInfoRepositoryImpl(database, storage)
     }
 }

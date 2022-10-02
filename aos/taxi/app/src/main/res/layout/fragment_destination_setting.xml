@@ -43,10 +43,10 @@
             android:layout_marginTop="22dp"
             android:layout_marginStart="16dp"
             android:hint="출발지 입력"
-            android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@+id/image_destination_setting_back"
             app:layout_constraintTop_toTopOf="@+id/view_destination_setting"
             android:text=""
+            android:ellipsize="end"
             android:maxLines="1"
             android:elevation="10dp"
             />
@@ -212,6 +212,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_destination_setting_destination_list" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/black"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

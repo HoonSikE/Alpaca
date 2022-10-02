@@ -10,18 +10,25 @@ const val HOME = "home"
 const val COMPANY = "company"
 const val CARNUMBER = "carNumber"
 const val RIDECOMFORTAVERAGE= "rideComfortAverage"
+const val FEE = "Fee"
+const val DISTANCE = "distance"
+const val MILEAGE = "Mileage"
 const val CARIMAGE = "carImage"
 const val CARNAME = "carName"
 const val LATITUDE = "latitude"
 const val LONGITUDE = "longitude"
 const val CLEANLINESSAVERAGE = "cleanlinessAverage"
 const val ISEACHDRIVING = "isEachDriving"
+const val ISEACHPROVIDER = "isEachProvider"
 const val ISEACHINOPERATION = "isEachInOperation"
 const val PROVIDERID = "providerId"
 const val DESTINATIONLATITUDE = "destinationLatitude"
 const val DESTINATIONLONGITUDE = "destinationLongitude"
+const val DESTINATIONNAME = "destinationName"
+const val DESTINATIONADDRESS = "destinationAddress"
 const val STARTLATITUDE = "startLatitude"
 const val STARTLONGITUDE = "startLongitude"
+const val STARTNAME = "startName"
 
 /**
  * 출발전 / 도착 후 상태
@@ -31,14 +38,19 @@ const val END = 91
 
 object FireStoreCollection{
     val DESTINATION = "Destination"
+    val LASTDESTINATION = "LastDestination"
     val FAVORITES = "Favorites"
     val USER = "User"
+    val INSIDECARLIST = "InsideCarList"
     val USERADDRESSINFO = "UserAddressInfo"
     val ROUTE = "Route"
     val ROUTESETTING = "RouteSetting"
     val TAXILIST = "TaxiList"
     val DISTANCE = "Distance"
     val CURRENTLOCATION = "CurrentLocation"
+    val USERLIST = "UserList"
+    val PROVIDER = "Provider"
+    val BOARDEDTAXILIST = "BoardedTaxiList"
 }
 
 object FireStoreDocumentField {

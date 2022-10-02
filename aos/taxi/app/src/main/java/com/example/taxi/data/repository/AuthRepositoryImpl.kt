@@ -3,6 +3,7 @@ package com.example.taxi.data.repository
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.net.toUri
 import com.example.taxi.data.dto.user.User
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.FireStoreCollection
@@ -10,6 +11,7 @@ import com.example.taxi.utils.constant.SharedPrefConstants
 import com.example.taxi.utils.constant.UiState
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 
 
@@ -73,25 +75,54 @@ class AuthRepositoryImpl(
     }
 
     override fun updateUserInfo(user: User, result: (UiState<String>) -> Unit) {
-        val document = database.collection(FireStoreCollection.USER).document(user.userSeq)
-        document
-            .set(user)
-            .addOnSuccessListener {
-                result.invoke(
-                    UiState.Success("User has been update successfully")
-                )
-            }
-            .addOnFailureListener {
-                result.invoke(
-                    UiState.Failure(
-                        it.localizedMessage
+        if(user.profileImage != "") {
+            var storage = FirebaseStorage.getInstance()
+            var imgFileName = user.userSeq + ".png"
+
+            storage.getReference().child("user_profiles").child(imgFileName)
+                .putFile(user.profileImage.toUri())//어디에 업로드할지 지정
+                .addOnSuccessListener { taskSnapshot ->
+                    taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { it ->
+                        ApplicationClass.prefs.profileImage = it.toString()
+                        user.profileImage = it.toString()
+                        // firestore 업데이트
+                        database.collection(FireStoreCollection.USER)
+                            .document(user.userSeq)
+                            .set(user)
+                            .addOnSuccessListener { task ->
+                                result.invoke(
+                                    UiState.Success("User has been update successfully")
+                                )
+                            }.addOnFailureListener { task ->
+                                result.invoke(
+                                    UiState.Failure(
+                                        task.localizedMessage
+                                    )
+                                )
+                            }
+                    }
+                }.addOnFailureListener {
+                    Log.d("addImageUpLoad", "Image has been uploaded fail")
+                }
+        }else{
+            database.collection(FireStoreCollection.USER)
+                .document(user.userSeq)
+                .set(user)
+                .addOnSuccessListener { task ->
+                    result.invoke(
+                        UiState.Success("User has been update successfully")
                     )
-                )
-            }
+                }.addOnFailureListener { task ->
+                    result.invoke(
+                        UiState.Failure(
+                            task.localizedMessage
+                        )
+                    )
+                }
+        }
     }
 
     override fun loginUser(email: String, password: String, result: (UiState<String>) -> Unit) {
-
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -192,7 +223,7 @@ class AuthRepositoryImpl(
     }
 
     override fun deleteUserInfo(result: (UiState<String>) -> Unit) {
-        val document = database.collection(FireStoreCollection.USER).document(ApplicationClass.prefs.userSeq.toString())
+        var document = database.collection(FireStoreCollection.USER).document(ApplicationClass.prefs.userSeq.toString())
         document.delete()
             .addOnSuccessListener {
                 result.invoke(
@@ -206,5 +237,22 @@ class AuthRepositoryImpl(
                     )
                 )
             }
+
+        if(ApplicationClass.prefs.isEachProvider == true){
+            document = database.collection(FireStoreCollection.PROVIDER).document(ApplicationClass.prefs.providerId.toString())
+            document.delete()
+                .addOnSuccessListener {
+                    result.invoke(
+                        UiState.Success("User has been deleted successfully")
+                    )
+                }
+                .addOnFailureListener {
+                    result.invoke(
+                        UiState.Failure(
+                            it.localizedMessage
+                        )
+                    )
+                }
+        }
     }
 }

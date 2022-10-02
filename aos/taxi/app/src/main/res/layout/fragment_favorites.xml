@@ -8,7 +8,103 @@
         android:layout_height="match_parent">
 
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_favorites"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/img_favorites_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="3dp"
+                android:src="@drawable/ic_back"
+                app:tint="@color/black" />
+
+            <TextView
+                style="@style/SubHeadBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="즐겨찾기 수정"
+                android:layout_gravity="center_vertical"/>
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <TextView
+            android:id="@+id/text_favorites_search_label"
+            style="@style/SubHeadSemiBoldPrimaryColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="주소 검색"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="@+id/search_favorites_search"
+            app:layout_constraintBottom_toBottomOf="@+id/search_favorites_search"
+            app:layout_constraintStart_toStartOf="@+id/toolbar_favorites"/>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_favorites_search"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:elevation="10dp"
+            app:defaultQueryHint="검색 주소를 입력해주세요."
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@drawable/search_regular"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_favorites"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_favorites"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="8dp"
+            android:elevation="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_favorites_search"
+            app:layout_constraintBottom_toTopOf="@+id/button_favorites_update"
+            />
+
+        <TextView
+            android:id="@+id/text_noContent_favorites"
+            style="@style/SubHeadSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="등록된 즐겨찾기 주소가 없습니다.\n 자주가는 장소를 즐겨찾기 해보세요!"
+            android:textColor="@color/primaryColor"
+            android:visibility="gone"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_favorites_update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerview_favorites" />
+
+        <!--button-->
+        <Button
+            android:id="@+id/button_favorites_update"
+            style="@style/Body"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_regular"
+            android:text="추가하기"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

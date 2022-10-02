@@ -22,6 +22,18 @@ class PreferenceUtil(context: Context) {
             destination.edit().putString(DESTINATIONLONGITUDE, value).apply()
         }
 
+    var destinationName : String?
+        get() = destination.getString(DESTINATIONNAME, null)
+        set(value){
+            destination.edit().putString(DESTINATIONNAME, value).apply()
+        }
+
+    var destinationAddress : String?
+        get() = destination.getString(DESTINATIONADDRESS, null)
+        set(value){
+            destination.edit().putString(DESTINATIONADDRESS, value).apply()
+        }
+
     var startLatitude : String?
         get() = destination.getString(STARTLATITUDE, null)
         set(value){
@@ -32,6 +44,12 @@ class PreferenceUtil(context: Context) {
         get() = destination.getString(STARTLONGITUDE, null)
         set(value){
             destination.edit().putString(STARTLONGITUDE, value).apply()
+        }
+
+    var startName : String?
+        get() = destination.getString(STARTNAME, null)
+        set(value){
+            destination.edit().putString(STARTNAME, value).apply()
         }
 
     var carNumber : String?
@@ -45,6 +63,22 @@ class PreferenceUtil(context: Context) {
         set(value){
             if (value != null) {
                 taxi.edit().putFloat(RIDECOMFORTAVERAGE, value).apply()
+            }
+        }
+
+    var fee : Int?
+        get() = taxi.getInt(FEE, 0)
+        set(value){
+            if (value != null) {
+                taxi.edit().putInt(FEE, value).apply()
+            }
+        }
+
+    var distance : Float?
+        get() = taxi.getFloat(DISTANCE, 0.0F)
+        set(value){
+            if (value != null) {
+                taxi.edit().putFloat(DISTANCE, value).apply()
             }
         }
 
@@ -134,6 +168,14 @@ class PreferenceUtil(context: Context) {
         get() = prefs.getString(USER_SEQ, null)
         set(value) {
             prefs.edit().putString(USER_SEQ, value).apply()
+        }
+
+    var isEachProvider : Boolean?
+        get() = prefs.getBoolean(ISEACHPROVIDER, false)
+        set(value){
+            if (value != null) {
+                prefs.edit().putBoolean(ISEACHPROVIDER, value).apply()
+            }
         }
 
 }

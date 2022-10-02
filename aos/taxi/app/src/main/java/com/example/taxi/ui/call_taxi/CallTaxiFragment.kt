@@ -20,9 +20,12 @@ import com.example.taxi.data.dto.user.destination.DestinationSearchDto
 import com.example.taxi.data.dto.user.route.Location
 import com.example.taxi.data.dto.user.route.RouteSetting
 import com.example.taxi.databinding.FragmentCallTaxiBinding
+import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.call_taxi.setting.DestinationSearchListAdapter
 import com.example.taxi.utils.constant.KakaoApi
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -80,7 +83,6 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
     }
 
     override fun init() {
-        //TODO : 선불이면 Bootpay 처리
         initData()
         observerData()
         setOnClickListeners()
@@ -101,17 +103,17 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
         callTaxiViewModel.routeSetting.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     toast("경로를 설정 중입니다. 잠시만 기다려 주세요.")
                     callTaxiViewModel.getRoute()
                 }
@@ -120,17 +122,17 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
         callTaxiViewModel.route.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     val json = requireActivity().assets.open("node_set.json").reader().readText()
                     val node = JSONObject(json)
                     val location = mutableListOf<Location>()
@@ -149,19 +151,20 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
         callTaxiViewModel.distance.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     var str = ((state.data.toDouble()/1000.0) * 100.0).roundToInt() / 100.0
                     binding.textCallTaxiDistance.text = str.toString() +"Km"
+                    ApplicationClass.prefs.distance = str.toFloat()
                     getFee(str)
                 }
             }
@@ -231,7 +234,6 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
             height = requireContext().getPxFromDp(40f)  // 마커 세로 크기
             zIndex = 0  // 마커 높이
             onClickListener = Overlay.OnClickListener {     // 마커 클릭 리스너
-                // todo: location_seq 이용해서 트립스탬프 상세화면으로 이동
                 return@OnClickListener true
             }
             isHideCollidedMarkers = true    // 겹치면 다른 마커 숨기기
@@ -270,10 +272,12 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
             binding.textCallTaxiDestination.visibility = View.GONE
             checkState = true
         }
-        binding.imageCallTaxiFirstPayment.setOnClickListener {
-
-        }
         binding.imageCallTaxiLatePayment.setOnClickListener {
+            findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
+                bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
+            )
+        }
+        binding.textCallTaxiLatePayment.setOnClickListener {
             findNavController().navigate(R.id.action_callTaxiFragment_to_waitingCallTaxiFragment,
                 bundleOf("Destination" to destination, "StartingPoint" to startingPoint)
             )

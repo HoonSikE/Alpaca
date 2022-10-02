@@ -195,66 +195,44 @@
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_call_taxi_distance"
             />
-        
-        <ImageView
-            android:id="@+id/image_call_taxi_first_payment"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/ic_first_payment"
-            android:elevation="10dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_call_taxi_Horizontal"
-            app:layout_constraintEnd_toStartOf="@+id/image_call_taxi_late_payment"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_call_taxi_first_payment"
-            app:layout_constraintEnd_toStartOf="@+id/image_call_taxi_late_payment"
-            android:text="선불 결제"
-            android:elevation="10dp"
-            style="@style/SubHeadSemiBold"
-            android:textColor="@color/gray"
-            />
-
-        <View
-            android:id="@+id/view_call_taxi_vertical"
-            android:layout_width="1dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="24dp"
-            android:elevation="10dp"
-            android:background="@color/lightGray"
-            app:layout_constraintStart_toEndOf="@+id/image_call_taxi_first_payment"
-            app:layout_constraintEnd_toStartOf="@+id/image_call_taxi_late_payment"
-            app:layout_constraintTop_toTopOf="@+id/view_call_taxi_Horizontal"
-            />
 
         <ImageView
             android:id="@+id/image_call_taxi_late_payment"
-            android:layout_width="96dp"
+            android:layout_width="0dp"
             android:layout_height="96dp"
             android:elevation="10dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_late_payment"
             app:layout_constraintTop_toBottomOf="@+id/view_call_taxi_Horizontal"
-            app:layout_constraintStart_toEndOf="@+id/image_call_taxi_first_payment"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/image_call_taxi_first_payment"
+            android:id="@+id/text_call_taxi_late_payment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_call_taxi_late_payment"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:text="후불 결제"
+            android:gravity="center_horizontal"
             android:elevation="10dp"
             style="@style/SubHeadSemiBold"
             android:textColor="@color/gray"
             />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/black"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

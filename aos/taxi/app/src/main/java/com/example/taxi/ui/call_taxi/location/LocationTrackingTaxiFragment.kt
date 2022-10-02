@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -25,6 +26,8 @@ import com.example.taxi.databinding.FragmentLocationTrackingTaxiBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.call_taxi.CallTaxiViewModel
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -43,7 +46,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
     OnMapReadyCallback {
 
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
-    var checkState = true
+    var distance = 0
     private var naverMap: NaverMap? = null
     private var uiSettings: UiSettings? = null
     private var markers = mutableListOf<Marker>()
@@ -62,7 +65,6 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
     }
 
     override fun init() {
-        //TODO : 출발지에 도착하면 startDrivingTaxiFragment로 이동
         initView()
         observerData()
         setOnClickListeners()
@@ -72,24 +74,24 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         binding.textLocationTrackingTaxiName.text = ApplicationClass.prefs.carName
         Glide.with(requireContext())
             .load(ApplicationClass.prefs.carImage)
-            .into(binding.imageLocationTrackingTaxiCar);
+            .into(binding.imageLocationTrackingTaxiCar)
     }
 
     private fun observerData(){
         callTaxiViewModel.routeSetting.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     toast("경로를 설정 중입니다. 잠시만 기다려 주세요.")
                     callTaxiViewModel.getRoute()
                 }
@@ -98,17 +100,17 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         callTaxiViewModel.route.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     val json = requireActivity().assets.open("node_set.json").reader().readText()
                     val node = JSONObject(json)
                     val location = mutableListOf<Location>()
@@ -126,18 +128,24 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         callTaxiViewModel.currentLocation.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
-                    updateMarker(state.data)
+                    binding.progressBar.hide()
+                    if(markers.size > 0){
+                        distance = state.data.dis.toInt()
+                        if(distance < 30){
+                            findNavController().navigate(R.id.action_locationTrackingTaxiFragment_to_startDrivingTaxiFragment)
+                        }
+                        updateMarker(state.data)
+                    }
                 }
             }
         }
@@ -151,7 +159,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         var str = ((location.dis/1000.0) * 100.0).roundToInt() / 100.0
         infoWindow.adapter = rootView?.let {
             MarkerInfoAdapter(requireContext(),
-                it, str.toString()+"Km", location.time)
+                it, str.toString()+"Km", location.time.toString()+"분")
         }!!
         infoWindow.open(markers[markers.lastIndex])
 
@@ -291,9 +299,9 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                     coords = list  // 경로 좌표
                     map = naverMap
                 })
+                callTaxiViewModel.getCurrentLocation()
             }
         }
-        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun setOnClickListeners() {
