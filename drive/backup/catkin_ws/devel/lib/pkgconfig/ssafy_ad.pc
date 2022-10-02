@@ -1,0 +1,8 @@
+prefix=/home/ssafy/catkin_ws/devel
+
+Name: ssafy_ad
+Description: Description of ssafy_ad
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
