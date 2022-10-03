@@ -4,15 +4,20 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.net.toUri
+import androidx.fragment.app.FragmentActivity
 import com.example.taxi.data.dto.user.User
 import com.example.taxi.di.ApplicationClass
+import com.example.taxi.ui.login.join.JoinFragment
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.SharedPrefConstants
 import com.example.taxi.utils.constant.UiState
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
+import java.util.concurrent.TimeUnit
 
 
 class AuthRepositoryImpl(
@@ -71,6 +76,61 @@ class AuthRepositoryImpl(
                         it.localizedMessage
                     )
                 )
+            }
+    }
+
+    override fun phoneAuth(phoneNumber: String, activity: FragmentActivity, result: (String) -> Unit){
+        auth.setLanguageCode("ko-KR")
+
+        println("option")
+        println("phoneNumber : " + phoneNumber)
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(phoneNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(activity)
+            .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                // 번호인증 혹은 기타 다른 인증(구글로그인, 이메일로그인 등) 끝난 상태
+                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                    println("onVerificationCompleted")
+                }
+
+                // 번호인증 실패 상태
+                override fun onVerificationFailed(e: FirebaseException) {
+                    println("onVerificationFailed")
+                    if (e is FirebaseAuthInvalidCredentialsException) {
+                        // Invalid request
+                    } else if (e is FirebaseTooManyRequestsException) {
+                        // The SMS quota for the project has been exceeded
+                    }
+                }
+
+                // 전화번호는 확인 되었으나 인증코드를 입력해야 하는 상태
+                override fun onCodeSent(
+                    verificationId: String,
+                    token: PhoneAuthProvider.ForceResendingToken
+                ) {
+                    result.invoke(verificationId)
+                }
+            })
+            .build()
+
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    override fun ckeckPhoneAuth(verificationId: String, code: String, result: (UiState<String>) -> Unit){
+        val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
+
+        println("ckeckPhoneAuth : " + verificationId + " " + code)
+
+
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    auth.signOut()
+                    result.invoke(UiState.Success("User has been ckecked PhoneAuth successfully"))
+                } else {
+                    result.invoke(UiState.Failure("User has been ckecked PhoneAuth Failure"))
+                }
             }
     }
 

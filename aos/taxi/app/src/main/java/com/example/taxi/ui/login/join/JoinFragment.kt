@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,10 +15,8 @@ import com.example.taxi.data.dto.user.address_info.AddressInfo
 import com.example.taxi.databinding.FragmentJoinBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.login.AuthViewModel
-import com.example.taxi.utils.constant.UiState
-import com.example.taxi.utils.constant.hide
-import com.example.taxi.utils.constant.isValidEmail
-import com.example.taxi.utils.constant.show
+import com.example.taxi.ui.mypage.update_provider.UpdateProviderDialogFragment
+import com.example.taxi.utils.constant.*
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,12 +26,14 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     var isEachProvider = false
     // 주소
     lateinit var addressInfo : AddressInfo
+    lateinit var verificationId : String
     // 사진 업로드
     var pickImageFromAlbum = 0
     var uriPhoto : Uri? = "".toUri()
 
     override fun init() {
         setOnClickListeners()
+        observer()
     }
 
     private fun setOnClickListeners(){
@@ -44,6 +45,28 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             var photoPickerInent = Intent(Intent.ACTION_PICK)
             photoPickerInent.type = "image/*"
             startActivityForResult(photoPickerInent, pickImageFromAlbum)
+        }
+        binding.buttonJoinTelAuth.setOnClickListener{
+            var activity = requireActivity()
+            if(checkPhone()){
+                authViewModel.phoneAuth (
+                    phoneNumber = "+82" + binding.editTextJoinTel.text.toString().replace("010", "10")+binding.editTextJoinTel2.text.toString()+binding.editTextJoinTel3.text.toString(),
+                    activity = activity
+                )
+                toast("인증번호가 전송되었습니다. 60초 이내에 입력해주세요.")
+                binding.buttonJoinTelAuth.isEnabled = false
+
+                val dialog = PhoneAuthDialogFragment()
+                // 화면 밖 터치시 종료되지 않게 하기
+                dialog.isCancelable = false
+                dialog.setOnOKClickedListener { content ->
+                    authViewModel.ckeckPhoneAuth (
+                        verificationId = verificationId,
+                        code = content
+                    )
+                }
+                dialog.show(childFragmentManager, "update home address")
+            }
         }
         binding.buttonJoinLogin.setOnClickListener {
             if (validation()){
@@ -58,49 +81,70 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     binding.editTextJoinCompanyAddress.text.toString(),
                     binding.editTextJoinHomeAddress.text.toString()
                 )
-                observer()
+
+                authViewModel.register.observe(viewLifecycleOwner) { state ->
+                    when(state){
+                        is UiState.Loading -> {
+                            binding.buttonJoinLogin.setText("Loading")
+                            binding.progressBarJoinLoading.show()
+                        }
+                        is UiState.Failure -> {
+//                    binding.buttonJoinLogin.setText("Register")
+                            binding.progressBarJoinLoading.hide()
+                            state.error?.let { toast(it) }
+                        }
+                        is UiState.Success -> {
+//                    binding.buttonJoinLogin.setText("Register")
+                            binding.progressBarJoinLoading.hide()
+                            toast(state.data)
+
+                            authViewModel.getSession { user ->
+                                if (user != null){
+                                    ApplicationClass.userId = user.userId
+                                    ApplicationClass.prefs.name = user.name
+                                    ApplicationClass.prefs.userSeq = user.userSeq
+                                    ApplicationClass.prefs.tel = user.tel
+                                    ApplicationClass.prefs.useCount = user.useCount
+
+                                    // 주소정보 추가 (userSeq값 할당 후 실행)
+                                    authViewModel.addAddressInfo(
+                                        addressInfo = addressInfo
+                                    )
+                                    ApplicationClass.prefs.isEachProvider = user.isEachProvider
+                                    if(isEachProvider)
+                                        findNavController().navigate(R.id.action_joinFragment_to_joinProviderFragment)
+                                    else
+                                        findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
+                                }
+                            }
+                        }
+                        else -> {}
+                    }
+                }
             }
         }
     }
 
     fun observer() {
-        authViewModel.register.observe(viewLifecycleOwner) { state ->
-            when(state){
+        authViewModel.phoneAuth.observe(viewLifecycleOwner) { state ->
+            verificationId = state
+        }
+        authViewModel.ckeckPhoneAuth.observe(viewLifecycleOwner) { state ->
+            when(state) {
                 is UiState.Loading -> {
-                    binding.buttonJoinLogin.setText("Loading")
                     binding.progressBarJoinLoading.show()
                 }
                 is UiState.Failure -> {
-//                    binding.buttonJoinLogin.setText("Register")
                     binding.progressBarJoinLoading.hide()
                     state.error?.let { toast(it) }
                 }
                 is UiState.Success -> {
-//                    binding.buttonJoinLogin.setText("Register")
-                    binding.progressBarJoinLoading.hide()
                     toast(state.data)
-
-                    authViewModel.getSession { user ->
-                        if (user != null){
-                            ApplicationClass.userId = user.userId
-                            ApplicationClass.prefs.name = user.name
-                            ApplicationClass.prefs.userSeq = user.userSeq
-                            ApplicationClass.prefs.tel = user.tel
-                            ApplicationClass.prefs.useCount = user.useCount
-
-                            // 주소정보 추가 (userSeq값 할당 후 실행)
-                            authViewModel.addAddressInfo(
-                                addressInfo = addressInfo
-                            )
-                            ApplicationClass.prefs.isEachProvider = user.isEachProvider
-                            if(isEachProvider)
-                                findNavController().navigate(R.id.action_joinFragment_to_joinProviderFragment)
-                            else
-                                findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
-                        }
-                    }
+                    binding.editTextJoinTel.isEnabled = false
+                    binding.editTextJoinTel2.isEnabled = false
+                    binding.editTextJoinTel3.isEnabled = false
+                    binding.buttonJoinTelAuth.text = "인증완료"
                 }
-                else -> {}
             }
         }
     }
@@ -116,6 +160,24 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         )
     }
 
+
+    private fun checkPhone(): Boolean {
+        if (binding.editTextJoinTel.text.isNullOrEmpty()){
+            toast("핸드폰번호를 입력해 주세요.")
+            return false
+        }
+
+        if (binding.editTextJoinTel2.text.isNullOrEmpty()){
+            toast("핸드폰번호를 입력해 주세요.")
+            return false
+        }
+
+        if (binding.editTextJoinTel3.text.isNullOrEmpty()){
+            toast("핸드폰번호를 입력해 주세요.")
+            return false
+        }
+        return true
+    }
     private fun validation(): Boolean {
         if (binding.editTextJoinName.text.isNullOrEmpty()){
             toast("이름을 입력해 주세요.")
@@ -176,6 +238,11 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
         if (binding.editTextJoinCompanyAddress.text.isNullOrEmpty()){
             binding.editTextJoinCompanyAddress.setText("")
+        }
+
+        if(binding.buttonJoinTelAuth.text != "인증완료"){
+            toast("휴대폰 인증을 해주세요")
+            return false
         }
         return true
     }

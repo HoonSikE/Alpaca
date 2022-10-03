@@ -15,14 +15,14 @@ import com.example.taxi.data.dto.user.address_info.AddressInfo
 import com.example.taxi.databinding.FragmentUpdateUserInfoBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.layout.fragment_update_user_info) {
     private val updateUserInfoViewModel : UpdateUserInfoViewModel by viewModels()
-
-    var isEachProvider = false
 
     // 사진 업로드
     var pickImageFromAlbum = 0
@@ -34,6 +34,12 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
         observerData()
     }
     private fun initData(){
+        if(ApplicationClass.prefs.isEachProvider == true){
+            binding.imageUpdateProvider.show()
+        }else{
+            binding.imageUpdateProvider.hide()
+        }
+
         val profileImage = ApplicationClass.prefs?.profileImage
         if(profileImage != "")
             Glide.with(this).load(profileImage).into(binding.imageUpdateUserImage)
@@ -47,6 +53,9 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
     private fun setOnClickListeners() {
         binding.imgJoinBack.setOnClickListener{
             requireActivity().onBackPressed()
+        }
+        binding.imageUpdateProvider.setOnClickListener{
+            findNavController().navigate(R.id.action_updateUserInfoFragment_to_updateProviderInfoFragment)
         }
         binding.imageUpdateUserImageButton.setOnClickListener{
             // Open Album
@@ -99,7 +108,7 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
                 addressInfo = addressInfo
             )
 
-            findNavController().navigate(R.id.action_myPageFragment_to_updateUserInfoFragment)
+            findNavController().navigate(R.id.action_updateUserInfoFragment_to_myPageFragment)
         }
     }
 
