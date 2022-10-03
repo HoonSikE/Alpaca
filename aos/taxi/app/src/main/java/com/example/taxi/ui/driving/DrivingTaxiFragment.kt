@@ -49,6 +49,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
 
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
     var distance = 0
+    var preDistance = 0
     private var naverMap: NaverMap? = null
     private var uiSettings: UiSettings? = null
     private var markers = mutableListOf<Marker>()
@@ -76,7 +77,8 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         binding.textDrivingTaxiName.text = ApplicationClass.prefs.carName
         Glide.with(requireContext())
             .load(ApplicationClass.prefs.carImage)
-            .into(binding.imageDrivingTaxiCar);
+            .into(binding.imageDrivingTaxiCar)
+        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun observerData(){
@@ -141,11 +143,13 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
                 }
                 is UiState.Success -> {
                     binding.progressBar.hide()
+                    preDistance = distance
                     distance = state.data.dis.toInt()
-                        if(distance < 30){
+                    if(distance < 0 && preDistance > 0){
                         arrivalDestination()
+                    }else{
+                            updateMarker(state.data)
                     }
-                    updateMarker(state.data)
                 }
             }
         }
@@ -301,12 +305,11 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
                 })
             }
         }
-        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun initNaverMap() {
         val _naverMap =
-            childFragmentManager.findFragmentById(R.id.fragmentContainer_location_tracking_taxi) as MapFragment?
+            childFragmentManager.findFragmentById(R.id.fragmentContainer_driving_taxi) as MapFragment?
                 ?: MapFragment.newInstance().also {
                     childFragmentManager.beginTransaction()
                         .add(R.id.fragmentContainer_location_tracking_taxi, it)

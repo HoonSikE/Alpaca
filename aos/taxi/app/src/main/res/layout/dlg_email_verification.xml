@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:layout_height="wrap_content"
@@ -21,6 +21,7 @@
             android:text="이메일 인증"
             android:textStyle="bold"
             android:paddingLeft="8dp"
+            android:layout_marginTop="16dp"
             android:paddingRight="8dp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,11 +42,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_email_verfication"
             android:inputType="text"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_regular"
             android:gravity="center"
             android:paddingTop="16dp"
+            android:layout_marginTop="16dp"
             android:paddingBottom="16dp"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
@@ -65,6 +67,7 @@
                 android:text="test@testmail.com"
                 android:textColor="@color/platinum"
                 android:textStyle="bold"
+                android:layout_marginStart="24dp"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +85,6 @@
                 app:layout_constraintTop_toTopOf="@+id/text_dlg_email_verfication1"
                 app:layout_constraintBottom_toBottomOf="@+id/text_dlg_email_verfication1"
                 app:layout_constraintStart_toEndOf="@+id/text_dlg_email_verfication1"
-                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <TextView
@@ -91,6 +93,7 @@
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
                 android:text="인증 이메일을 보냈습니다."
                 app:layout_constraintTop_toBottomOf="@+id/text_dlg_email_verfication2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +112,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraint_email_verfication"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginVertical="24dp"
             android:layout_marginBottom="8dp"
             android:text="확인"
             android:textStyle="bold"
