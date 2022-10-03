@@ -298,7 +298,7 @@
                 <EditText
                     android:id="@+id/editText_join_tel"
                     style="@style/Body"
-                    android:layout_width="80dp"
+                    android:layout_width="64dp"
                     android:layout_height="48dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
@@ -317,19 +317,19 @@
                     style="@style/SubHeadSemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="24dp"
                     android:text="-"
                     app:layout_constraintStart_toEndOf="@+id/editText_join_tel"
+                    app:layout_constraintEnd_toStartOf="@+id/editText_join_tel2"
                     app:layout_constraintTop_toBottomOf="@id/text_join_tel"
                     />
 
                 <EditText
                     android:id="@+id/editText_join_tel2"
                     style="@style/Body"
-                    android:layout_width="110dp"
+                    android:layout_width="80dp"
                     android:layout_height="48dp"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
@@ -339,6 +339,7 @@
                     android:inputType="number"
                     android:textColorHint="@color/hintGray"
                     app:layout_constraintStart_toEndOf="@+id/text_join_tel_bar"
+                    app:layout_constraintEnd_toStartOf="@+id/text_join_tel_bar2"
                     app:layout_constraintTop_toBottomOf="@id/text_join_tel" />
 
                 <TextView
@@ -346,20 +347,21 @@
                     style="@style/SubHeadSemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginHorizontal="8dp"
                     android:text="-"
                     app:layout_constraintStart_toEndOf="@+id/editText_join_tel2"
+                    app:layout_constraintEnd_toStartOf="@+id/editText_join_tel3"
                     app:layout_constraintTop_toBottomOf="@id/text_join_tel"
-
                     />
 
                 <EditText
                     android:id="@+id/editText_join_tel3"
                     style="@style/Body"
-                    android:layout_width="110dp"
+                    android:layout_width="80dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
                     android:hint="5678"
@@ -367,9 +369,22 @@
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:textColorHint="@color/hintGray"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/text_join_tel_bar2"
+                    app:layout_constraintEnd_toStartOf="@+id/button_join_tel_auth"
                     app:layout_constraintTop_toBottomOf="@id/text_join_tel" />
+
+                <Button
+                    android:id="@+id/button_join_tel_auth"
+                    style="@style/BodyWhite"
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/button_regular"
+                    android:text="인증"
+                    app:layout_constraintTop_toTopOf="@+id/editText_join_tel3"
+                    app:layout_constraintBottom_toBottomOf="@+id/editText_join_tel3"
+                    app:layout_constraintStart_toEndOf="@+id/editText_join_tel3"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <!-- Home Address -->
                 <TextView
