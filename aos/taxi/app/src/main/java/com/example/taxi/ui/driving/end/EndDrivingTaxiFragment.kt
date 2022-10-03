@@ -11,9 +11,7 @@ import com.example.taxi.data.dto.provider.ProviderCar
 import com.example.taxi.data.dto.provider.TaxiUser
 import com.example.taxi.data.dto.provider.UserList
 import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
-import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxiList
 import com.example.taxi.data.dto.user.calltaxi.Taxi
-import com.example.taxi.data.dto.user.calltaxi.TaxiList
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.databinding.FragmentEndDrivingTaxiBinding
@@ -71,7 +69,7 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
             //사진 다 넣었는지 확인하기
             var resRide = 0.0
             var resClean = 0.0
-            userList.add(TaxiUser(ApplicationClass.userId, binding.ratingEndTaxiRideComfort.rating.toDouble(),
+            userList.add(TaxiUser(ApplicationClass.userId, ApplicationClass.prefs.name.toString(), binding.ratingEndTaxiRideComfort.rating.toDouble(),
                 ApplicationClass.prefs.profileImage.toString(), binding.ratingEndTaxiCleanliness.rating.toDouble()))
             for(i in userList){
                 resRide += i.rideComfort
@@ -329,7 +327,7 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
     private fun sortTaxiList(taxiList: Taxi) {
         taxiList.isEachInOperation = false
         callTaxiViewModel.updateTaxiList(taxiList)
-        boardedTaxiList.add(BoardedTaxi(fee, ApplicationClass.prefs.destinationName.toString(),
+        boardedTaxiList.add(BoardedTaxi(ApplicationClass.prefs.providerId.toString(), fee, ApplicationClass.prefs.destinationName.toString(),
             ApplicationClass.prefs.startName.toString(), ApplicationClass.prefs.carImage.toString(),
             ApplicationClass.prefs.carName.toString(), ApplicationClass.prefs.carNumber.toString(),
             ApplicationClass.prefs.cleanlinessAverage!!.toDouble(), ApplicationClass.prefs.rideComfortAverage!!.toDouble(),
