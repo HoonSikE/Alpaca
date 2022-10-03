@@ -28,10 +28,6 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     private lateinit var favoritesAdapter: FavoritesAdapter
     private var favorites : MutableList<Favorites> = mutableListOf()
     private val userHomeViewModel : UserHomeViewModel by viewModels()
-    private var destinationLatitude:Double = 0.0
-    private var destinationLongitude:Double = 0.0
-    private var destinationPlace: String = ""
-    private var destinationAddress: String = ""
     private lateinit var destination: Destination
     private var addressFavorites = ""
 

@@ -56,7 +56,11 @@ class StartDrivingTaxiFragment : BaseFragment<FragmentStartDrivingTaxiBinding>(R
             findNavController().navigate(R.id.action_startDrivingTaxiFragment_to_DrivingTaxiCheckFragment, bundleOf("checkState" to true))
         }
         binding.buttonStartDrivingTaxiStart.setOnClickListener {
-            findNavController().navigate(R.id.action_startDrivingTaxiFragment_to_drivingTaxiFragment)
+            if(lockState){
+                findNavController().navigate(R.id.action_startDrivingTaxiFragment_to_drivingTaxiFragment)
+            }else{
+                toast("문을 열고 탑승해주세요.")
+            }
         }
     }
 
