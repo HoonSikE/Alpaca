@@ -178,4 +178,15 @@ class PreferenceUtil(context: Context) {
             }
         }
 
+    var destinationUserName: String?
+        get() = prefs.getString(DESTNATIONUSERNAME, null)
+        set(value) {
+            prefs.edit().putString(DESTNATIONUSERNAME, value).apply()
+        }
+
+    var destinationUserImg: String?
+        get() = prefs.getString(DESTINATIONUSERIMG, null)
+        set(value) {
+            prefs.edit().putString(DESTINATIONUSERIMG, value).apply()
+        }
 }

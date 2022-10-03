@@ -29,6 +29,9 @@ const val DESTINATIONADDRESS = "destinationAddress"
 const val STARTLATITUDE = "startLatitude"
 const val STARTLONGITUDE = "startLongitude"
 const val STARTNAME = "startName"
+const val DESTNATIONUSERNAME = "destinationUserName"
+const val DESTINATIONUSERIMG = "destinationUserImg"
+
 
 /**
  * 출발전 / 도착 후 상태
