@@ -4,11 +4,12 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class BoardedTaxi (
+data class BoardedTaxi(
+    var userId: String = "",
     var Cost: Int = 0,
     val Destination: String = "",
     val StartingPoint: String = "",
-    val carImage : String = "",
+    val carImage: String = "",
     val carName: String = "",
     val carNumber: String = "",
     var cleanlinessAverage: Double = 0.0,

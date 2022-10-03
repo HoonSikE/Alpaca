@@ -81,7 +81,7 @@ class JoinProviderFragment : BaseFragment<FragmentJoinProviderBinding>(R.layout.
                     ApplicationClass.prefs.rideComfortAverage = provider.car?.rideComfortAverage?.toFloat()
                     ApplicationClass.prefs.fee = provider.revenue
 
-                    findNavController().navigate(R.id.action_joinProviderFragment_to_providerHomeFragment)
+                    findNavController().navigate(R.id.action_joinProviderFragment_to_userHomeFragment)
                 }
                 else -> {}
             }

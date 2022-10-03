@@ -1,6 +1,8 @@
 package com.example.taxi.ui.login
 
 import android.net.Uri
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +23,14 @@ class AuthViewModel @Inject constructor(
     private val _register = MutableLiveData<UiState<String>>()
     val register: LiveData<UiState<String>>
             get() = _register
+
+    private val _phoneAuth = MutableLiveData<String>()
+    val phoneAuth: LiveData<String>
+        get() = _phoneAuth
+
+    private val _ckeckPhoneAuth = MutableLiveData<UiState<String>>()
+    val ckeckPhoneAuth: LiveData<UiState<String>>
+        get() = _ckeckPhoneAuth
 
     private val _login = MutableLiveData<UiState<String>>()
     val login: LiveData<UiState<String>>
@@ -96,6 +106,24 @@ class AuthViewModel @Inject constructor(
         _forgotPassword.value = UiState.Loading
         repository.forgotPassword(email){
             _forgotPassword.value = it
+        }
+    }
+
+    fun phoneAuth(phoneNumber: String, activity: FragmentActivity){
+        repository.phoneAuth(
+            phoneNumber = phoneNumber,
+            activity = activity
+        ){
+            _phoneAuth.value = it
+        }
+    }
+
+    fun ckeckPhoneAuth(verificationId: String, code: String){
+        repository.ckeckPhoneAuth(
+            verificationId = verificationId,
+            code = code
+        ){
+            _ckeckPhoneAuth.value = it
         }
     }
 

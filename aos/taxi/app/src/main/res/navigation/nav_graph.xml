@@ -129,8 +129,8 @@
         tools:layout="@layout/fragment_join_provider"
         >
         <action
-            android:id="@+id/action_joinProviderFragment_to_providerHomeFragment"
-            app:destination="@id/providerHomeFragment"
+            android:id="@+id/action_joinProviderFragment_to_userHomeFragment"
+            app:destination="@id/userHomeFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -437,8 +437,32 @@
         tools:layout="@layout/fragment_update_user_info">
 
         <action
-            android:id="@+id/action_myPageFragment_to_updateUserInfoFragment"
+            android:id="@+id/action_updateUserInfoFragment_to_myPageFragment"
             app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+
+        <action
+            android:id="@+id/action_updateUserInfoFragment_to_updateProviderInfoFragment"
+            app:destination="@id/updateProviderInfoFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProviderInfoFragment"
+        android:name="com.example.taxi.ui.mypage.update_provider.UpdateProviderInfoFragment"
+        android:label="UpdateProviderInfoFragment"
+        tools:layout="@layout/fragment_update_provider_info">
+
+        <action
+            android:id="@+id/action_updateProviderInfoFragment_to_userHomeFragment"
+            app:destination="@id/userHomeFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
