@@ -1,6 +1,7 @@
 package com.example.taxi.ui.home.provider.information_user
 
 import android.util.Log
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -95,7 +96,7 @@ class InformationUserFragment : BaseFragment<FragmentInformationUserBinding>(R.l
 
     private fun setOnClickListeners() {
         binding.buttonInformationUserStart.setOnClickListener {
-            findNavController().navigate(R.id.action_informationUserFragment_to_personalChatFragment)
+            findNavController().navigate(R.id.action_informationUserFragment_to_personalChatFragment, bundleOf("startUserName" to ApplicationClass.userId.toString(), "destinationUserName" to taxiUser.userId, "destinationUserImg" to taxiUser.userImage))
         }
         binding.imageInformationUserBack.setOnClickListener {
             requireActivity().onBackPressed()

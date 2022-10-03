@@ -3,6 +3,7 @@ package com.example.taxi.di
 import android.content.SharedPreferences
 import com.example.taxi.data.repository.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import dagger.Module
@@ -55,5 +56,12 @@ object RepositoryModule {
         database: FirebaseFirestore
     ) : UserInfoRepository{
         return UserInfoRepositoryImpl(database)
+    }
+
+    @Provides
+    @Singleton
+    fun personalPersonalChatRepository(
+    ) : PersonalChatRepository{
+        return PersonalChatRepositoryImpl()
     }
 }

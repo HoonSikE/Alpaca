@@ -7,6 +7,7 @@ import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxi
 import com.example.taxi.databinding.FragmentTaxiDetailBinding
+import com.example.taxi.di.ApplicationClass
 import com.gun0912.tedpermission.provider.TedPermissionProvider
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,7 +51,7 @@ class TaxiDetailFragment : BaseFragment<FragmentTaxiDetailBinding>(R.layout.frag
             findNavController().navigate(R.id.action_taxiDetailFragment_to_taxiAssessmentFragment, bundleOf("BoardedTaxi" to boardedTaxi, "index" to idx))
         }
         binding.buttonBoardingTaxiPersonChat.setOnClickListener{
-            findNavController().navigate(R.id.action_taxiDetailFragment_to_personalChatFragment)
+            findNavController().navigate(R.id.action_taxiDetailFragment_to_personalChatFragment, bundleOf("startUserName" to ApplicationClass.userId.toString(), "destinationUserName" to boardedTaxi.userId, "destinationUserImg" to boardedTaxi.carImage))
         }
     }
 }
