@@ -81,6 +81,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         binding.textUserWithdrawal.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_userWithdrawalFragment)
         }
+        binding.imageMyPageChatBot.setOnClickListener{
+            findNavController().navigate(R.id.action_myPageFragment_to_chatBotFragment)
+        }
     }
 
     private fun observerData() {

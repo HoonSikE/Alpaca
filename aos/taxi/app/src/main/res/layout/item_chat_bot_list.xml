@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_messageItem_main"
+    android:id="@+id/layout_chat_bot_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -11,17 +11,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
-            android:id="@+id/layout_messageItem_destination"
+            android:id="@+id/layout_chat_bot_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
             >
             <ImageView
-                android:id="@+id/image_messageItem_profile"
+                android:id="@+id/image_chat_bot_list"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/img_user"/>
+                android:src="@drawable/ic_message"/>
         </LinearLayout>
 
         <LinearLayout
@@ -29,25 +29,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/text_messageItem_name"
+                android:id="@+id/text_chat_bot_list_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이름"
+                android:text="알파카"
                 android:textColor="#000000"
                 android:textStyle="bold" />
+
+<!--            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_chat_bot_list_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />-->
+
             <TextView
-                android:id="@+id/text_messageItem_message"
+                android:id="@+id/text_chat_bot_list_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="8dp"
                 android:text="메세지"
+                android:background="@drawable/textview_regular"
                 android:textColor="#000000" />
-            <TextView
-                android:id="@+id/text_messageItem_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="시간"
-                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
