@@ -5,15 +5,22 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.fragment.findNavController
+import com.example.taxi.R
 import com.example.taxi.data.dto.user.User
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.login.join.JoinFragment
 import com.example.taxi.utils.constant.FireStoreCollection
 import com.example.taxi.utils.constant.SharedPrefConstants
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.view.toast
+import com.facebook.AccessToken
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
@@ -26,6 +33,15 @@ class AuthRepositoryImpl(
     val appPreferences: SharedPreferences,
     val gson: Gson
 ) : AuthRepository {
+    override fun getCurrentUser(result: (FirebaseUser) -> Unit){
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            result.invoke(currentUser)
+        } else {
+
+        }
+    }
+
     override fun registerUser(
         email: String,
         password: String,
@@ -77,6 +93,30 @@ class AuthRepositoryImpl(
                     )
                 )
             }
+    }
+
+    override fun snsRegister(user: User, result: (UiState<String>) -> Unit){
+        user.userSeq = ApplicationClass.prefs.userSeq.toString()
+
+        updateUserInfo(user) { state ->
+            when (state) {
+                is UiState.Success -> {
+                    storeSession(id = user.userSeq ?: "") {
+                        if (it == null) {
+                            result.invoke(UiState.Failure("User register successfully but session failed to store"))
+                        } else {
+                            result.invoke(
+                                UiState.Success("User register successfully!")
+                            )
+                        }
+                    }
+                }
+                is UiState.Failure -> {
+                    result.invoke(UiState.Failure(state.error))
+                }
+                else -> {}
+            }
+        }
     }
 
     override fun phoneAuth(phoneNumber: String, activity: FragmentActivity, result: (String) -> Unit){
@@ -197,6 +237,82 @@ class AuthRepositoryImpl(
             }.addOnFailureListener {
                 result.invoke(UiState.Failure("Authentication failed, Check email and password"))
             }
+    }
+
+    override fun googleLogin(idToken: String, result: (UiState<String>) -> Unit){
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    storeSession(id = idToken ?: ""){
+                        if (it == null){
+                            result.invoke(UiState.Success("null"))
+                        }else{
+                            result.invoke(UiState.Success("Login successfully!"))
+                        }
+                    }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    result.invoke(UiState.Success("Failed to store local session"))
+                }
+            }
+            .addOnFailureListener {
+                result.invoke(UiState.Failure("Authentication failed, Check google email"))
+            }
+    }
+
+    override fun facebookLogin(accessToken: AccessToken, result: (UiState<String>) -> Unit){
+        // AccessToken 으로 Facebook 인증
+        val credential = FacebookAuthProvider.getCredential(accessToken?.token!!)
+
+        // 성공 시 Firebase 에 유저 정보 보내기 (로그인)
+        auth?.signInWithCredential(credential)
+            ?.addOnCompleteListener{ task ->
+                if (task.isSuccessful) {
+                    storeSession(id = task.result.user?.uid ?: ""){
+                        ApplicationClass.prefs.userSeq = task.result.user?.uid ?: ""
+                        println("task.result.user?.uid : " + task.result.user?.uid)
+                        if (it == null){
+                            result.invoke(UiState.Success("Failed to facebook login"))
+                        }else{
+                            result.invoke(UiState.Success("Facebook login successfully!"))
+                        }
+                    }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    result.invoke(UiState.Success("Failed to facebook login"))
+                }
+            }
+    }
+
+    override fun githubLogin(activity: FragmentActivity, result: (UiState<String>) -> Unit){
+        // 빌더로 OAuthProvider의 인스턴스를 생성
+        val githubProvider = OAuthProvider.newBuilder("github.com")
+        // 선택사항: OAuth 요청과 함께 전송하고자 하는 커스텀 OAuth 매개변수를 추가로 지정합니다.
+        auth.startActivityForSignInWithProvider(activity, githubProvider.build())
+            .addOnSuccessListener { authResult ->
+                    auth.signInWithCredential(authResult.credential!!)
+                        .addOnCompleteListener(activity) { task ->
+                            if (task.isSuccessful) {
+                                storeSession(id = task.result.user?.uid ?: ""){
+                                    ApplicationClass.prefs.userSeq = task.result.user?.uid ?: ""
+                                    println("task.result.user?.uid : " + task.result.user?.uid)
+                                    if (it == null){
+                                        result.invoke(UiState.Success("Failed to github login"))
+                                    }else{
+                                        result.invoke(UiState.Success("Github login successfully!"))
+                                    }
+                                }
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                result.invoke(UiState.Success("Failed to github login"))
+                            }
+                        }
+            }.addOnFailureListener{
+                result.invoke(UiState.Failure("Authentication failed, Check github email"))
+            }
+
     }
 
     override fun reauthPassword(existingPassword: String, result: (UiState<String>) -> Unit){

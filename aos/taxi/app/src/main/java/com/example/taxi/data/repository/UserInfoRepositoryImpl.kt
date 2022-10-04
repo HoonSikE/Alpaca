@@ -63,7 +63,7 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
 
     override fun addImageUpLoad(user: User, result: (UiState<User>) -> Unit) {
         var storage = FirebaseStorage.getInstance()
-        var imgFileName = user.userSeq + ".png"
+        var imgFileName = user.userSeq.substring(0 until 28) + ".png"
 
         storage.reference.child("user_profiles").child(imgFileName)
             .putFile(user.profileImage.toUri())//어디에 업로드할지 지정

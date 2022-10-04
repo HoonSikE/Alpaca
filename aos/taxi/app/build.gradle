@@ -106,6 +106,9 @@ dependencies {
 
     // Google Login
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    // Facebook Login
+    implementation 'com.facebook.android:facebook-login:8.2.0'
+//    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
     //Gson
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
