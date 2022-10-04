@@ -29,9 +29,15 @@
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/search_regular.xml" value="0.1235" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/view_bottom.xml" value="0.1555" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/drawable/view_radius.xml" value="0.1555" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_address.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_email_verification.xml" value="0.22826086956521738" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_favorites.xml" value="0.15364583333333334" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_provider.xml" value="0.2" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_startDrivingLock.xml" value="0.15364583333333334" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_start_driving_lock.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_tel.xml" value="0.22826086956521738" />
+        <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/dlg_with_drawal.xml" value="0.22826086956521738" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_assigned_taxi_information.xml" value="0.2" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_call_taxi.xml" value="0.2" />
         <entry key="..\:/SSAFY/work_android/S07P22D208/aos/taxi/app/src/main/res/layout/fragment_check_bottom_sheet.xml" value="0.15364583333333334" />

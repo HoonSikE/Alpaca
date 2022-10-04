@@ -2,25 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="160dp"
         android:background="@drawable/dialog_backgound">
 
         <TextView
-            android:id="@+id/text_dlg_address_title"
+            android:id="@+id/text_dlg_phone_auth_title"
             style="@style/SubHeadSemiBoldPrimaryColor"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:scaleType="center"
-            android:text="주소"
+            android:text="휴대폰 인증"
             android:textStyle="bold"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_marginTop="16dp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,44 +27,44 @@
             />
 
         <ImageView
-            android:id="@+id/image_update_user_info_home_address"
+            android:id="@+id/image_phone_auth"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/text_dlg_address_title"
-            app:layout_constraintTop_toTopOf="@+id/text_dlg_address_title"
-            app:layout_constraintBottom_toBottomOf="@+id/text_dlg_address_title"
-            app:srcCompat="@drawable/img_edit" />
+            app:layout_constraintEnd_toStartOf="@+id/text_dlg_phone_auth_title"
+            app:layout_constraintTop_toTopOf="@+id/text_dlg_phone_auth_title"
+            app:layout_constraintBottom_toBottomOf="@+id/text_dlg_phone_auth_title"
+            app:srcCompat="@drawable/ic_phone" />
 
         <EditText
-            android:id="@+id/edittext_dlg_address_input"
+            android:id="@+id/edittext_dlg_phone_auth_input"
             style="@style/Body"
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_regular"
-            android:hint="주소를 입력하세요"
+            android:hint="인증번호를 입력하세요"
             android:gravity="center"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/text_dlg_address_title"
+            app:layout_constraintTop_toBottomOf="@+id/text_dlg_phone_auth_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-/>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
 
         <Button
             android:id="@+id/button_dlg_address_update"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_regular"
-            app:layout_constraintTop_toBottomOf="@+id/edittext_dlg_address_input"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_dlg_phone_auth_input"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginVertical="24dp"
-            android:text="수정"/>
+            android:text="인증"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

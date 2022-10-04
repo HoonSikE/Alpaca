@@ -47,6 +47,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
 
     private val callTaxiViewModel : CallTaxiViewModel by viewModels()
     var distance = 0
+    var preDistance = 0
     private var naverMap: NaverMap? = null
     private var uiSettings: UiSettings? = null
     private var markers = mutableListOf<Marker>()
@@ -59,6 +60,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        findNavController().navigate(R.id.action_locationTrackingTaxiFragment_to_startDrivingTaxiFragment)
         rootView = container
         initNaverMap()
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -75,6 +77,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         Glide.with(requireContext())
             .load(ApplicationClass.prefs.carImage)
             .into(binding.imageLocationTrackingTaxiCar)
+        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun observerData(){
@@ -140,11 +143,13 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     if(markers.size > 0){
+                        preDistance = distance
                         distance = state.data.dis.toInt()
-                        if(distance < 30){
-                            findNavController().navigate(R.id.action_locationTrackingTaxiFragment_to_startDrivingTaxiFragment)
+                        if(distance < 0 && preDistance > 0){
+                            arrivalDestination()
+                        }else{
+                            updateMarker(state.data)
                         }
-                        updateMarker(state.data)
                     }
                 }
             }
@@ -299,7 +304,6 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                     coords = list  // 경로 좌표
                     map = naverMap
                 })
-                callTaxiViewModel.getCurrentLocation()
             }
         }
     }
@@ -351,6 +355,10 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                 checkState = true
             )
         )
+    }
+
+    private fun arrivalDestination(){
+        findNavController().navigate(R.id.action_locationTrackingTaxiFragment_to_startDrivingTaxiFragment)
     }
 
 }
