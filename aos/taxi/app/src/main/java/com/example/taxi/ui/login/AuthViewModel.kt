@@ -11,6 +11,8 @@ import com.example.taxi.data.dto.user.address_info.AddressInfo
 import com.example.taxi.data.repository.AuthRepository
 import com.example.taxi.data.repository.UserInfoRepository
 import com.example.taxi.utils.constant.UiState
+import com.facebook.AccessToken
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,6 +26,10 @@ class AuthViewModel @Inject constructor(
     val register: LiveData<UiState<String>>
             get() = _register
 
+    private val _snsRegister = MutableLiveData<UiState<String>>()
+    val snsRegister: LiveData<UiState<String>>
+        get() = _snsRegister
+
     private val _phoneAuth = MutableLiveData<String>()
     val phoneAuth: LiveData<String>
         get() = _phoneAuth
@@ -35,6 +41,18 @@ class AuthViewModel @Inject constructor(
     private val _login = MutableLiveData<UiState<String>>()
     val login: LiveData<UiState<String>>
         get() = _login
+
+    private val _googleLogin = MutableLiveData<UiState<String>>()
+    val googleLogin: LiveData<UiState<String>>
+        get() = _googleLogin
+
+    private val _facebookLogin = MutableLiveData<UiState<String>>()
+    val facebookLogin: LiveData<UiState<String>>
+        get() = _facebookLogin
+
+    private val _githubLogin = MutableLiveData<UiState<String>>()
+    val githubLogin: LiveData<UiState<String>>
+        get() = _githubLogin
 
     private val _reauthPassword = MutableLiveData<UiState<String>>()
     val reauthPassword: LiveData<UiState<String>>
@@ -63,6 +81,10 @@ class AuthViewModel @Inject constructor(
     val deleteUserInfo: LiveData<UiState<String>>
         get() = _deleteUserInfo
 
+    fun getCurrentUser(result: (FirebaseUser) -> Unit){
+        repository.getCurrentUser(result)
+    }
+
     fun register(
         email: String,
         password: String,
@@ -76,18 +98,47 @@ class AuthViewModel @Inject constructor(
         ) { _register.value = it }
     }
 
+    fun snsRegister(user : User) {
+        _snsRegister.value = UiState.Loading
+        repository.snsRegister(
+            user = user
+        ) { _snsRegister.value = it }
+    }
+
     fun login(
         email: String,
         password: String
     ) {
         _login.value = UiState.Loading
         repository.loginUser(
-            email,
-            password
+            email = email,
+            password = password
         ){
             _login.value = it
         }
     }
+
+    fun facebookLogin(accessToken: AccessToken) {
+        _facebookLogin.value = UiState.Loading
+        repository.facebookLogin(accessToken){
+            _facebookLogin.value = it
+        }
+    }
+
+    fun googleLogin(idToken: String) {
+        _googleLogin.value = UiState.Loading
+        repository.googleLogin(idToken){
+            _googleLogin.value = it
+        }
+    }
+
+    fun githubLogin(activity: FragmentActivity) {
+        _githubLogin.value = UiState.Loading
+        repository.githubLogin(activity){
+            _githubLogin.value = it
+        }
+    }
+
     fun reauthPassword(existingPassword: String) {
         _reauthPassword.value = UiState.Loading
         repository.reauthPassword(existingPassword){

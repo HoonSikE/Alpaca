@@ -97,7 +97,7 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
                 )
             }
 
-            // 사진 추가
+            // 전화번호 추가
             updateUserInfoViewModel.updateUserTel(
                 tel = binding.textUpdateUserInfoPhone.text.toString()
             )

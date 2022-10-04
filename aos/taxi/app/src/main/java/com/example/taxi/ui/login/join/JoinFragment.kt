@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.user.User
@@ -30,10 +31,39 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     // 사진 업로드
     var pickImageFromAlbum = 0
     var uriPhoto : Uri? = "".toUri()
+    // SNS 로그인 확인
+    var checkCurrentUser = false
 
     override fun init() {
+        initData()
         setOnClickListeners()
         observer()
+    }
+
+    private fun initData(){
+        authViewModel.getCurrentUser { currentUser ->
+            // SNS 로그인 시 사용
+            // 일반 회원가입일 경우 쓸필요 없음
+            if(currentUser != null){
+                checkCurrentUser = true
+                // 프로필 사진 불러오기 및 비활성화
+                Glide.with(this).load(currentUser.photoUrl).into(binding.imageJoinUserImage)
+                binding.imageJoinUserImageButton.disable()
+                // 이메일 불러오기
+                binding.editTextJoinId.setText(currentUser.email)
+                // ID, PW 비활성화
+                binding.editTextJoinId.disable()
+                binding.editTextJoinPw.disable()
+                binding.editTextJoinPwCheck.disable()
+                // 이름 불러오기/비활성화
+                if(currentUser.displayName != null){
+                    binding.editTextJoinName.setText(currentUser.displayName)
+                    binding.editTextJoinName.disable()
+                }
+            }else{
+                // 유저 정보가 없다면 그대로 진행
+            }
+        }
     }
 
     private fun setOnClickListeners(){
@@ -71,11 +101,17 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         binding.buttonJoinLogin.setOnClickListener {
             if (validation()){
                 isEachProvider = binding.switchJoinIsEachProvider.isChecked
-                authViewModel.register(
-                    email = binding.editTextJoinId.text.toString(),
-                    password = binding.editTextJoinPw.text.toString(),
-                    user = getUserObj()
-                )
+                if(!checkCurrentUser){
+                    authViewModel.register(
+                        email = binding.editTextJoinId.text.toString(),
+                        password = binding.editTextJoinPw.text.toString(),
+                        user = getUserObj()
+                    )
+                }else{
+                    authViewModel.snsRegister(
+                        user = getUserObj()
+                    )
+                }
                 // 주소정보 추가
                 addressInfo = AddressInfo(
                     binding.editTextJoinCompanyAddress.text.toString(),
@@ -89,12 +125,10 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                             binding.progressBarJoinLoading.show()
                         }
                         is UiState.Failure -> {
-//                    binding.buttonJoinLogin.setText("Register")
                             binding.progressBarJoinLoading.hide()
                             state.error?.let { toast(it) }
                         }
                         is UiState.Success -> {
-//                    binding.buttonJoinLogin.setText("Register")
                             binding.progressBarJoinLoading.hide()
                             toast(state.data)
 
@@ -111,6 +145,45 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                                         addressInfo = addressInfo
                                     )
                                     ApplicationClass.prefs.isEachProvider = user.isEachProvider
+                                    if(isEachProvider)
+                                        findNavController().navigate(R.id.action_joinFragment_to_joinProviderFragment)
+                                    else
+                                        findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
+                                }
+                            }
+                        }
+                        else -> {}
+                    }
+                }
+
+                authViewModel.snsRegister.observe(viewLifecycleOwner) { state ->
+                    when(state){
+                        is UiState.Loading -> {
+                            binding.buttonJoinLogin.setText("Loading")
+                            binding.progressBarJoinLoading.show()
+                        }
+                        is UiState.Failure -> {
+                            binding.progressBarJoinLoading.hide()
+                            state.error?.let { toast(it) }
+                        }
+                        is UiState.Success -> {
+                            binding.progressBarJoinLoading.hide()
+                            toast(state.data)
+
+                            authViewModel.getSession { user ->
+                                if (user != null){
+                                    ApplicationClass.userId = user.userId
+                                    ApplicationClass.prefs.name = user.name
+                                    ApplicationClass.prefs.userSeq = user.userSeq
+                                    ApplicationClass.prefs.tel = user.tel
+                                    ApplicationClass.prefs.useCount = user.useCount
+
+                                    // 주소정보 추가 (userSeq값 할당 후 실행)
+                                    authViewModel.addAddressInfo(
+                                        addressInfo = addressInfo
+                                    )
+                                    ApplicationClass.prefs.isEachProvider = user.isEachProvider
+
                                     if(isEachProvider)
                                         findNavController().navigate(R.id.action_joinFragment_to_joinProviderFragment)
                                     else
@@ -179,6 +252,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         return true
     }
     private fun validation(): Boolean {
+        var validation = true
         if (binding.editTextJoinName.text.isNullOrEmpty()){
             toast("이름을 입력해 주세요.")
             return false
@@ -208,29 +282,35 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                 return false
             }
         }
-        if (binding.editTextJoinPw.text.isNullOrEmpty()){
-            toast("비밀번호를 입력해 주세요.")
-            return false
-        }else{
-            if (binding.editTextJoinPw.text.toString().length < 6){
-                toast("비밀번호를 6자리 이상 입력해 주세요.")
-                return false
-            }
-        }
-        if (binding.editTextJoinPwCheck.text.isNullOrEmpty()){
-            toast("비밀번호를 입력해 주세요.")
-            return false
-        }else{
-            if (binding.editTextJoinPwCheck.text.toString().length < 6){
-                toast("비밀번호를 6자리 이상 입력해 주세요.")
-                return false
-            }
-        }
+        authViewModel.getCurrentUser { currentUser ->
+            if(currentUser == null){
+                if (binding.editTextJoinPw.text.isNullOrEmpty()){
+                    toast("비밀번호를 입력해 주세요.")
+                    validation =  false
+                }else{
+                    if (binding.editTextJoinPw.text.toString().length < 6){
+                        toast("비밀번호를 6자리 이상 입력해 주세요.")
+                        validation =  false
+                    }
+                }
+                if (binding.editTextJoinPwCheck.text.isNullOrEmpty()){
+                    toast("비밀번호를 입력해 주세요.")
+                    validation =  false
+                }else{
+                    if (binding.editTextJoinPwCheck.text.toString().length < 6){
+                        toast("비밀번호를 6자리 이상 입력해 주세요.")
+                        validation =  false
+                    }
+                }
 
-        if(binding.editTextJoinPwCheck.text.toString() != binding.editTextJoinPw.text.toString()) {
-            toast("비밀번호 확인에 실패했습니다. 다시 입력해주세요.")
-            return false
+                if(binding.editTextJoinPwCheck.text.toString() != binding.editTextJoinPw.text.toString()) {
+                    toast("비밀번호 확인에 실패했습니다. 다시 입력해주세요.")
+                        validation =  false
+                }
+            }
         }
+        if(!validation)
+            return validation
 
         if (binding.editTextJoinHomeAddress.text.isNullOrEmpty()){
             binding.editTextJoinHomeAddress.setText("")
