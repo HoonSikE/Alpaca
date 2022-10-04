@@ -87,7 +87,7 @@ class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.
     }
 
     private fun setOnClickListeners() {
-        binding.imgPersonalChatBack.setOnClickListener{
+        binding.imagePersonalChatBack.setOnClickListener{
             requireActivity().onBackPressed()
         }
         binding.imagePersonalChat.setOnClickListener{

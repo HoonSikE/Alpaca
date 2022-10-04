@@ -60,8 +60,15 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun personalPersonalChatRepository(
+    fun mypagePersonalChatRepository(
     ) : PersonalChatRepository{
         return PersonalChatRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun mypageChatBotRepository(
+    ) : ChatBotRepository{
+        return ChatBotRepositoryImpl()
     }
 }
