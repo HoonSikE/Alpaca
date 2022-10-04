@@ -47,316 +47,350 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_my_page" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_my_page"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-            <!--Profile-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_my_page_profile"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginVertical="32dp"
-                android:layout_marginHorizontal="16dp"
-                android:elevation="5dp"
-                android:background="@drawable/layout_user_profile"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_my_page"
+            app:layout_constraintVertical_bias="0.0">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/image_my_page_profile"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_my_page"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <!--Profile-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_my_page_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginVertical="32dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:elevation="5dp"
+                    android:background="@drawable/layout_user_profile"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/image_my_page_profile"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="24dp"
+                        android:src="@drawable/img_user"
+                        android:background="@drawable/circle_profile"
+                        android:padding="1dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/layout_my_page_profile"
+                        app:layout_constraintTop_toTopOf="@+id/layout_my_page_profile" />
+
+                    <TextView
+                        android:id="@+id/text_my_page_name"
+                        style="@style/SubHead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        app:layout_constraintStart_toEndOf="@id/image_my_page_profile"
+                        app:layout_constraintTop_toTopOf="@id/image_my_page_profile"
+                        android:text="XXX님, 안녕하세요!" />
+
+                    <TextView
+                        android:id="@+id/tv_my_page_count"
+                        style="@style/SubHead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toEndOf="@id/image_my_page_profile"
+                        app:layout_constraintTop_toBottomOf="@+id/text_my_page_name"
+                        android:text="총 이용 횟수 : " />
+
+                    <TextView
+                        android:id="@+id/text_my_page_count"
+                        style="@style/SubHead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tv_my_page_count"
+                        app:layout_constraintTop_toBottomOf="@+id/text_my_page_name"
+                        android:text="X회" />
+
+                    <TextView
+                        android:id="@+id/tv_my_page_class"
+                        style="@style/SubHead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toEndOf="@id/image_my_page_profile"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_my_page_count"
+                        android:text="현재 등급 : " />
+
+                    <TextView
+                        android:id="@+id/text_my_page_class"
+                        style="@style/SubHeadBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tv_my_page_class"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_my_page_count"
+                        android:text="Rate" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--Information Management-->
+                <View
+                    android:id="@+id/view_my_page_profile_circle"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/circle_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_my_page_profile" />
+
+                <TextView
+                    android:id="@+id/text_my_page_information_management"
+                    style="@style/HeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toEndOf="@+id/view_my_page_profile_circle"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_my_page_profile"
+                    android:text="정보 관리" />
+
+                <!--Update User Information-->
+                <TextView
+                    android:id="@+id/text_my_page_favorites"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_my_page_information_management"
+                    android:layout_marginTop="16dp"
+                    android:ems="10"
+                    android:text="즐겨찾기 수정"
+                    style="@style/Body"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="48dp"
+                    android:background="@drawable/textview_regular"
+                    tools:layout_editor_absoluteX="88dp"
+                    tools:layout_editor_absoluteY="193dp" />
+
+                <ImageView
+                    android:id="@+id/image_my_page_favorites"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_my_page_favorites"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_my_page_favorites"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_my_page_favorites"
+                    app:srcCompat="@drawable/ic_star_full" />
+
+                <!--Update User Information-->
+                <TextView
+                    android:id="@+id/text_update_user_info"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_my_page_favorites"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:text="회원정보 수정"
+                    style="@style/Body"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="48dp"
+                    android:background="@drawable/textview_regular"
+                    tools:layout_editor_absoluteX="88dp"
+                    tools:layout_editor_absoluteY="193dp" />
+
+                <ImageView
+                    android:id="@+id/image_update_user_info"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_update_user_info"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_user_info"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_profile" />
+
+                <!--Update Password-->
+                <TextView
+                    android:id="@+id/text_update_password"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_info"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:text="비밀번호 변경"
+                    style="@style/Body"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="48dp"
+                    android:background="@drawable/textview_regular"
+                    tools:layout_editor_absoluteX="88dp"
+                    tools:layout_editor_absoluteY="193dp" />
+
+                <ImageView
+                    android:id="@+id/image_update_user_password"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_update_password"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_password"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_lock_close" />
+
+                <!--Logout-->
+                <TextView
+                    android:id="@+id/text_update_user_logout"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_password"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:text="로그아웃"
+                    style="@style/Body"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="48dp"
+                    android:background="@drawable/textview_regular"
+                    tools:layout_editor_absoluteX="88dp"
+                    tools:layout_editor_absoluteY="193dp" />
+
+                <ImageView
+                    android:id="@+id/image_update_user_logout"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_update_user_logout"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_user_logout"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_cancel" />
+
+                <!--withdrawal-->
+                <TextView
+                    android:id="@+id/text_user_withdrawal"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_logout"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:text="회원탈퇴"
+                    style="@style/Body"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="48dp"
+                    android:background="@drawable/textview_regular"
+                    tools:layout_editor_absoluteX="88dp"
+                    tools:layout_editor_absoluteY="193dp" />
+
+                <ImageView
+                    android:id="@+id/image_user_withdawal"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_user_withdrawal"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_user_withdrawal"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_withdrawal" />
+
+                <!--boarding list-->
+
+                <View
+                    android:id="@+id/view_my_page_profile_circle2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/circle_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_user_withdrawal" />
+
+                <TextView
+                    android:id="@+id/text_my_page_boarding_list"
+                    style="@style/HeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintStart_toEndOf="@+id/view_my_page_profile_circle2"
+                    app:layout_constraintTop_toBottomOf="@+id/text_user_withdrawal"
+                    android:text="탑승했던 택시 정보" />
+
+                <TextView
+                    android:id="@+id/text_user_home_noContent_favorites"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="탑승했던 택시 정보가 없습니다.\n알파고를 이용해보세요!"
+                    android:textColor="@color/primaryColor"
+                    android:visibility="gone"
+                    android:elevation="5dp"
+                    app:layout_constraintTop_toBottomOf="@+id/text_my_page_boarding_list"
+                    app:layout_constraintBottom_toTopOf="@+id/recyclerview_my_page_board_taxi_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_my_page_board_taxi_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:elevation="5dp"
+                    android:background="@drawable/layout_recycler"
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_my_page_boarding_list"
+                    />
+
+                <ImageView
+                    android:id="@+id/image_my_page_chat_bot"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginStart="24dp"
-                    android:src="@drawable/img_user"
-                    android:background="@drawable/circle_profile"
-                    android:padding="1dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/layout_my_page_profile"
-                    app:layout_constraintTop_toTopOf="@+id/layout_my_page_profile" />
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginRight="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerview_my_page_board_taxi_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_message"
+                    />
 
                 <TextView
-                    android:id="@+id/text_my_page_name"
-                    style="@style/SubHead"
+                    android:id="@+id/text_my_page_chat_bot"
+                    style="@style/SubHeadSemiBoldPrimaryColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    app:layout_constraintStart_toEndOf="@id/image_my_page_profile"
-                    app:layout_constraintTop_toTopOf="@id/image_my_page_profile"
-                    android:text="XXX님, 안녕하세요!" />
-
-                <TextView
-                    android:id="@+id/tv_my_page_count"
-                    style="@style/SubHead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toEndOf="@id/image_my_page_profile"
-                    app:layout_constraintTop_toBottomOf="@+id/text_my_page_name"
-                    android:text="총 이용 횟수 : " />
-
-                <TextView
-                    android:id="@+id/text_my_page_count"
-                    style="@style/SubHead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toEndOf="@id/tv_my_page_count"
-                    app:layout_constraintTop_toBottomOf="@+id/text_my_page_name"
-                    android:text="X회" />
-
-                <TextView
-                    android:id="@+id/tv_my_page_class"
-                    style="@style/SubHead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toEndOf="@id/image_my_page_profile"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_count"
-                    android:text="현재 등급 : " />
-
-                <TextView
-                    android:id="@+id/text_my_page_class"
-                    style="@style/SubHeadBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toEndOf="@id/tv_my_page_class"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_count"
-                    android:text="Rate" />
+                    android:text="무엇을 도와드릴까요?"
+                    android:paddingRight="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/image_my_page_chat_bot"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_my_page_chat_bot"
+                    app:layout_constraintEnd_toStartOf="@+id/image_my_page_chat_bot"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!--Information Management-->
-            <View
-                android:id="@+id/view_my_page_profile_circle"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/circle_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_my_page_profile" />
-
-            <TextView
-                android:id="@+id/text_my_page_information_management"
-                style="@style/HeadSemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toEndOf="@+id/view_my_page_profile_circle"
-                app:layout_constraintTop_toBottomOf="@+id/layout_my_page_profile"
-                android:text="정보 관리" />
-
-            <!--Update User Information-->
-            <TextView
-                android:id="@+id/text_my_page_favorites"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_my_page_information_management"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:text="즐겨찾기 수정"
-                style="@style/Body"
-                android:gravity="center_vertical"
-                android:paddingLeft="48dp"
-                android:background="@drawable/textview_regular"
-                tools:layout_editor_absoluteX="88dp"
-                tools:layout_editor_absoluteY="193dp" />
-
-            <ImageView
-                android:id="@+id/image_my_page_favorites"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:layout_constraintStart_toStartOf="@+id/text_my_page_favorites"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toTopOf="@+id/text_my_page_favorites"
-                app:layout_constraintBottom_toBottomOf="@+id/text_my_page_favorites"
-                app:srcCompat="@drawable/ic_star_full" />
-
-            <!--Update User Information-->
-            <TextView
-                android:id="@+id/text_update_user_info"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_my_page_favorites"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:text="회원정보 수정"
-                style="@style/Body"
-                android:gravity="center_vertical"
-                android:paddingLeft="48dp"
-                android:background="@drawable/textview_regular"
-                tools:layout_editor_absoluteX="88dp"
-                tools:layout_editor_absoluteY="193dp" />
-
-            <ImageView
-                android:id="@+id/image_update_user_info"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:layout_constraintStart_toStartOf="@+id/text_update_user_info"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toTopOf="@+id/text_update_user_info"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/ic_profile" />
-
-            <!--Update Password-->
-            <TextView
-                android:id="@+id/text_update_password"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_update_user_info"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:text="비밀번호 변경"
-                style="@style/Body"
-                android:gravity="center_vertical"
-                android:paddingLeft="48dp"
-                android:background="@drawable/textview_regular"
-                tools:layout_editor_absoluteX="88dp"
-                tools:layout_editor_absoluteY="193dp" />
-
-            <ImageView
-                android:id="@+id/image_update_user_password"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:layout_constraintStart_toStartOf="@+id/text_update_password"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toTopOf="@+id/text_update_password"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/ic_lock_close" />
-
-            <!--Logout-->
-            <TextView
-                android:id="@+id/text_update_user_logout"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_update_password"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:text="로그아웃"
-                style="@style/Body"
-                android:gravity="center_vertical"
-                android:paddingLeft="48dp"
-                android:background="@drawable/textview_regular"
-                tools:layout_editor_absoluteX="88dp"
-                tools:layout_editor_absoluteY="193dp" />
-
-            <ImageView
-                android:id="@+id/image_update_user_logout"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:layout_constraintStart_toStartOf="@+id/text_update_user_logout"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toTopOf="@+id/text_update_user_logout"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/ic_cancel" />
-
-            <!--withdrawal-->
-            <TextView
-                android:id="@+id/text_user_withdrawal"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_update_user_logout"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:text="회원탈퇴"
-                style="@style/Body"
-                android:gravity="center_vertical"
-                android:paddingLeft="48dp"
-                android:background="@drawable/textview_regular"
-                tools:layout_editor_absoluteX="88dp"
-                tools:layout_editor_absoluteY="193dp" />
-
-            <ImageView
-                android:id="@+id/image_user_withdawal"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:layout_constraintStart_toStartOf="@+id/text_user_withdrawal"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toTopOf="@+id/text_user_withdrawal"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/ic_withdrawal" />
-
-            <!--boarding list-->
-
-            <View
-                android:id="@+id/view_my_page_profile_circle2"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/circle_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_user_withdrawal" />
-
-            <TextView
-                android:id="@+id/text_my_page_boarding_list"
-                style="@style/HeadSemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintStart_toEndOf="@+id/view_my_page_profile_circle2"
-                app:layout_constraintTop_toBottomOf="@+id/text_user_withdrawal"
-                android:text="탑승했던 택시 정보" />
-
-            <TextView
-                android:id="@+id/text_user_home_noContent_favorites"
-                style="@style/SubHeadSemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="탑승했던 택시 정보가 없습니다.\n알파고를 이용해보세요!"
-                android:textColor="@color/primaryColor"
-                android:visibility="gone"
-                android:elevation="5dp"
-                app:layout_constraintTop_toBottomOf="@+id/text_my_page_boarding_list"
-                app:layout_constraintBottom_toTopOf="@+id/recyclerview_my_page_board_taxi_list"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_my_page_board_taxi_list"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginHorizontal="16dp"
-                android:elevation="5dp"
-                android:background="@drawable/layout_recycler"
-                android:paddingVertical="8dp"
-                android:paddingHorizontal="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_my_page_boarding_list"
-                />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

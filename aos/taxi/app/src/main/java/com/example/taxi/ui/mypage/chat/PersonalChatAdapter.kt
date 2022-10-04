@@ -55,8 +55,6 @@ class PersonalChatAdapter: RecyclerView.Adapter<PersonalChatAdapter.MessageViewH
             carName = ApplicationClass.prefs.carName!!
         }
 
-
-
         if(commentList[position].userName.equals(userName) || commentList[position].userName.equals(carName)){ // 본인 채팅
             holder.textView_message.setBackgroundResource(R.drawable.ic_chat_right)
             holder.textView_message.setPadding(16,16,16,32)
@@ -78,12 +76,12 @@ class PersonalChatAdapter: RecyclerView.Adapter<PersonalChatAdapter.MessageViewH
     }
 
     inner class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView_profile: ImageView = view.findViewById(R.id.messageItem_imageview_profile)
-        val textView_name: TextView = view.findViewById(R.id.messageItem_textview_name)
-        val textView_message: TextView = view.findViewById(R.id.messageItem_textView_message)
-        val textView_time: TextView = view.findViewById(R.id.messageItem_textView_time)
-        val layout_main: LinearLayout = view.findViewById(R.id.messageItem_linearlayout_main)
-        val layout_destination: LinearLayout = view.findViewById(R.id.messageItem_layout_destination)
+        val imageView_profile: ImageView = view.findViewById(R.id.image_messageItem_profile)
+        val textView_name: TextView = view.findViewById(R.id.text_messageItem_name)
+        val textView_message: TextView = view.findViewById(R.id.text_messageItem_message)
+        val textView_time: TextView = view.findViewById(R.id.text_messageItem_time)
+        val layout_main: LinearLayout = view.findViewById(R.id.layout_messageItem_main)
+        val layout_destination: LinearLayout = view.findViewById(R.id.layout_messageItem_destination)
     }
 
     override fun getItemCount(): Int {
