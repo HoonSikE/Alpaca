@@ -54,8 +54,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
             <TextView
                 android:id="@+id/text_dlg_user_with_drawal1"
@@ -67,7 +67,8 @@
                 android:layout_marginStart="14dp"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/text_dlg_user_with_drawal2"/>
 
             <TextView
                 android:id="@+id/text_dlg_user_with_drawal2"
@@ -82,6 +83,7 @@
                 app:layout_constraintTop_toTopOf="@+id/text_dlg_user_with_drawal1"
                 app:layout_constraintBottom_toBottomOf="@+id/text_dlg_user_with_drawal1"
                 app:layout_constraintStart_toEndOf="@+id/text_dlg_user_with_drawal1"
+                app:layout_constraintEnd_toStartOf="@+id/text_dlg_user_with_drawal3"
                 />
 
             <TextView
@@ -95,6 +97,7 @@
                 app:layout_constraintTop_toTopOf="@+id/text_dlg_user_with_drawal1"
                 app:layout_constraintBottom_toBottomOf="@+id/text_dlg_user_with_drawal1"
                 app:layout_constraintStart_toEndOf="@+id/text_dlg_user_with_drawal2"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <TextView
