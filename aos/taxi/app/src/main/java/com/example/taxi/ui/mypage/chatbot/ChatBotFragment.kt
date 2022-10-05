@@ -21,7 +21,7 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
     private val chatBotViewModel: ChatBotViewModel by viewModels()
     private lateinit var chatBotAdapter: ChatBotAdapter
     private var comments = ArrayList<String>()
-    private var message = "main"
+    private var message = "0"
     private var messageTmp = ""
 
     private val messageClickListener: (View, String) -> Unit = { _, msg ->

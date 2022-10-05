@@ -1,4 +1,4 @@
-package com.example.taxi.ui.login.join
+package com.example.taxi.ui.mypage.update_user
 
 import android.app.Dialog
 import android.content.Context
@@ -14,7 +14,7 @@ import com.example.taxi.databinding.DlgAddressBinding
 import com.example.taxi.databinding.DlgPhoneAuthBinding
 import com.example.taxi.utils.view.toast
 
-class PhoneAuthDialogFragment() : DialogFragment() {
+class UpdatePhoneAuthDialogFragment() : DialogFragment() {
     private var _binding: DlgPhoneAuthBinding? = null
     private val binding get() = _binding!!
 

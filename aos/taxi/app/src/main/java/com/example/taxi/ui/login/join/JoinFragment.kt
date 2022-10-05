@@ -24,10 +24,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     val authViewModel: AuthViewModel by viewModels()
-    var isEachProvider = false
+//    var isEachProvider = false
     // 주소
     lateinit var addressInfo : AddressInfo
-    lateinit var verificationId : String
+    var verificationId : String = ""
     // 사진 업로드
     var pickImageFromAlbum = 0
     var uriPhoto : Uri? = "".toUri()
@@ -90,17 +90,19 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                 // 화면 밖 터치시 종료되지 않게 하기
                 dialog.isCancelable = false
                 dialog.setOnOKClickedListener { content ->
-                    authViewModel.ckeckPhoneAuth (
-                        verificationId = verificationId,
-                        code = content
-                    )
+                    if(verificationId != "") {
+                        authViewModel.ckeckPhoneAuth(
+                            verificationId = verificationId,
+                            code = content
+                        )
+                    }
                 }
-                dialog.show(childFragmentManager, "update home address")
+                dialog.show(childFragmentManager, "complete phone auth")
             }
         }
         binding.buttonJoinLogin.setOnClickListener {
             if (validation()){
-                isEachProvider = binding.switchJoinIsEachProvider.isChecked
+//                isEachProvider = binding.switchJoinIsEachProvider.isChecked
                 if(!checkCurrentUser){
                     authViewModel.register(
                         email = binding.editTextJoinId.text.toString(),
@@ -145,10 +147,10 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                                         addressInfo = addressInfo
                                     )
                                     ApplicationClass.prefs.isEachProvider = user.isEachProvider
-                                    if(isEachProvider)
-                                        findNavController().navigate(R.id.action_joinFragment_to_joinProviderFragment)
-                                    else
-                                        findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
+//                                    if(isEachProvider)
+//                                        findNavController().navigate(R.id.action_joinFragment_to_joinProviderFragment)
+//                                    else
+                                    findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
                                 }
                             }
                         }
@@ -184,10 +186,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                                     )
                                     ApplicationClass.prefs.isEachProvider = user.isEachProvider
 
-                                    if(isEachProvider)
-                                        findNavController().navigate(R.id.action_joinFragment_to_joinProviderFragment)
-                                    else
-                                        findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
+                                    findNavController().navigate(R.id.action_joinFragment_to_userHomeFragment)
                                 }
                             }
                         }
@@ -229,7 +228,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             name = binding.editTextJoinName.text.toString(),
             tel = binding.editTextJoinTel.text.toString()+"-"+binding.editTextJoinTel2.text.toString()+"-"+binding.editTextJoinTel3.text.toString(),
             userId = binding.editTextJoinId.text.toString(),
-            isEachProvider = binding.switchJoinIsEachProvider.isChecked,
+            isEachProvider = false,
             profileImage = uriPhoto.toString()
         )
     }
@@ -252,6 +251,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         }
         return true
     }
+
     private fun validation(): Boolean {
         var validation = true
         if (binding.editTextJoinName.text.isNullOrEmpty()){

@@ -17,6 +17,7 @@ import com.example.taxi.databinding.FragmentJoinProviderBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.home.provider.ProviderViewModel
 import com.example.taxi.ui.login.AuthViewModel
+import com.example.taxi.ui.mypage.update_user.UpdateUserInfoViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.show
@@ -26,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class JoinProviderFragment : BaseFragment<FragmentJoinProviderBinding>(R.layout.fragment_join_provider) {
     val providerViewModel: ProviderViewModel by viewModels()
+    val updateUserInfoViewModel: UpdateUserInfoViewModel by viewModels()
 
     // 사진 업로드
     var pickImageFromAlbum = 0
@@ -37,6 +39,9 @@ class JoinProviderFragment : BaseFragment<FragmentJoinProviderBinding>(R.layout.
     }
 
     private fun setOnClickListeners(){
+        binding.imgJoinProviderBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
         binding.imageJoinProviderImageButton.setOnClickListener{
             // Open Album
             var photoPickerInent = Intent(Intent.ACTION_PICK)
@@ -81,6 +86,8 @@ class JoinProviderFragment : BaseFragment<FragmentJoinProviderBinding>(R.layout.
                     ApplicationClass.prefs.rideComfortAverage = provider.car?.rideComfortAverage?.toFloat()
                     ApplicationClass.prefs.fee = provider.revenue
 
+                    toast("차량등록이 완료되었습니다.")
+                    updateUserInfoViewModel.updateUserEachProvider(true)
                     findNavController().navigate(R.id.action_joinProviderFragment_to_userHomeFragment)
                 }
                 else -> {}
