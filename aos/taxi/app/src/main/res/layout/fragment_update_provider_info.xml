@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_join"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_join_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="3dp"
+                android:src="@drawable/ic_back"
+                app:tint="@color/black" />
+
+            <TextView
+                style="@style/SubHeadBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="회원정보 수정 (제공자)"
+                android:layout_gravity="center_vertical"
+                />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_join"
+            />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_join"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!--Car Image-->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_update_car_image"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/circle_profile"
+                    android:src="@drawable/img_car"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_update_car_image_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/edittext_regular"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_update_car_image"
+                    app:layout_constraintEnd_toEndOf="@+id/image_update_car_image"
+                    app:srcCompat="@drawable/img_edit" />
+
+                <TextView
+                    android:id="@+id/text_update_car_image"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="차량 사진"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image_update_car_image_button" />
+
+                <!--Car Name-->
+                <TextView
+                    android:id="@+id/text_label_update_car_name"
+                    style="@style/SubHeadSemiBoldPrimaryColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="차량 이름"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_car_image" />
+
+                <TextView
+                    android:id="@+id/text_update_car_name"
+                    style="@style/Body"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/textview_regular"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="48dp"
+                    android:hint="차량 이름을 입력하세요"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_update_car_name"
+                    tools:layout_editor_absoluteX="88dp"
+                    tools:layout_editor_absoluteY="193dp" />
+
+                <ImageView
+                    android:id="@+id/image_update_car_name"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_update_car_name"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_car_name"
+                    app:srcCompat="@drawable/ic_local_taxi" />
+
+                <ImageView
+                    android:id="@+id/image_update_car_name_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_car_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_update_car_name"
+                    app:layout_constraintEnd_toEndOf="@+id/text_update_car_name"
+                    android:layout_marginRight="8dp"
+                    app:srcCompat="@drawable/ic_edit" />
+
+                <!--Car Number-->
+                <TextView
+                    android:id="@+id/text_label_update_car_number"
+                    style="@style/SubHeadSemiBoldPrimaryColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="차량 번호"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_car_name" />
+
+                <TextView
+                    android:id="@+id/text_update_car_number"
+                    style="@style/Body"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/textview_regular"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="48dp"
+                    android:hint="차량 번호를 입력하세요."
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_update_car_number"
+                    tools:layout_editor_absoluteX="88dp"
+                    tools:layout_editor_absoluteY="193dp" />
+
+                <ImageView
+                    android:id="@+id/image_update_update_car_number"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_update_car_number"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_car_number"
+                    app:srcCompat="@drawable/ic_tag" />
+
+                <ImageView
+                    android:id="@+id/image_update_car_number_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_update_car_number"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_update_car_number"
+                    app:layout_constraintEnd_toEndOf="@+id/text_update_car_number"
+                    android:layout_marginRight="8dp"
+                    app:srcCompat="@drawable/ic_edit" />
+
+                <!--button-->
+                <Button
+                    android:id="@+id/button_provier_update"
+                    style="@style/Body"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/button_regular"
+                    android:text="수정하기"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressBar_update_loading"
+            style="?android:attr/progressBarStyle"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
