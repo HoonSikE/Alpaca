@@ -52,17 +52,23 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
         providerViewModel.userList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    binding.progressBar.show()
+//                    binding.progressBar.show()
+                    binding.textProviderHomeNoContentUserList.show()
+                    binding.textProviderHomeFailedUserList.hide()
                 }
                 is UiState.Failure -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textProviderHomeNoContentUserList.hide()
+                    binding.textProviderHomeFailedUserList.show()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textProviderHomeNoContentUserList.hide()
+                    binding.textProviderHomeFailedUserList.hide()
                     userList = state.data
                     initAdapter(state.data)
                 }
