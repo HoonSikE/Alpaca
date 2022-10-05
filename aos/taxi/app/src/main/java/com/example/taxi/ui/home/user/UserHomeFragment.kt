@@ -90,19 +90,22 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
         userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    binding.progressBar.show()
+//                    binding.progressBar.show()
+                    binding.textUserHomeNoContentDestination.show()
+                    binding.textUserHomeFailedDestination.hide()
                 }
                 is UiState.Failure -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                     binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler_no_item)
-                    binding.textUserHomeNoContentDestination.show()
+                    binding.textUserHomeNoContentDestination.hide()
+                    binding.textUserHomeFailedDestination.show()
                 }
                 is UiState.Success -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
                     Glide.with(requireContext())
                         .load(ApplicationClass.prefs.profileImage)
                         .into(binding.imageUserHomeProfile)
@@ -113,29 +116,34 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                     destinationListAdapter.updateList(list)
                     binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textUserHomeNoContentDestination.hide()
+                    binding.textUserHomeFailedDestination.hide()
                 }
             }
         }
         userHomeViewModel.favorites.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+//                    binding.progressBar.show()
+                    binding.textUserHomeNoContentFavorites.show()
+                    binding.textUserHomeFailedFavorites.hide()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+//                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                     binding.recyclerviewUserHomeFavorites.setBackgroundResource(R.drawable.layout_recycler_no_item)
-                    binding.textUserHomeNoContentFavorites.show()
+                    binding.textUserHomeNoContentFavorites.hide()
+                    binding.textUserHomeFailedFavorites.show()
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+//                    binding.progressBar.hide()
                     favorites = state.data.toMutableList()
                     favoritesAdapter.updateList(favorites)
                     binding.recyclerviewUserHomeFavorites.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textUserHomeNoContentFavorites.hide()
+                    binding.textUserHomeFailedFavorites.hide()
                 }
             }
         }

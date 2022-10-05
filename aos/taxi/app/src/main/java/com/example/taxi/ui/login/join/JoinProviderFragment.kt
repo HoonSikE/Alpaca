@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class JoinProviderFragment : BaseFragment<FragmentJoinProviderBinding>(R.layout.fragment_join_provider) {
+    val authViewModel: AuthViewModel by viewModels()
     val providerViewModel: ProviderViewModel by viewModels()
     val updateUserInfoViewModel: UpdateUserInfoViewModel by viewModels()
 
@@ -74,8 +75,10 @@ class JoinProviderFragment : BaseFragment<FragmentJoinProviderBinding>(R.layout.
 //                    binding.buttonJoinLogin.setText("Register")
                     binding.progressBarJoinLoading.hide()
 
+
                     val provider: Provider = state.data
 
+                    ApplicationClass.prefs.providerId = ApplicationClass.userId
                     ApplicationClass.prefs.carName = provider.car?.carName
                     ApplicationClass.prefs.carNumber = provider.car?.carNumber
                     ApplicationClass.prefs.cleanlinessAverage = provider.car?.cleanlinessAverage?.toFloat()

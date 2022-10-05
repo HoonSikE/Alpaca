@@ -110,6 +110,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 ApplicationClass.prefs.profileImage = user.profileImage
                 ApplicationClass.prefs.tel = user.tel
                 ApplicationClass.prefs.isEachProvider = user.isEachProvider
+                if(user.isEachProvider){
+                    ApplicationClass.prefs.providerId = user.userId
+                }
                 findNavController().navigate(R.id.action_loginFragment_to_userHomeFragment)
             }
         }
@@ -139,6 +142,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                             ApplicationClass.prefs.useCount = user.useCount
                             ApplicationClass.prefs.profileImage = user.profileImage
                             ApplicationClass.prefs.isEachProvider = user.isEachProvider
+                            if(user.isEachProvider){
+                                ApplicationClass.prefs.providerId = user.userId
+                            }
                             findNavController().navigate(R.id.action_loginFragment_to_userHomeFragment)
                         }
                     }
@@ -174,6 +180,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                                     ApplicationClass.prefs.userSeq = user.userSeq
                                     ApplicationClass.prefs.useCount = user.useCount
                                     ApplicationClass.prefs.profileImage = user.profileImage
+                                    if(user.isEachProvider){
+                                        ApplicationClass.prefs.providerId = user.userId
+                                    }
                                     findNavController().navigate(R.id.action_loginFragment_to_userHomeFragment)
                                 }else{
                                     findNavController().navigate(R.id.action_loginFragment_to_joinFragment)
