@@ -37,6 +37,10 @@ class ProviderViewModel @Inject constructor(
     val upadteUserList: LiveData<UiState<UserList>>
         get() = _upadteUserList
 
+    private val _deleteProvider = MutableLiveData<UiState<String>>()
+    val deleteProvider: LiveData<UiState<String>>
+        get() = _deleteProvider
+
     fun getProvider(){
         _provider.value = UiState.Loading
         repository.getProvider { _provider.value = it }
@@ -50,6 +54,11 @@ class ProviderViewModel @Inject constructor(
     fun updateProvider(providerCar: ProviderCar) {
         _providerCar.value = UiState.Loading
         repository.updateProvider(providerCar) { _providerCar.value = it }
+    }
+
+    fun deleteProvider() {
+        _deleteProvider.value = UiState.Loading
+        repository.deleteProvider { _deleteProvider.value = it }
     }
 
     fun updateRevenue(revenue : Int){

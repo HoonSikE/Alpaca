@@ -47,17 +47,28 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     override fun init() {
+        initData()
         initAdapter()
         observerData()
         setOnClickListeners()
     }
 
-    private fun initAdapter() {
-        if(ApplicationClass.prefs.isEachProvider == true){
-            binding.imageMoveProvider.show()
-        }else{
-            binding.imageMoveProvider.hide()
+    private fun initData() {
+        val profileImage = ApplicationClass.prefs?.profileImage
+        if (profileImage != "")
+            Glide.with(this).load(profileImage).into(binding.imageUserHomeProfile)
+
+        binding.textUserHomeName.text = ApplicationClass.prefs.name + "님, 안녕하세요!"
+        binding.textUserHomeCount.text = ApplicationClass.prefs.useCount.toString()
+
+        val useCount = ApplicationClass.prefs.useCount
+        if (useCount != null) {
+            setLevel()
         }
+    }
+
+
+    private fun initAdapter() {
         userHomeViewModel.getDestinations()
         destinationListAdapter = DestinationListAdapter().apply {
             onItemClickListener = destinationOnClickListener
@@ -135,7 +146,11 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
             findNavController().navigate(R.id.action_userHomeFragment_to_myPageFragment)
         }
         binding.imageMoveProvider.setOnClickListener {
-            findNavController().navigate(R.id.action_userHomeFragment_to_providerHomeFragment)
+            if(ApplicationClass.prefs.isEachProvider == true){
+                findNavController().navigate(R.id.action_userHomeFragment_to_providerHomeFragment)
+            }else{
+                findNavController().navigate(R.id.action_userHomeFragment_to_joinProviderFragment)
+            }
         }
         binding.buttonUserHomeCallTaxi.setOnClickListener {
             findNavController().navigate(R.id.action_userHomeFragment_to_startPointSettingFragment)

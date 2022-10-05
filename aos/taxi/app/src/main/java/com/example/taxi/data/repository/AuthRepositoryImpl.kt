@@ -159,9 +159,7 @@ class AuthRepositoryImpl(
 
     override fun ckeckPhoneAuth(verificationId: String, code: String, result: (UiState<String>) -> Unit){
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
-
         println("ckeckPhoneAuth : " + verificationId + " " + code)
-
 
         auth.signInWithCredential(credential)
             .addOnCompleteListener() { task ->
@@ -388,12 +386,18 @@ class AuthRepositoryImpl(
         }
     }
 
-    override fun withDrawal(result: () -> Unit) {
+    override fun withDrawal(result: (UiState<String>) -> Unit) {
         auth.currentUser!!.delete().addOnCompleteListener{ task ->
             if(task.isSuccessful){
                 auth.signOut()
                 appPreferences.edit().putString(SharedPrefConstants.USER_SESSION,null).apply()
-                result.invoke()
+                result.invoke(
+                    UiState.Success("User has been deleted successfully")
+                )
+            }else{
+                result.invoke(
+                    UiState.Success("User has been deleted Failed")
+                )
             }
         }
     }

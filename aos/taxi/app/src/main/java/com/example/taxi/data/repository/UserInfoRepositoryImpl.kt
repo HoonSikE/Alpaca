@@ -89,6 +89,26 @@ class UserInfoRepositoryImpl(private val database: FirebaseFirestore) : UserInfo
             }
     }
 
+    override fun updateUserEachProvider(isEachProvider: Boolean, result: (UiState<Boolean>) -> Unit){
+        val document = database.collection(FireStoreCollection.USER).document(ApplicationClass.prefs.userSeq.toString())
+        document.update("isEachProvider", isEachProvider)
+            .addOnSuccessListener {
+                ApplicationClass.prefs.isEachProvider = isEachProvider
+                result.invoke(
+                    UiState.Success(isEachProvider)
+                )
+                Log.d("updateUserEachProvider", "Tel has been updated successfully")
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+                Log.d("updateUserEachProvider", "Tel has been updated fail")
+            }
+    }
+
     override fun updateUserTel(tel: String, result: (UiState<String>) -> Unit){
         val document = database.collection(FireStoreCollection.USER).document(ApplicationClass.prefs.userSeq.toString())
         document.update("tel", tel)
