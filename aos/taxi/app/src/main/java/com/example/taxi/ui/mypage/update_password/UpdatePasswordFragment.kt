@@ -8,7 +8,9 @@ import com.example.taxi.base.BaseFragment
 import com.example.taxi.databinding.FragmentUpdatePasswordBinding
 import com.example.taxi.ui.login.AuthViewModel
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.isValidEmail
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,10 +38,10 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(R.lay
         authViewModel.reauthPassword.observe(viewLifecycleOwner){ state ->
             when(state){
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     toast("기존 비밀번호가 일치하지 않습니다!")
                     state.error?.let {
                         toast(it)
@@ -47,6 +49,7 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(R.lay
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     toast("기존 비밀번호가 일치합니다!")
                     authViewModel.updatePassword(
                         newPassword = binding.editTextUpdatePassword2.text.toString()
@@ -57,17 +60,18 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(R.lay
         authViewModel.updatePassword.observe(viewLifecycleOwner){ state ->
             when(state){
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    toast("비밀번호 변경이 완료되었습니다.ㅋㅌ!")
+                    binding.progressBar.hide()
+                    toast("비밀번호 변경이 완료되었습니다.")
                     findNavController().navigate(R.id.action_updatePasswordFragment_to_myPageFragment)
                 }
             }

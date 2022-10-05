@@ -8,6 +8,8 @@ import com.example.taxi.base.BaseFragment
 import com.example.taxi.databinding.FragmentFindPwBinding
 import com.example.taxi.ui.login.AuthViewModel
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,10 +37,10 @@ class FindPWFragment : BaseFragment<FragmentFindPwBinding>(R.layout.fragment_fin
         authViewModel.forgotPassword.observe(viewLifecycleOwner){ state ->
             when(state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     toast("이메일 전송에 실패했습니다.!")
                     state.error?.let {
                         toast(it)
@@ -46,6 +48,7 @@ class FindPWFragment : BaseFragment<FragmentFindPwBinding>(R.layout.fragment_fin
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     toast("이메일 전송에 성공했습니다.!")
                     findNavController().navigate(R.id.action_findPWFragment_to_loginFragment)
                 }

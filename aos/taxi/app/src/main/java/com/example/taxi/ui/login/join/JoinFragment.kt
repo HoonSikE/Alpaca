@@ -212,6 +212,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     state.error?.let { toast(it) }
                 }
                 is UiState.Success -> {
+                    binding.progressBarJoinLoading.hide()
                     toast(state.data)
                     binding.editTextJoinTel.isEnabled = false
                     binding.editTextJoinTel2.isEnabled = false
