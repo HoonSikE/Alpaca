@@ -7,7 +7,106 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_assigned_taxi_information_car"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:src="@drawable/img_car"
+            android:background="@drawable/circle_profile"
+            android:padding="1dp"
+            android:layout_marginTop="96dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/text_assigned_taxi_information_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12가3456"
+            android:layout_marginTop="24dp"
+            style="@style/SubHead"
+            app:layout_constraintTop_toBottomOf="@+id/image_assigned_taxi_information_car"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/text_assigned_taxi_information_ride_comfort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="승차감"
+            android:layout_marginTop="48dp"
+            android:layout_marginStart="32dp"
+            style="@style/SubHead"
+            app:layout_constraintTop_toBottomOf="@+id/text_assigned_taxi_information_number"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <RatingBar
+            android:id="@+id/rating_assigned_taxi_information_ride_comfort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:layout_marginStart="32dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.1"
+            app:layout_constraintStart_toEndOf="@+id/text_assigned_taxi_information_ride_comfort"
+            app:layout_constraintTop_toBottomOf="@+id/text_assigned_taxi_information_number"
+            />
+
+        <TextView
+            android:id="@+id/text_assigned_taxi_information_cleanliness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="청결도"
+            android:layout_marginTop="48dp"
+            android:layout_marginStart="32dp"
+            style="@style/SubHead"
+            app:layout_constraintTop_toBottomOf="@+id/text_assigned_taxi_information_ride_comfort"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <RatingBar
+            android:id="@+id/rating_assigned_taxi_information_cleanliness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:layout_marginStart="32dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.1"
+            app:layout_constraintStart_toEndOf="@+id/text_assigned_taxi_information_cleanliness"
+            app:layout_constraintTop_toBottomOf="@+id/text_assigned_taxi_information_ride_comfort"
+            />
+
+        <Button
+            android:id="@+id/button_assigned_taxi_information"
+            style="@style/Body"
+            android:textColor="@color/primaryTextColor"
+            android:layout_width="128dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_regular"
+            android:text="확인"
+            app:layout_constraintTop_toBottomOf="@+id/text_assigned_taxi_information_cleanliness"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/black"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

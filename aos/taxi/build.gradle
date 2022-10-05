@@ -2,7 +2,11 @@
 buildscript {
     repositories {
         google()
+        jcenter()
         mavenCentral()
+        maven{
+            url 'https://naver.jfrog.io/artifactory/maven/'
+        }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
@@ -13,7 +17,7 @@ buildscript {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.42'
 
         // Firebase
-        classpath 'com.google.gms:google-services:4.3.13'
+        classpath 'com.google.gms:google-services:4.3.14'
     }
 }
 

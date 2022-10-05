@@ -27,14 +27,12 @@ android {
         }
     }
     compileOptions {
-        // Flag to enable support for the new language APIs
-        coreLibraryDesugaringEnabled true
-        // Sets Java compatibility to Java 8
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
     buildFeatures {
         viewBinding = true
@@ -100,9 +98,21 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx:24.3.0'
     implementation 'com.google.firebase:firebase-firestore:24.3.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.2'
+    // Firebase Storage
+    implementation 'com.google.firebase:firebase-storage:20.0.2'
+    // Firebase Storage 이미지 불러오기 (Glide)
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:glide:4.13.2'
+
+    // Google Login
+    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    // Facebook Login
+    implementation 'com.facebook.android:facebook-login:8.2.0'
+//    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
     //Gson
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.google.code.gson:gson:2.6.2'
 
     // Navigation
@@ -110,6 +120,27 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    //NaverMap API
+    implementation 'com.naver.maps:map-sdk:3.15.0'
+
+    // CanHub/Android-Image-Cropper
+    implementation 'com.github.CanHub:Android-Image-Cropper:4.3.1'
+
+    // TedPermission-normal
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
+
+    //gms-location
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+
+    // Recyclerview
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+
+    //SwitchButton
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
+    // Bootpay
+    implementation 'io.github.bootpay:android:4.0.8'
 }
 
 kapt {

@@ -5,9 +5,178 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_end_taxi_car"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:src="@drawable/img_car"
+            android:background="@drawable/circle_profile"
+            android:padding="1dp"
+            android:layout_marginTop="96dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_end_taxi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23나4567"
+            android:layout_marginTop="24dp"
+            style="@style/SubHeadSemiBold"
+            app:layout_constraintTop_toBottomOf="@+id/image_end_taxi_car"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <View
+            android:id="@+id/back_end_taxi"
+            android:layout_width="0dp"
+            android:layout_height="288dp"
+            android:background="@drawable/view_bottom"
+            android:elevation="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/back_end_taxi_bar"
+            android:layout_width="1dp"
+            android:layout_height="208dp"
+            android:background="@color/lightGray"
+            android:elevation="1dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_end_taxi"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/image_end_taxi_photo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@+id/back_end_taxi_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_end_taxi"
+            android:elevation="5dp"
+            android:src="@drawable/ic_local_taxi"
+            />
+
+        <TextView
+            android:id="@+id/text_end_taxi_door"
+            style="@style/SubHeadBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:text="평점을 남겨주세요!"
+            android:textColor="@color/primaryColor"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toTopOf="@id/back_end_taxi"
+            app:layout_constraintEnd_toStartOf="@+id/back_end_taxi_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="563dp" />
+
+        <TextView
+            android:id="@+id/text_end_taxi_ride_comfort"
+            style="@style/SubHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:text="승차감"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/text_end_taxi_door"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="563dp" />
+
+        <RatingBar
+            android:id="@+id/rating_end_taxi_ride_comfort"
+            android:layout_width="180dp"
+            android:layout_height="32dp"
+            android:elevation="5dp"
+            android:numStars="5"
+            android:stepSize="0.1"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/text_end_taxi_ride_comfort"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/text_end_taxi_cleanliness"
+            style="@style/SubHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:text="청결도"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/rating_end_taxi_ride_comfort"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="563dp" />
+
+        <RatingBar
+            android:id="@+id/rating_end_taxi_cleanliness"
+            android:layout_width="180dp"
+            android:layout_height="32dp"
+            android:elevation="5dp"
+            android:numStars="5"
+            android:stepSize="0.1"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/text_end_taxi_cleanliness"
+            app:layout_constraintStart_toStartOf="parent"
+            />
 
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_end_taxi_photo"
+            style="@style/Body"
+            android:layout_width="128dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button_light"
+            android:elevation="10dp"
+            android:text="내부사진\n찍기"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toEndOf="@+id/back_end_taxi_bar"
+            app:layout_constraintTop_toBottomOf="@+id/image_end_taxi_photo" />
+
+        <Button
+            android:id="@+id/button_end_taxi_start"
+            style="@style/Body"
+            android:textColor="@color/primaryTextColor"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_regular"
+            android:text="택시 호출하기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/black"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,7 +1,6 @@
 package com.example.taxi.ui.home.user
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
@@ -9,10 +8,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.mypage.Favorites
 import com.example.taxi.data.dto.user.destination.Destination
+import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.databinding.FragmentUserHomeBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.UiState
@@ -25,10 +26,24 @@ import dagger.hilt.android.AndroidEntryPoint
 class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_user_home) {
     private lateinit var destinationListAdapter: DestinationListAdapter
     private lateinit var favoritesAdapter: FavoritesAdapter
+    private var favorites : MutableList<Favorites> = mutableListOf()
     private val userHomeViewModel : UserHomeViewModel by viewModels()
+    private lateinit var destination: Destination
+    private var addressFavorites = ""
 
     private val favoritesDeleteClickListener: (View, String) -> Unit = { _, address ->
+        addressFavorites = address
         showFavoritesDialog(address)
+    }
+
+    private val destinationOnClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
+        destination = Destination(address,x,place,y)
+        findNavController().navigate(R.id.action_userHomeFragment_to_destinationSettingFragment, bundleOf("Destination" to destination))
+    }
+
+    private val favoritesOnClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
+        destination = Destination(address,x,place,y)
+        findNavController().navigate(R.id.action_userHomeFragment_to_destinationSettingFragment, bundleOf("Destination" to destination))
     }
 
     override fun init() {
@@ -38,13 +53,21 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun initAdapter() {
+        if(ApplicationClass.prefs.isEachProvider == true){
+            binding.imageMoveProvider.show()
+        }else{
+            binding.imageMoveProvider.hide()
+        }
         userHomeViewModel.getDestinations()
-        destinationListAdapter = DestinationListAdapter()
+        destinationListAdapter = DestinationListAdapter().apply {
+            onItemClickListener = destinationOnClickListener
+        }
         binding.recyclerviewUserHomeDestinationList.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerviewUserHomeDestinationList.adapter = destinationListAdapter
         userHomeViewModel.getFavorites()
         favoritesAdapter = FavoritesAdapter().apply {
             onItemClickListener = favoritesDeleteClickListener
+            onFavoritesClickListener = favoritesOnClickListener
         }
         binding.recyclerviewUserHomeFavorites.apply {
             adapter = favoritesAdapter
@@ -56,10 +79,10 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
         userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
@@ -68,11 +91,14 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                     binding.textUserHomeNoContentDestination.show()
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
+                    Glide.with(requireContext())
+                        .load(ApplicationClass.prefs.profileImage)
+                        .into(binding.imageUserHomeProfile)
                     binding.textUserHomeName.text = ApplicationClass.prefs.name + "님, 안녕하세요"
                     binding.textUserHomeCount.text = ApplicationClass.prefs.useCount.toString() + "회"
                     setLevel()
-                    val list : MutableList<Destination> = state.data.toMutableList()
+                    val list : MutableList<FrequentDestination> = state.data.toMutableList()
                     destinationListAdapter.updateList(list)
                     binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textUserHomeNoContentDestination.hide()
@@ -95,8 +121,8 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                 }
                 is UiState.Success -> {
                     //binding.progressBar.hide()
-                    val list : MutableList<Favorites> = state.data.toMutableList()
-                    favoritesAdapter.updateList(list)
+                    favorites = state.data.toMutableList()
+                    favoritesAdapter.updateList(favorites)
                     binding.recyclerviewUserHomeFavorites.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textUserHomeNoContentFavorites.hide()
                 }
@@ -105,8 +131,14 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun setOnClickListeners(){
+        binding.imageMoveMyPage.setOnClickListener{
+            findNavController().navigate(R.id.action_userHomeFragment_to_myPageFragment)
+        }
+        binding.imageMoveProvider.setOnClickListener {
+            findNavController().navigate(R.id.action_userHomeFragment_to_providerHomeFragment)
+        }
         binding.buttonUserHomeCallTaxi.setOnClickListener {
-            findNavController().navigate(R.id.action_userHomeFragment_to_destinationSettingFragment)
+            findNavController().navigate(R.id.action_userHomeFragment_to_startPointSettingFragment)
         }
     }
 
@@ -115,7 +147,18 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private val favoritesListener: (address: String) -> Unit = {
-        //userHomeViewModel.deleteFavorites()
+        if(favorites.size < 2) {
+            userHomeViewModel.deleteFavorites()
+        }else{
+            for(i in 0 until favorites.size){
+                if(favorites[i].address == addressFavorites) {
+                    favorites.removeAt(i)
+                    userHomeViewModel.updateFavorites(favorites)
+                }
+            }
+
+        }
+        userHomeViewModel.getFavorites()
     }
 
     @SuppressLint("ResourceAsColor")
