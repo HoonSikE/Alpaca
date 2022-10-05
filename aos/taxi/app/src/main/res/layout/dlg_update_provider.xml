@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="240dp"
-        android:layout_height="160dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/dialog_backgound">
 
         <TextView
@@ -20,6 +20,7 @@
             android:textStyle="bold"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,20 +41,21 @@
             android:id="@+id/edittext_dlg_car_info_input"
             style="@style/Body"
             android:inputType="text"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_regular"
             android:hint="차량 ㅇㅇ를 입력하세요"
             android:gravity="center"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
+            android:paddingHorizontal="32dp"
             app:layout_constraintTop_toBottomOf="@+id/text_dlg_update_car_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
 
         <Button
             android:id="@+id/button_dlg_update_car_info"
@@ -64,6 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginVertical="24dp"
             android:text="수정"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

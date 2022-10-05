@@ -191,7 +191,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     app:layout_constraintStart_toStartOf="@+id/text_my_page_favorites"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="12dp"
                     app:layout_constraintTop_toTopOf="@+id/text_my_page_favorites"
                     app:layout_constraintBottom_toBottomOf="@+id/text_my_page_favorites"
                     app:srcCompat="@drawable/ic_star_full" />
@@ -364,6 +364,36 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_my_page_boarding_list"
                     />
+
+                <TextView
+                    android:id="@+id/text_my_page_noContent_taxi_list"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="탑승한 사용자가 없습니다."
+                    android:gravity="center"
+                    android:textColor="@color/primaryColor"
+                    android:visibility="gone"
+                    android:elevation="5dp"
+                    app:layout_constraintTop_toTopOf="@+id/recyclerview_my_page_board_taxi_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/recyclerview_my_page_board_taxi_list" />
+
+                <TextView
+                    android:id="@+id/text_my_page_failed_taxi_list"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="탑승했던 택시 정보 조회에 실패했습니다."
+                    android:gravity="center"
+                    android:textColor="@color/primaryColor"
+                    android:visibility="gone"
+                    android:elevation="5dp"
+                    app:layout_constraintTop_toTopOf="@+id/recyclerview_my_page_board_taxi_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/recyclerview_my_page_board_taxi_list" />
 
                 <ImageView
                     android:id="@+id/image_my_page_chat_bot"

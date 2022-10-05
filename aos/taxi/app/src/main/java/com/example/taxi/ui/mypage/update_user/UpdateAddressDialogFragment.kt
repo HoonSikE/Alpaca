@@ -2,6 +2,8 @@ package com.example.taxi.ui.mypage.update_user
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -47,6 +49,9 @@ class UpdateAddressDialogFragment(val title : String) : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DlgAddressBinding.inflate(inflater, container, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+
         val view = binding.root
 
         if(title == "home"){

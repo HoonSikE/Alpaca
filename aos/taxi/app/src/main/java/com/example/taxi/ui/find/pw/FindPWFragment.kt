@@ -1,12 +1,14 @@
 package com.example.taxi.ui.find.pw
 
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.databinding.FragmentFindPwBinding
 import com.example.taxi.ui.login.AuthViewModel
+import com.example.taxi.ui.mypage.update_provider.UpdateProviderDialogFragment
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.show
@@ -50,7 +52,14 @@ class FindPWFragment : BaseFragment<FragmentFindPwBinding>(R.layout.fragment_fin
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     toast("이메일 전송에 성공했습니다.!")
-                    findNavController().navigate(R.id.action_findPWFragment_to_loginFragment)
+
+                    val dialog = FindPWDialogFragment(binding.editTextFindPw.text.toString())
+
+                    dialog.setOnOKClickedListener { content ->
+                        findNavController().navigate(R.id.action_findPWFragment_to_loginFragment)
+                    }
+
+                    dialog.show(childFragmentManager, "Find Password")
                 }
             }
         }

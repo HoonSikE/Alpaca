@@ -2,6 +2,8 @@ package com.example.taxi.ui.mypage.update_user
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +26,8 @@ class UpdatePhoneAuthDialogFragment() : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DlgPhoneAuthBinding.inflate(inflater, container, false)
         val view = binding.root
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         //ok 버튼 동작
         binding.buttonDlgAddressUpdate.setOnClickListener {
