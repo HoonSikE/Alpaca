@@ -9,6 +9,7 @@ interface ProviderRepository {
     fun getProvider(result: (UiState<Provider>) -> Unit)
     fun addProvider(provider: Provider, result: (UiState<Provider>) -> Unit)
     fun updateProvider(provider: ProviderCar, result: (UiState<ProviderCar>) -> Unit)
+    fun deleteProvider(result: (UiState<String>) -> Unit)
     fun updateRevenue(revenue: Int, result: (UiState<Int>) -> Unit)
     fun getUserList (result: (UiState<UserList>) -> Unit)
     fun updateUserList(userList: UserList, result: (UiState<UserList>) -> Unit)

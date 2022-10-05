@@ -25,13 +25,15 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"/>
+
         <action
-            android:id="@+id/action_userHomeFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment"
+            android:id="@+id/action_userHomeFragment_to_joinProviderFragment"
+            app:destination="@id/joinProviderFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
+            app:popExitAnim="@anim/to_right"/>
+
         <action
             android:id="@+id/action_userHomeFragment_to_myPageFragment"
             app:destination="@id/myPageFragment"
@@ -39,6 +41,7 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"/>
+
         <action
             android:id="@+id/action_userHomeFragment_to_startPointSettingFragment"
             app:destination="@id/startPointSettingFragment" />
@@ -90,14 +93,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             />
-        <action
-            android:id="@+id/action_loginFragment_to_providerHomeFragment"
-            app:destination="@id/providerHomeFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            />
     </fragment>
     <fragment
         android:id="@+id/joinFragment"
@@ -105,18 +100,17 @@
         android:label="JoinFragment"
         tools:layout="@layout/fragment_join"
         >
-
         <action
-            android:id="@+id/action_joinFragment_to_userHomeFragment"
-            app:destination="@id/userHomeFragment"
+            android:id="@+id/action_joinFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
 
         <action
-            android:id="@+id/action_joinFragment_to_joinProviderFragment"
-            app:destination="@id/joinProviderFragment"
+            android:id="@+id/action_joinFragment_to_userHomeFragment"
+            app:destination="@id/userHomeFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -180,12 +174,6 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             />
     </fragment>
-    <fragment
-        android:id="@+id/userProfileFragment"
-        android:name="com.example.taxi.ui.mypage.edit_profile.UserProfileFragment"
-        android:label="UserProfileFragment"
-        tools:layout="@layout/fragment_user_profile"
-        />
     <fragment
         android:id="@+id/callTaxiFragment"
         android:name="com.example.taxi.ui.call_taxi.CallTaxiFragment"
@@ -363,8 +351,16 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.taxi.ui.mypage.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
-        tools:layout="@layout/fragment_favorites"
-        />
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.example.taxi.ui.mypage.MyPageFragment"
@@ -461,6 +457,15 @@
         tools:layout="@layout/fragment_update_provider_info">
 
         <action
+            android:id="@+id/action_updateProviderInfoFragment_to_updateUserInfoFragment"
+            app:destination="@id/updateUserInfoFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+
+        <action
             android:id="@+id/action_updateProviderInfoFragment_to_userHomeFragment"
             app:destination="@id/userHomeFragment"
             app:enterAnim="@anim/from_right"
@@ -474,6 +479,15 @@
         android:name="com.example.taxi.ui.mypage.with_drawal.UserWithdrawalFragment"
         android:label="UserWithdrawalFragment"
         tools:layout="@layout/fragment_user_with_drawal">
+        <action
+            android:id="@+id/action_userWithdrawalFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            />
+
         <action
             android:id="@+id/action_userWithdrawalFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -501,6 +515,14 @@
         android:name="com.example.taxi.ui.mypage.boarding_list.BoardingListFragment"
         android:label="BoardingListFragment"
         tools:layout="@layout/fragment_boarding_list">
+        <action
+            android:id="@+id/action_boardingListFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+
         <action
             android:id="@+id/action_boardingListFragment_to_taxiDetailFragment"
             app:destination="@id/taxiDetailFragment"
@@ -553,7 +575,15 @@
         android:id="@+id/chatBotFragment"
         android:name="com.example.taxi.ui.mypage.chatbot.ChatBotFragment"
         android:label="ChatBotFragment"
-        tools:layout="@layout/fragment_chat_bot"/>
+        tools:layout="@layout/fragment_chat_bot">
+        <action
+            android:id="@+id/action_startPointSettingFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+    </fragment>
     <fragment
         android:id="@+id/personalChatFragment"
         android:name="com.example.taxi.ui.mypage.chat.PersonalChatFragment"

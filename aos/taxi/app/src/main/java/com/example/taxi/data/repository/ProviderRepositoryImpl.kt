@@ -108,6 +108,23 @@ class ProviderRepositoryImpl(
             }
     }
 
+    override fun deleteProvider(result: (UiState<String>) -> Unit){
+        val document = database.collection(FireStoreCollection.PROVIDER).document(ApplicationClass.userId)
+        document.delete()
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success("User has been deleted successfully")
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
+
     override fun updateRevenue(revenue: Int, result: (UiState<Int>) -> Unit) {
         val document = database.collection(FireStoreCollection.PROVIDER).document(ApplicationClass.prefs.providerId.toString())
         document
