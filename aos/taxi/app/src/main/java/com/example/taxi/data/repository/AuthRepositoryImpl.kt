@@ -101,7 +101,9 @@ class AuthRepositoryImpl(
         updateUserInfo(user) { state ->
             when (state) {
                 is UiState.Success -> {
-                    storeSession(id = user.userSeq ?: "") {
+                    val tmp = user.userSeq.split(".")
+                    ApplicationClass.prefs.userSeq = tmp[0]
+                    storeSession(id = tmp[0] ?: "") {
                         if (it == null) {
                             result.invoke(UiState.Failure("User register successfully but session failed to store"))
                         } else {
@@ -243,7 +245,9 @@ class AuthRepositoryImpl(
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    storeSession(id = idToken ?: ""){
+                    val tmp = idToken.split(".")
+                    ApplicationClass.prefs.userSeq = tmp[0]
+                    storeSession(id = tmp[0] ?: ""){
                         if (it == null){
                             result.invoke(UiState.Success("null"))
                         }else{
@@ -263,6 +267,7 @@ class AuthRepositoryImpl(
     override fun facebookLogin(accessToken: AccessToken, result: (UiState<String>) -> Unit){
         // AccessToken 으로 Facebook 인증
         val credential = FacebookAuthProvider.getCredential(accessToken?.token!!)
+        println("facebook: credential : " + credential)
 
         // 성공 시 Firebase 에 유저 정보 보내기 (로그인)
         auth?.signInWithCredential(credential)
@@ -270,7 +275,7 @@ class AuthRepositoryImpl(
                 if (task.isSuccessful) {
                     storeSession(id = task.result.user?.uid ?: ""){
                         ApplicationClass.prefs.userSeq = task.result.user?.uid ?: ""
-                        println("task.result.user?.uid : " + task.result.user?.uid)
+                        println("facebook: task.result.user?.uid : " + task.result.user?.uid)
                         if (it == null){
                             result.invoke(UiState.Success("Failed to facebook login"))
                         }else{
@@ -278,6 +283,7 @@ class AuthRepositoryImpl(
                         }
                     }
                 } else {
+                    println("facebook: 로그인 실패")
                     // If sign in fails, display a message to the user.
                     result.invoke(UiState.Success("Failed to facebook login"))
                 }
