@@ -93,7 +93,7 @@
 
             <Button
                 android:id="@+id/button_login_Login"
-                style="@style/BodyWhite"
+                style="@style/Body"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="24dp"

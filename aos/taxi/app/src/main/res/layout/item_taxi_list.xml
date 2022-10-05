@@ -53,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="택시 번호 : "
-                    style="@style/SubHead"
+                    style="@style/SubHeadBold"
                     android:layout_marginLeft="8dp"
                     app:layout_constraintTop_toTopOf="@+id/image_my_page_board_taxi_label"
                     app:layout_constraintBottom_toBottomOf="@+id/image_my_page_board_taxi_label"
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12가 1234"
-                    style="@style/SubHead"
+                    style="@style/SubHeadBold"
                     app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_number_label"
                     app:layout_constraintStart_toEndOf="@+id/text_my_page_board_taxi_number_label"
                     />
