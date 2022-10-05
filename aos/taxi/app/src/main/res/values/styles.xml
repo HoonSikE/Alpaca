@@ -82,6 +82,13 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="SubHeadSemiBoldPrimaryColor" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="SubHeadBold" parent="android:TextAppearance">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
@@ -136,6 +143,16 @@
         <item name="android:maxLines">2</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/scdream_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="BodyPrimaryColor" parent="android:TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@font/scdream_regular</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -276,6 +293,13 @@
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:fontFamily">@font/scdream_regular</item>
         <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SwitchButtonStyle">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
     </style>
 
 </resources>

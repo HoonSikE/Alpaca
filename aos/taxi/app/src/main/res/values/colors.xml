@@ -21,6 +21,7 @@
     <color name="secondaryTextColor">#A2A2A2</color>
     <color name="buttonTextColor">#35383F</color>
     <color name="redTextColor">#F52D56</color>
+    <color name="greenTextColor">#4CE5B1</color>
 
     <color name="background">#FFFFFF</color>
     <color name="transparent">#00000000</color>

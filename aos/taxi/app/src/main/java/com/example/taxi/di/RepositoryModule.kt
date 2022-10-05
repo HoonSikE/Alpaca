@@ -1,13 +1,10 @@
 package com.example.taxi.di
 
 import android.content.SharedPreferences
-import com.example.taxi.data.repository.AuthRepository
-import com.example.taxi.data.repository.AuthRepositoryImpl
-import com.example.taxi.data.repository.DestinationRepository
-import com.example.taxi.data.repository.DestinationRepositoryImpl
+import com.example.taxi.data.repository.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -20,10 +17,10 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    fun provideDestinationRepository(
+    fun provideFrequentDestinationRepository(
         database: FirebaseFirestore
-    ): DestinationRepository {
-        return DestinationRepositoryImpl(database)
+    ): FrequentDestinationRepository {
+        return FrequentDestinationRepositoryImpl(database)
     }
 
     @Provides
@@ -35,5 +32,43 @@ object RepositoryModule {
         gson: Gson
     ): AuthRepository {
         return AuthRepositoryImpl(auth,database,appPreferences,gson)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRouteRepository(
+        database: FirebaseFirestore
+    ): RouteRepository {
+        return RouteRepositoryImpl(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProviderRepository(
+        database: FirebaseFirestore
+    ): ProviderRepository {
+        return ProviderRepositoryImpl(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserInfoRepository(
+        database: FirebaseFirestore
+    ) : UserInfoRepository{
+        return UserInfoRepositoryImpl(database)
+    }
+
+    @Provides
+    @Singleton
+    fun mypagePersonalChatRepository(
+    ) : PersonalChatRepository{
+        return PersonalChatRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun mypageChatBotRepository(
+    ) : ChatBotRepository{
+        return ChatBotRepositoryImpl()
     }
 }
