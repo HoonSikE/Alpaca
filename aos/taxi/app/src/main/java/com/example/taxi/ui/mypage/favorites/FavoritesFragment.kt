@@ -44,11 +44,11 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragme
     private var favorites : MutableList<Favorites> = mutableListOf()
     private var addressFavorites = ""
     private lateinit var destinationSearchListAdapter: DestinationSearchListAdapter
-    private lateinit var destination : Destination
+    private lateinit var destination : Favorites
     private var checkState = false
 
     private val destinationSearchClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
-        destination = Destination(address,y,place,x)
+        destination = Favorites(address,y,place,x)
         checkState = true
         binding.searchFavoritesSearch.setQuery(destination.addressName, false)
         binding.recyclerFavorites.hide()
@@ -108,8 +108,7 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragme
         }
         binding.buttonFavoritesUpdate.setOnClickListener{
             if(binding.searchFavoritesSearch.query.toString() != ""){
-                val addfavorite = Favorites("", "", binding.searchFavoritesSearch.query.toString(), "")
-                favorites.add(addfavorite)
+                favorites.add(destination)
                 if(favorites.size == 1){
                     userHomeViewModel.addFavorites(favorites)
                 }else{
