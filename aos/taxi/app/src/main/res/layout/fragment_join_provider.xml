@@ -25,13 +25,14 @@
                 android:focusable="true"
                 android:padding="3dp"
                 android:src="@drawable/ic_back"
-                app:tint="@color/black" />
+                app:tint="@color/primaryColor" />
 
             <TextView
-                style="@style/SubHeadBold"
+                style="@style/HeadBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:textColor="@color/primaryColor"
                 android:text="차량 제공자 추가정보 등록"
                 android:layout_gravity="center_vertical"
                 />
@@ -201,7 +202,7 @@
 
                 <Button
                     android:id="@+id/button_join_provider"
-                    style="@style/BodyWhite"
+                    style="@style/Body"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_marginHorizontal="16dp"
