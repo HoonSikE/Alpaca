@@ -43,7 +43,7 @@
             android:id="@+id/edittext_dlg_address_input"
             style="@style/Body"
             android:inputType="text"
-            android:layout_width="match_parent"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_regular"
             android:hint="주소를 입력하세요"
