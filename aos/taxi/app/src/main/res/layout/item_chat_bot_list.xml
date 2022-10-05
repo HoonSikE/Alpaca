@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="알파카"
+                android:layout_marginLeft="8dp"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
@@ -47,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:paddingVertical="8dp"
                 android:paddingHorizontal="8dp"
+                android:layout_marginHorizontal="8dp"
                 android:text="메세지"
                 android:background="@drawable/textview_regular"
                 android:textColor="#000000" />
