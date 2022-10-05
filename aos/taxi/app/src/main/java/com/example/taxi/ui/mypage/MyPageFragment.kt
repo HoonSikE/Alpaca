@@ -92,17 +92,23 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         endDrivingViewModel.boardedTaxiList.observe(viewLifecycleOwner) {state ->
             when (state) {
                 is UiState.Loading -> {
-                    binding.progressBar.show()
+//                    binding.progressBar.show()
+                    binding.textMyPageNoContentTaxiList.show()
+                    binding.textMyPageFailedTaxiList.hide()
                 }
                 is UiState.Failure -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textMyPageNoContentTaxiList.hide()
+                    binding.textMyPageFailedTaxiList.show()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textMyPageNoContentTaxiList.hide()
+                    binding.textMyPageFailedTaxiList.hide()
 //                    boardedTaxiList = state.data.taxiList as MutableList<BoardedTaxi>
                     boardedTaxiList = state.data
                     initAdapter(boardedTaxiList)

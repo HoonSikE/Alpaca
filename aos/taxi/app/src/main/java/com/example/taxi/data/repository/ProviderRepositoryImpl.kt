@@ -42,6 +42,7 @@ class ProviderRepositoryImpl(
     }
 
     override fun addProvider(provider: Provider, result: (UiState<Provider>) -> Unit){
+
         if(provider.car?.carImage != ""){
             var storage = FirebaseStorage.getInstance()
             var imgFileName = ApplicationClass.prefs.providerId + ".png"
