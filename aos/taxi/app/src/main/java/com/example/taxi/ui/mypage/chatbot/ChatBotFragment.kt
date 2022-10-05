@@ -98,7 +98,7 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
                         println(comments)
                     }
                     chatBotAdapter.updateList(comments)
-
+                    binding.messageActivityRecyclerview.scrollToPosition(chatBotAdapter.itemCount-1)
                     println("comments : " + comments)
                 }
                 else -> {}
