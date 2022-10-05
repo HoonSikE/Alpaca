@@ -124,23 +124,27 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragme
         userHomeViewModel.favorites.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    binding.progressBar.show()
+//                    binding.progressBar.show()
+                    binding.textMyPageNoContentFavorites.show()
+                    binding.textMyPageFailedFavorites.hide()
                 }
                 is UiState.Failure -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textMyPageNoContentFavorites.hide()
+                    binding.textMyPageFailedFavorites.show()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                     binding.recyclerviewFavorites.setBackgroundResource(R.drawable.layout_recycler_no_item)
-                    binding.textNoContentFavorites.show()
                 }
                 is UiState.Success -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textMyPageNoContentFavorites.hide()
+                    binding.textMyPageFailedFavorites.hide()
                     favorites = state.data.toMutableList()
                     updateFavoritesAdapter.updateList(favorites)
                     binding.recyclerviewFavorites.setBackgroundResource(R.drawable.layout_recycler)
-                    binding.textNoContentFavorites.hide()
                 }
             }
         }
