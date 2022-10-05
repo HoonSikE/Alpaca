@@ -22,6 +22,8 @@ import com.example.taxi.ui.driving.end.EndDrivingViewModel
 import com.example.taxi.ui.home.provider.ProviderAdapter
 import com.example.taxi.ui.login.AuthViewModel
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,17 +92,17 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         endDrivingViewModel.boardedTaxiList.observe(viewLifecycleOwner) {state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
 //                    boardedTaxiList = state.data.taxiList as MutableList<BoardedTaxi>
                     boardedTaxiList = state.data
                     initAdapter(boardedTaxiList)
@@ -110,7 +112,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun getGrade(useCount : Int){
-        if(0 <= useCount && useCount < 5) {
+        if(0 < useCount && useCount < 5) {
             binding.textMyPageClass.setText("Bronze")
             binding.textMyPageClass.setTextColor(ContextCompat.getColor(requireContext(),R.color.bronze))
         }else if(useCount < 10){
@@ -125,6 +127,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         }else if(useCount >= 30){
             binding.textMyPageClass.setText("Diamond")
             binding.textMyPageClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.diamond))
+        }else{
+            binding.textMyPageClass.setText("Unrank")
+            binding.textMyPageClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
     }
 

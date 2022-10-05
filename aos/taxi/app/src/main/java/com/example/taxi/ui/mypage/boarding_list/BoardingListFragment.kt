@@ -15,6 +15,8 @@ import com.example.taxi.databinding.FragmentBoardingListBinding
 import com.example.taxi.ui.driving.end.EndDrivingViewModel
 import com.example.taxi.ui.mypage.MyPageAdapter
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,17 +46,17 @@ class BoardingListFragment : BaseFragment<FragmentBoardingListBinding>(R.layout.
         endDrivingViewModel.boardedTaxiList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
 //                    boardedTaxiList = state.data.taxiList as MutableList<BoardedTaxi>
                     boardedTaxiList = state.data
                     initAdapter(boardedTaxiList)

@@ -134,15 +134,17 @@ class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.
         personalChatViewModel.createChatRooms.observe(viewLifecycleOwner){ state ->
             when(state){
                 is UiState.Loading ->{
-
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     personalChatViewModel.checkChatRoom(
                         startUserName = startUserName!!,
                         destinationUserName = destinationUserName!!
@@ -154,15 +156,17 @@ class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.
         personalChatViewModel.checkChatRoom.observe(viewLifecycleOwner){ state ->
             when(state){
                 is UiState.Loading ->{
-
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     for(data in state.data.children){
                         val item = data.getValue<ChatModel>()
 
@@ -179,15 +183,17 @@ class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.
         personalChatViewModel.getComment.observe(viewLifecycleOwner){ state ->
             when(state){
                 is UiState.Loading ->{
-
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     comments.clear()
                     for(data in state.data.children){
                         val item = data.getValue<ChatModel.CommentModel>()
