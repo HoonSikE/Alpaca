@@ -42,12 +42,13 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="60dp"
             android:layout_marginBottom="55dp"
             android:layout_marginHorizontal="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/button_chat_bot_start"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_chat_bot">
@@ -58,6 +59,45 @@
                 android:layout_height="match_parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/button_chat_bot_start"
+            style="@style/Body"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_chat_bot"
+            android:text="처음으로"
+            app:layout_constraintStart_toStartOf="@+id/layout_recyclerview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            />
+
+        <Button
+            android:id="@+id/button_chat_bot_previous"
+            style="@style/Body"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_chat_bot"
+            android:backgroundTint="@color/primaryColor"
+            android:text="이전으로"
+            app:layout_constraintStart_toEndOf="@+id/button_chat_bot_start"
+            app:layout_constraintEnd_toStartOf="@+id/button_chat_bot_call"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            />
+
+        <Button
+            android:id="@+id/button_chat_bot_call"
+            style="@style/Body"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_chat_bot"
+            android:text="상담사 연결"
+            app:layout_constraintStart_toEndOf="@+id/button_chat_bot_previous"
+            app:layout_constraintEnd_toEndOf="@+id/layout_recyclerview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            />
 
         <ProgressBar
             android:id="@+id/progressBar"
