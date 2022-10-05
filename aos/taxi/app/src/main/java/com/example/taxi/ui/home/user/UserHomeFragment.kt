@@ -12,10 +12,12 @@ import com.bumptech.glide.Glide
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.mypage.Favorites
+import com.example.taxi.data.dto.provider.ProviderCar
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.databinding.FragmentUserHomeBinding
 import com.example.taxi.di.ApplicationClass
+import com.example.taxi.ui.home.provider.ProviderViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.show
@@ -28,6 +30,7 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     private lateinit var favoritesAdapter: FavoritesAdapter
     private var favorites : MutableList<Favorites> = mutableListOf()
     private val userHomeViewModel : UserHomeViewModel by viewModels()
+    private val providerViewModel : ProviderViewModel by viewModels()
     private lateinit var destination: Destination
     private var addressFavorites = ""
 
@@ -65,6 +68,9 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
         if (useCount != null) {
             setLevel()
         }
+        if(ApplicationClass.prefs.isEachProvider == true){
+            providerViewModel.getProvider()
+        }
     }
 
 
@@ -87,6 +93,27 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun observerData() {
+        providerViewModel.provider.observe(viewLifecycleOwner){ state ->
+            when (state) {
+                is UiState.Loading -> {
+                    binding.progressBar.show()
+                }
+                is UiState.Failure -> {
+                    binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                }
+                is UiState.Success -> {
+                    binding.progressBar.hide()
+                    val provider = state.data
+                    ApplicationClass.prefs.carImage = provider.car!!.carImage
+                    ApplicationClass.prefs.carName = provider.car!!.carName
+                    ApplicationClass.prefs.carNumber = provider.car!!.carNumber
+                }
+            }
+        }
         userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {

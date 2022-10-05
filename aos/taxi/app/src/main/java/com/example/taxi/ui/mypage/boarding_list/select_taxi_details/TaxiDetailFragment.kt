@@ -35,10 +35,10 @@ class TaxiDetailFragment : BaseFragment<FragmentTaxiDetailBinding>(R.layout.frag
             }
             binding.ratingBoardingTaxiDetailRideComfort.rating = boardedTaxi.rideComfortAverage.toFloat()
             binding.ratingBoardingTaxiDetailCleanliness.rating = boardedTaxi.cleanlinessAverage.toFloat()
-            binding.textBoardingTaxiStart.text = boardedTaxi.StartingPoint
-            binding.textBoardingTaxiDestination.text = boardedTaxi.Destination
+            binding.textBoardingTaxiStart.text = boardedTaxi.startingPoint
+            binding.textBoardingTaxiDestination.text = boardedTaxi.destination
             binding.textBoardingTaxiDistance.text = boardedTaxi.distance.toString() + "km"
-            binding.textBoardingTaxiCost.text = boardedTaxi.Cost.toString() + "원"
+            binding.textBoardingTaxiCost.text = boardedTaxi.cost.toString() + "원"
         }
     }
 
