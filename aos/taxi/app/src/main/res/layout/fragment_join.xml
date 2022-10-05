@@ -416,6 +416,21 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_home_address" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_join_home_address"
+                    android:layout_width="360dp"
+                    android:layout_height="200dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:elevation="12dp"
+                    android:visibility="invisible"
+                    android:background="@drawable/reycler_comment"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/editText_join_home_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+
                 <ImageView
                     android:id="@+id/image_join_user_info_home_address"
                     android:layout_width="32dp"
@@ -456,6 +471,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_company_address" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_join_company_address"
+                    android:layout_width="360dp"
+                    android:layout_height="200dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:elevation="12dp"
+                    android:visibility="invisible"
+                    android:background="@drawable/reycler_comment"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/editText_join_company_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
                 <ImageView
                     android:id="@+id/image_join_user_info_company_address"
