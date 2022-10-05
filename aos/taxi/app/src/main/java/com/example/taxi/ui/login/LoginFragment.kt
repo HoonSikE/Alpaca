@@ -18,7 +18,9 @@ import com.example.taxi.databinding.FragmentLoginBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.di.MainActivity
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.isValidEmail
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -116,17 +118,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         authViewModel.login.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBarLoginLoading.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBarLoginLoading.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBarLoginLoading.hide()
                     authViewModel.getSession { user ->
                         Log.d("user : ", user.toString())
                         if (user != null) {
@@ -146,16 +148,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         authViewModel.googleLogin.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBarLoginLoading.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBarLoginLoading.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBarLoginLoading.hide()
                     println("state.data : " + state.data)
                     if(state.data == "null"){
                         findNavController().navigate(R.id.action_loginFragment_to_joinFragment)
@@ -187,16 +190,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         authViewModel.githubLogin.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBarLoginLoading.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBarLoginLoading.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBarLoginLoading.hide()
                     println("state.data : " + state.data)
                     if(state.data == "null"){
                         findNavController().navigate(R.id.action_loginFragment_to_joinFragment)

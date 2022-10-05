@@ -129,16 +129,17 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
         updateUserInfoViewModel.addressInfo.observe(viewLifecycleOwner){ state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBarUpdateLoading.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBarUpdateLoading.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBarUpdateLoading.hide()
                     binding.textUpdateUserInfoHomeAddress.text = state.data.home
                     binding.textUpdateUserInfoCompanyAddress.text = state.data.company
                 }

@@ -12,6 +12,8 @@ import com.example.taxi.data.dto.user.boarded_taxi_list.BoardedTaxiList
 import com.example.taxi.databinding.FragmentTaxiAssessmentBinding
 import com.example.taxi.ui.driving.end.EndDrivingViewModel
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import com.gun0912.tedpermission.provider.TedPermissionProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,17 +69,17 @@ class TaxiAssessmentFragment : BaseFragment<FragmentTaxiAssessmentBinding>(R.lay
         endDrivingViewModel.boardedTaxiList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
 //                    boardedTaxiList = state.data.taxiList as MutableList<BoardedTaxi>
                     boardedTaxiList = state.data
                 }
@@ -86,17 +88,17 @@ class TaxiAssessmentFragment : BaseFragment<FragmentTaxiAssessmentBinding>(R.lay
         endDrivingViewModel.updateBoardedTaxiList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+                    binding.progressBar.hide()
                 }
             }
         }

@@ -18,6 +18,8 @@ import com.example.taxi.databinding.FragmentUpdateUserInfoBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.ui.home.provider.ProviderViewModel
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.security.Provider
@@ -101,16 +103,17 @@ class UpdateProviderInfoFragment : BaseFragment<FragmentUpdateProviderInfoBindin
         providerViewModel.provider.observe(viewLifecycleOwner){ state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+                    binding.progressBarUpdateLoading.show()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+                    binding.progressBarUpdateLoading.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBarUpdateLoading.hide()
                     val carImage = state.data.car!!.carImage
                     if(carImage != ""){
                         ApplicationClass.prefs.carImage = carImage

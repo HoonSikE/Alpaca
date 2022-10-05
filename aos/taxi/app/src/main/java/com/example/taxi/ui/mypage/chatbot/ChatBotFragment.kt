@@ -10,6 +10,8 @@ import com.example.taxi.base.BaseFragment
 import com.example.taxi.databinding.FragmentChatBotBinding
 import com.example.taxi.di.ApplicationClass
 import com.example.taxi.utils.constant.UiState
+import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -71,15 +73,17 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
         chatBotViewModel.checkChatBotMessage.observe(viewLifecycleOwner){ state ->
             when(state){
                 is UiState.Loading ->{
-
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     if(state.data.value != null){
                         if(messageTmp == ""){
                             comments.add("안녕하세요! 저는 알파카 챗봇이라고 해요!")
