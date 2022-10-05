@@ -1,47 +1,29 @@
 package com.example.taxi.ui.login
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.os.Build
-import android.text.TextUtils
-import android.util.Base64
 import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.browser.customtabs.CustomTabsClient.getPackageName
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.databinding.FragmentLoginBinding
 import com.example.taxi.di.ApplicationClass
-import com.example.taxi.di.MainActivity
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.isValidEmail
 import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
-import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.wrappers.Wrappers.packageManager
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.OAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 import java.util.*
 
 
@@ -52,7 +34,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private lateinit var googleSignInClient: GoogleSignInClient
     private val RC_GOOGLE_SIGN_IN = 9001
     // Facebook Login 결과를 가져오는 콜백
-    private var callbackManager: CallbackManager? = null
+    private var callbackManager = CallbackManager.Factory.create()
 
     override fun init() {
         initData()
@@ -67,8 +49,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             .build()
         // Google Login
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        // Facebook Login
-        callbackManager = CallbackManager.Factory.create()
     }
 
     private fun setOnClickListeners(){
@@ -86,7 +66,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             )
         }
         binding.imageLoginFacebook.setOnClickListener{
-            facebookLogin()
+//            facebookLogin()
         }
         binding.imageLoginGoogle.setOnClickListener{
             googleSignIn()
@@ -311,13 +291,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 Log.d("GoogleActivity", "firebaseAuthWithGoogle:" + account.id)
-                ApplicationClass.prefs.userSeq = account.idToken!!
+                val tmp = account.idToken!!.split(".")
+                ApplicationClass.prefs.userSeq = tmp[0]
                 authViewModel.googleLogin(account.idToken!!)
             } catch (e: ApiException) {
                 Log.w("GoogleActivity", "Google sign in failed", e)
             }
         }
         /** 구글 로그인 End**/
+        /** 페이스북 로그인 Start**/
+        else {
+            callbackManager?.onActivityResult(requestCode, resultCode, data)
+        }
+        /** 페이스북 로그인 End**/
     }
 
     /** 구글 로그인 Start**/
@@ -329,26 +315,37 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     /** 페이스북 로그인 Start**/
     private fun facebookLogin() {
+        println("facebook: 페북 로그인 시작")
         // 페이스북에서 받을 권한 요청 - 프로필 이미지, 이메일
         LoginManager.getInstance()
-            .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
+//            .logInWithReadPermissions(this, Arrays.asList("email", "public_profile", "user_friends"))
+//            .logInWithReadPermissions(requireActivity(), callbackManager, Arrays.asList("public_profile", "email"))
+            .logInWithReadPermissions(requireActivity(), Arrays.asList("public_profile", "email"))
+        println("facebook: 권한 완료")
 
         LoginManager.getInstance()
             .registerCallback(callbackManager, object:FacebookCallback<LoginResult>{
-                override fun onSuccess(result: LoginResult?) {
+                override fun onSuccess(result: LoginResult) {
+                    println("facebook: result : " + result)
+                    println("facebook: result?accessToken : " + result?.accessToken)
                     if (result?.accessToken != null) {
                         // facebook 계정 정보를 firebase 서버에게 전달(로그인)
                         val accessToken = result.accessToken
                         authViewModel.facebookLogin(accessToken)
+                        Log.d("facebook 로그인", "성공")
                     } else {
                         Log.d("Facebook", "Fail Facebook Login")
                     }
                 }
                 override fun onCancel() {
                     //취소가 된 경우 할일
+                    println("facebook: 로그인 취소")
+                    Log.d("facebook 로그인", "취소")
                 }
-                override fun onError(error: FacebookException?) {
+                override fun onError(error: FacebookException) {
                     //에러가 난 경우 할일
+                    println("facebook: 에러 발생")
+                    Log.d("facebook 로그인", "에러 발생 $error")
                 }
             })
     }

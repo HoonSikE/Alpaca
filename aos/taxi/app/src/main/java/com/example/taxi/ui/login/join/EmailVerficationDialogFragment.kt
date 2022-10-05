@@ -1,9 +1,12 @@
 package com.example.taxi.ui.login.join
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.example.taxi.databinding.DlgEmailVerificationBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +20,8 @@ class EmailVerficationDialogFragment(val email: String) : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DlgEmailVerificationBinding.inflate(inflater, container, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         val view = binding.root
 
         binding.textDlgEmailVerfication1.text = email
