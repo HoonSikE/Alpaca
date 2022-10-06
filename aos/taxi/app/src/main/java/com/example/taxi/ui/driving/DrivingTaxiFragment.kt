@@ -175,7 +175,8 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
                 )
             )
         )
-        getFee(location.dis)
+
+        getFee(((location.dis/1000.0) * 100.0).roundToInt() / 100.0)
     }
 
     private fun getAddress(lat: Double, lng: Double): String {
@@ -349,20 +350,17 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     }
 
     private fun getFee(distance: Double){
-        var distanceStart = ApplicationClass.prefs.distanceStart
-        var distance = distanceStart?.minus(distance)
+        var distance = distance
         val numberFormat: NumberFormat = NumberFormat.getInstance()
-        if (distance != null) {
-            if(distance <= 3){
-                var feeNum = numberFormat.format(3000)
-                binding.textDrivingTaxiFee.text = feeNum + " 원"
-            }else{
-                distance -= 3
-                var res = distance/0.16
-                fee = 3000 + (res.toInt()*100)
-                var feeNum = numberFormat.format(fee)
-                binding.textDrivingTaxiFee.text = feeNum + " 원"
-            }
+        if(distance <= 3){
+            var feeNum = numberFormat.format(3000)
+            binding.textDrivingTaxiFee.text = feeNum + " 원"
+        }else{
+            distance -= 3
+            var res = distance/0.16
+            fee = 3000 + (res.toInt()*100)
+            var feeNum = numberFormat.format(fee)
+            binding.textDrivingTaxiFee.text = feeNum + " 원"
         }
     }
 
