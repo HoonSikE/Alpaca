@@ -312,7 +312,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
             childFragmentManager.findFragmentById(R.id.fragmentContainer_driving_taxi) as MapFragment?
                 ?: MapFragment.newInstance().also {
                     childFragmentManager.beginTransaction()
-                        .add(R.id.fragmentContainer_location_tracking_taxi, it)
+                        .add(R.id.fragmentContainer_driving_taxi, it)
                         .commit()
                 }
         _naverMap.getMapAsync(this)

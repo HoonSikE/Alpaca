@@ -19,6 +19,7 @@ class FrequentDestinationRepositoryImpl(
 ) : FrequentDestinationRepository {
 
     override fun getDestination(result: (UiState<List<FrequentDestination>>) -> Unit) {
+        println("userId : " + ApplicationClass.userId)
         database.collection(FireStoreCollection.DESTINATION).document(ApplicationClass.userId)
             .get()
             .addOnSuccessListener { document ->

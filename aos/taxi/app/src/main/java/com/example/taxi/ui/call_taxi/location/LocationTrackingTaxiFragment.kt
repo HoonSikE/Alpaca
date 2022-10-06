@@ -60,7 +60,6 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        findNavController().navigate(R.id.action_locationTrackingTaxiFragment_to_startDrivingTaxiFragment)
         rootView = container
         initNaverMap()
         return super.onCreateView(inflater, container, savedInstanceState)
