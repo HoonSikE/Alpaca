@@ -4,13 +4,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/linearBackground">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_join_provider"
             android:layout_width="0dp"
             android:layout_height="48dp"
             app:contentInsetStart="0dp"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -90,7 +92,11 @@
                     android:id="@+id/image_join_provider_image_button"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:backgroundTint="@color/primaryColor"
+                    android:background="@drawable/edittext_regular"
+                    android:backgroundTint="@color/white"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:padding="3dp"
                     app:layout_constraintBottom_toBottomOf="@+id/image_join_provider_image"
                     app:layout_constraintEnd_toEndOf="@+id/image_join_provider_image"
                     app:srcCompat="@drawable/img_edit" />

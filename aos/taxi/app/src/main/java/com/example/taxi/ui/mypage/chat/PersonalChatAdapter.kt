@@ -52,8 +52,9 @@ class PersonalChatAdapter: RecyclerView.Adapter<PersonalChatAdapter.MessageViewH
 
         if(commentList[position].userName.equals(userName) || commentList[position].userName.equals(carName)){ // 본인 채팅
             holder.textView_message.setBackgroundResource(R.drawable.ic_chat_right)
-            holder.textView_name.visibility = View.INVISIBLE
+            holder.textView_name.visibility = View.GONE
             holder.layout_destination.visibility = View.INVISIBLE
+            holder.textView_time.gravity = Gravity.RIGHT
             holder.layout_main.gravity = Gravity.RIGHT
         }else{ // 상대방 채팅
             Glide.with(holder.itemView.context)
@@ -63,6 +64,7 @@ class PersonalChatAdapter: RecyclerView.Adapter<PersonalChatAdapter.MessageViewH
             holder.textView_name.text = ApplicationClass.prefs.destinationUserName
             holder.layout_destination.visibility = View.VISIBLE
             holder.textView_name.visibility = View.VISIBLE
+            holder.textView_time.gravity = Gravity.LEFT
             holder.textView_message.setBackgroundResource(R.drawable.ic_chat_left)
             holder.layout_main.gravity = Gravity.LEFT
         }
