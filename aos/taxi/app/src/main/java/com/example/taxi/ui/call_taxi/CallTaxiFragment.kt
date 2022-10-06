@@ -164,7 +164,7 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     var str = ((state.data.toDouble()/1000.0) * 100.0).roundToInt() / 100.0
-                    ApplicationClass.prefs.distanceStart = state.data.toFloat()
+                    ApplicationClass.prefs.distanceStart = str.toFloat()
                     binding.textCallTaxiDistance.text = str.toString() +"Km"
                     ApplicationClass.prefs.distance = str.toFloat()
                     getFee(str)

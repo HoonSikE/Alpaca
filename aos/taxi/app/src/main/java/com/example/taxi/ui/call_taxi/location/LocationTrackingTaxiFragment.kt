@@ -163,7 +163,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         var str = ((location.dis/1000.0) * 100.0).roundToInt() / 100.0
         infoWindow.adapter = rootView?.let {
             MarkerInfoAdapter(requireContext(),
-                it, str.toString()+"Km", location.time.toString()+"분")
+                it, str.toString()+"Km", "약"+location.time.toInt().toString()+"분")
         }!!
         infoWindow.open(markers[markers.lastIndex])
 
