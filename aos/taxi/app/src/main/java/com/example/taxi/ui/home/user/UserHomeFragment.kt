@@ -3,6 +3,7 @@ package com.example.taxi.ui.home.user
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,6 +24,7 @@ import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notify
 
 @AndroidEntryPoint
 class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_user_home) {
@@ -66,7 +68,7 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
 
         val useCount = ApplicationClass.prefs.useCount
         if (useCount != null) {
-            setLevel()
+            getGrade(useCount)
         }
         if(ApplicationClass.prefs.isEachProvider == true){
             providerViewModel.getProvider()
@@ -138,7 +140,6 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                         .into(binding.imageUserHomeProfile)
                     binding.textUserHomeName.text = ApplicationClass.prefs.name + "님, 안녕하세요"
                     binding.textUserHomeCount.text = ApplicationClass.prefs.useCount.toString() + "회"
-                    setLevel()
                     val list : MutableList<FrequentDestination> = state.data.toMutableList()
                     destinationListAdapter.updateList(list)
                     binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler)
@@ -193,47 +194,32 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun showFavoritesDialog(address: String) {
-        FavoritesDialogFragment { favoritesListener(address) }.show(childFragmentManager, "FAVORITES_DIALOG")
+        FavoritesDialogFragment(address){favoritesListener}.show(childFragmentManager, "FAVORITES_DIALOG")
     }
 
-    private val favoritesListener: (address: String) -> Unit = {
-        if(favorites.size < 2) {
-            userHomeViewModel.deleteFavorites()
-        }else{
-            for(i in 0 until favorites.size){
-                if(favorites[i].address == addressFavorites) {
-                    favorites.removeAt(i)
-                    userHomeViewModel.updateFavorites(favorites)
-                }
-            }
-
-        }
+    private val favoritesListener: () -> Unit = {
         userHomeViewModel.getFavorites()
     }
 
-    @SuppressLint("ResourceAsColor")
-    private fun setLevel(){
-        when(ApplicationClass.prefs.useCount?.div(10)){
-            1 -> {
-                binding.textUserHomeClass.text = "Bronze"
-                binding.textUserHomeClass.setTextColor(R.color.bronze)
-            }
-            2 -> {
-                binding.textUserHomeClass.text = "Silver"
-                binding.textUserHomeClass.setTextColor(R.color.silver)
-            }
-            3 -> {
-                binding.textUserHomeClass.text = "Gold"
-                binding.textUserHomeClass.setTextColor(R.color.gold)
-            }
-            4 -> {
-                binding.textUserHomeClass.text = "Platinum"
-                binding.textUserHomeClass.setTextColor(R.color.platinum)
-            }
-            5 -> {
-                binding.textUserHomeClass.text = "Diamond"
-                binding.textUserHomeClass.setTextColor(R.color.diamond)
-            }
+    private fun getGrade(useCount : Int){
+        if(0 < useCount && useCount < 5) {
+            binding.textUserHomeClass.setText("Bronze")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(),R.color.bronze))
+        }else if(5 <= useCount && useCount < 10){
+            binding.textUserHomeClass.setText("Siver")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.silver))
+        }else if(10 <= useCount && useCount < 20){
+            binding.textUserHomeClass.setText("Gold")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.gold))
+        }else if(20 <= useCount && useCount < 30){
+            binding.textUserHomeClass.setText("Platinum")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.platinum))
+        }else if(useCount >= 30){
+            binding.textUserHomeClass.setText("Diamond")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.diamond))
+        }else{
+            binding.textUserHomeClass.setText("Unrank")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
     }
 }

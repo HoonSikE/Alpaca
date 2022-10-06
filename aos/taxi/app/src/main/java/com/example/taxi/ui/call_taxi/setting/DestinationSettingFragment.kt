@@ -283,10 +283,10 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     }
 
     private fun showFavoritesDialog(address: String) {
-        FavoritesDialogFragment { favoritesListener(address) }.show(childFragmentManager, "FAVORITES_DIALOG")
+        FavoritesDialogFragment(address){favoritesListener}.show(childFragmentManager, "FAVORITES_DIALOG")
     }
 
-    private val favoritesListener: (address: String) -> Unit = {
-        //userHomeViewModel.deleteFavorites()
+    private val favoritesListener: () -> Unit = {
+        userHomeViewModel.getFavorites()
     }
 }
