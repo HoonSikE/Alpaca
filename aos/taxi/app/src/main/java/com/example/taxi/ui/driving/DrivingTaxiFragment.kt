@@ -78,7 +78,6 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         Glide.with(requireContext())
             .load(ApplicationClass.prefs.carImage)
             .into(binding.imageDrivingTaxiCar)
-        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun observerData(){
@@ -126,6 +125,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
                     deletePaths()
                     drawMarkers(location)
                     drawPolyline(location)
+                    callTaxiViewModel.getCurrentLocation()
                 }
             }
         }

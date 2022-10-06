@@ -76,7 +76,6 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         Glide.with(requireContext())
             .load(ApplicationClass.prefs.carImage)
             .into(binding.imageLocationTrackingTaxiCar)
-        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun observerData(){
@@ -124,6 +123,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                     deletePaths()
                     drawMarkers(location)
                     drawPolyline(location)
+                    callTaxiViewModel.getCurrentLocation()
                 }
             }
         }
