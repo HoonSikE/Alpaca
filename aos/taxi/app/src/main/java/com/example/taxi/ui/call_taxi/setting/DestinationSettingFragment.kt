@@ -44,6 +44,7 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     private lateinit var favoritesAdapter: FavoritesAdapter
     private lateinit var destinationSearchListAdapter: DestinationSearchListAdapter
     private val userHomeViewModel : UserHomeViewModel by viewModels()
+    lateinit var list : MutableList<FrequentDestination>
 
     private val destinationOnClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
         destination = Destination(address,x,place,y)
@@ -70,6 +71,11 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     }
 
     private fun checkEnd(){
+        if(list == null){
+            list = mutableListOf()
+            list.add(FrequentDestination(destination.address,destination.latitude,0,destination.addressName,destination.longitude))
+            userHomeViewModel.updateDestinations(list)
+        }
         if(binding.textDestinationSettingStart.text !="" && binding.textDestinationSettingDestination.text != ""){
             findNavController().navigate(R.id.action_destinationSettingFragment_to_callTaxiFragment,
             bundleOf("Destination" to destination, "StartingPoint" to startingPoint))
@@ -133,8 +139,10 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
                 }
                 is UiState.Success -> {
                     binding.progressBar.hide()
-                    val list : MutableList<FrequentDestination> = state.data.toMutableList()
-                    destinationListAdapter.updateList(list)
+                    if(state.data != null){
+                        list = state.data.toMutableList()
+                        destinationListAdapter.updateList(list)
+                    }
                     binding.recyclerviewDestinationSettingDestinationList.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textDestinationSettingNoContentDestination.hide()
 
