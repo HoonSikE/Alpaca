@@ -305,9 +305,9 @@
                 <EditText
                     android:id="@+id/editText_join_tel"
                     style="@style/Body"
-                    android:layout_width="64dp"
+                    android:layout_width="56dp"
                     android:layout_height="48dp"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_regular"
                     android:ems="10"
@@ -316,6 +316,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:textColorHint="@color/hintGray"
+                    app:layout_constraintEnd_toStartOf="@+id/text_join_tel_bar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_join_tel" />
 
@@ -335,7 +336,7 @@
                 <EditText
                     android:id="@+id/editText_join_tel2"
                     style="@style/Body"
-                    android:layout_width="80dp"
+                    android:layout_width="72dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_regular"
@@ -365,7 +366,7 @@
                 <EditText
                     android:id="@+id/editText_join_tel3"
                     style="@style/Body"
-                    android:layout_width="80dp"
+                    android:layout_width="72dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="16dp"
@@ -380,7 +381,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/button_join_tel_auth"
                     app:layout_constraintTop_toBottomOf="@id/text_join_tel" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_join_tel_auth"
                     style="@style/Body"
                     android:layout_width="96dp"
@@ -429,7 +430,7 @@
                     android:layout_height="200dp"
                     android:layout_marginHorizontal="16dp"
                     android:elevation="12dp"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:background="@drawable/reycler_comment"
                     android:padding="8dp"
                     app:layout_constraintBottom_toTopOf="@+id/editText_join_home_address"
@@ -485,7 +486,7 @@
                     android:layout_height="200dp"
                     android:layout_marginHorizontal="16dp"
                     android:elevation="12dp"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:background="@drawable/reycler_comment"
                     android:padding="8dp"
                     app:layout_constraintBottom_toTopOf="@+id/editText_join_company_address"

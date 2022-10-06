@@ -44,11 +44,11 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragme
     private var favorites : MutableList<Favorites> = mutableListOf()
     private var addressFavorites = ""
     private lateinit var destinationSearchListAdapter: DestinationSearchListAdapter
-    private lateinit var destination : Destination
+    private lateinit var destination : Favorites
     private var checkState = false
 
     private val destinationSearchClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
-        destination = Destination(address,y,place,x)
+        destination = Favorites(address,y,place,x)
         checkState = true
         binding.searchFavoritesSearch.setQuery(destination.addressName, false)
         binding.recyclerFavorites.hide()
@@ -108,8 +108,7 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragme
         }
         binding.buttonFavoritesUpdate.setOnClickListener{
             if(binding.searchFavoritesSearch.query.toString() != ""){
-                val addfavorite = Favorites("", "", binding.searchFavoritesSearch.query.toString(), "")
-                favorites.add(addfavorite)
+                favorites.add(destination)
                 if(favorites.size == 1){
                     userHomeViewModel.addFavorites(favorites)
                 }else{
@@ -152,20 +151,10 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragme
 
     // Dialog를 보여줌과 동시에 삭제 명령을 내린다.
     private fun showFavoritesDialog(address: String) {
-        FavoritesDialogFragment { favoritesListener(address) }.show(childFragmentManager, "FAVORITES_DIALOG")
+        FavoritesDialogFragment(address) { favoritesListener }.show(childFragmentManager, "FAVORITES_DIALOG")
     }
 
-    private val favoritesListener: (address: String) -> Unit = {
-        if(favorites.size < 2) {
-            userHomeViewModel.deleteFavorites()
-        }else{
-            for(i in 0 until favorites.size){
-                if(favorites[i].address == addressFavorites) {
-                    favorites.removeAt(i)
-                    userHomeViewModel.updateFavorites(favorites)
-                }
-            }
-        }
+    private val favoritesListener: () -> Unit = {
         userHomeViewModel.getFavorites()
     }
 
