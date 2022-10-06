@@ -167,7 +167,8 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
                     ApplicationClass.prefs.distanceStart = str.toFloat()
                     binding.textCallTaxiDistance.text = str.toString() +"Km"
                     ApplicationClass.prefs.distance = str.toFloat()
-                    getFee(str)
+                    binding.textCallTaxiCash.text = "1,000 원"
+                    //getFee(str)
                 }
             }
         }

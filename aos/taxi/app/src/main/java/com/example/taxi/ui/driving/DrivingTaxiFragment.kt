@@ -175,8 +175,8 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
                 )
             )
         )
-
-        getFee(((location.dis/1000.0) * 100.0).roundToInt() / 100.0)
+        binding.textDrivingTaxiFee.text = "1,000 원"
+        //getFee(((location.dis/1000.0) * 100.0).roundToInt() / 100.0)
     }
 
     private fun getAddress(lat: Double, lng: Double): String {
