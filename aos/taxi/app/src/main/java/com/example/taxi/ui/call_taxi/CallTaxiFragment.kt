@@ -60,6 +60,7 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
     private var uiSettings: UiSettings? = null
     private var markers = mutableListOf<Marker>()
     private var paths = mutableListOf<PathOverlay>()
+    private var distance = 0.0
 
     private val destinationSearchClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
         binding.searchCallTaxi.visibility = View.GONE
@@ -163,6 +164,7 @@ class CallTaxiFragment : BaseFragment<FragmentCallTaxiBinding>(R.layout.fragment
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     var str = ((state.data.toDouble()/1000.0) * 100.0).roundToInt() / 100.0
+                    ApplicationClass.prefs.distanceStart = state.data.toFloat()
                     binding.textCallTaxiDistance.text = str.toString() +"Km"
                     ApplicationClass.prefs.distance = str.toFloat()
                     getFee(str)

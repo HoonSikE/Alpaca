@@ -22,7 +22,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="160dp"
+                android:layout_height="240dp"
                 android:background="@drawable/layout_recycler_regular"
                 android:padding="16dp"
                 >
@@ -41,10 +41,10 @@
 
                 <ImageView
                     android:id="@+id/image_my_page_board_taxi_label"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:paddingLeft="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/image_my_page_board_taxi"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi"
                     app:srcCompat="@drawable/ic_taxi_number" />
 
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text="택시 번호 : "
                     style="@style/SubHeadBold"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     app:layout_constraintTop_toTopOf="@+id/image_my_page_board_taxi_label"
                     app:layout_constraintBottom_toBottomOf="@+id/image_my_page_board_taxi_label"
                     app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi_label"
@@ -66,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:text="12가 1234"
                     style="@style/SubHeadBold"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_number_label"
                     app:layout_constraintStart_toEndOf="@+id/text_my_page_board_taxi_number_label"
                     />
@@ -85,10 +86,11 @@
                     android:layout_height="wrap_content"
                     android:text="승차감"
                     android:paddingLeft="8dp"
+                    android:layout_marginTop="16dp"
                     style="@style/SubHead"
-                    app:layout_constraintTop_toTopOf="@+id/image_my_page_board_taxi"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_my_page_board_taxi"
-                    app:layout_constraintStart_toStartOf="@+id/image_my_page_board_taxi_label"
+                    app:layout_constraintTop_toBottomOf="@+id/text_my_page_board_taxi_number"
+                    app:layout_constraintBottom_toTopOf="@+id/rating_my_page_board_taxi_ride_comfort"
+                    app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi"
                     />
 
                 <RatingBar
@@ -99,9 +101,10 @@
                     android:isIndicator="true"
                     android:numStars="5"
                     android:stepSize="0.1"
-                    app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_ride_comfort"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_ride_comfort"
-                    app:layout_constraintStart_toEndOf="@+id/text_my_page_board_taxi_ride_comfort"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_my_page_board_taxi_ride_comfort"
+                    app:layout_constraintBottom_toTopOf="@+id/text_my_page_board_taxi_cleanliness"
+                    app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi"
                     android:layout_marginLeft="4dp"
                     />
 
@@ -121,6 +124,8 @@
                     android:text="청결도"
                     android:paddingLeft="8dp"
                     style="@style/SubHead"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/rating_my_page_board_taxi_ride_comfort"
                     app:layout_constraintBottom_toBottomOf="@+id/image_my_page_board_taxi"
                     app:layout_constraintStart_toStartOf="@+id/image_my_page_board_taxi_label"
                     />
@@ -133,9 +138,11 @@
                     android:isIndicator="true"
                     android:numStars="5"
                     android:stepSize="0.1"
-                    app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_cleanliness"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_cleanliness"
-                    app:layout_constraintStart_toEndOf="@+id/text_my_page_board_taxi_cleanliness"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_my_page_board_taxi_cleanliness"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_my_page_board_taxi"
                     android:layout_marginLeft="4dp"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
