@@ -12,10 +12,7 @@ import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.api.KakaoAPI
 import com.example.taxi.data.dto.mypage.Favorites
-import com.example.taxi.data.dto.user.destination.Destination
-import com.example.taxi.data.dto.user.destination.DestinationSearch
-import com.example.taxi.data.dto.user.destination.DestinationSearchDto
-import com.example.taxi.data.dto.user.destination.FrequentDestination
+import com.example.taxi.data.dto.user.destination.*
 import com.example.taxi.databinding.FragmentDestinationSettingBinding
 import com.example.taxi.ui.home.user.DestinationListAdapter
 import com.example.taxi.ui.home.user.FavoritesAdapter
@@ -44,7 +41,7 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     private lateinit var favoritesAdapter: FavoritesAdapter
     private lateinit var destinationSearchListAdapter: DestinationSearchListAdapter
     private val userHomeViewModel : UserHomeViewModel by viewModels()
-    lateinit var list : MutableList<FrequentDestination>
+    var list : MutableList<FrequentDestination> = mutableListOf()
 
     private val destinationOnClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
         destination = Destination(address,x,place,y)
@@ -71,10 +68,9 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     }
 
     private fun checkEnd(){
-        if(list == null){
-            list = mutableListOf()
+        if(list.isEmpty()){
             list.add(FrequentDestination(destination.address,destination.latitude,0,destination.addressName,destination.longitude))
-            userHomeViewModel.updateDestinations(list)
+            userHomeViewModel.addDestination(FrequentDestinationDto(list))
         }
         if(binding.textDestinationSettingStart.text !="" && binding.textDestinationSettingDestination.text != ""){
             findNavController().navigate(R.id.action_destinationSettingFragment_to_callTaxiFragment,
