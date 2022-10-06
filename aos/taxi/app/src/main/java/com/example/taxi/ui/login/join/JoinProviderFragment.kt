@@ -107,7 +107,7 @@ class JoinProviderFragment : BaseFragment<FragmentJoinProviderBinding>(R.layout.
                 carName = binding.editTextJoinProviderCarName.text.toString(),
                 carNumber = binding.editTextJoinProviderCarNumber.text.toString(),
                 cleanlinessAverage = 0.0,
-                deadLine = "",
+                deadLine = "없음",
                 isEachDriving = false,
                 isEachInOperation = false,
                 position = Location("", ""),

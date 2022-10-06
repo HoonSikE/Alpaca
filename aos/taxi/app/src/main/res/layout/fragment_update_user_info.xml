@@ -59,6 +59,7 @@
             />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view_update_user_info"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
@@ -67,11 +68,13 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_join"
+            app:layout_constraintBottom_toTopOf="@id/button_user_update_info"
             app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:orientation="vertical">
 
                 <!--User Image-->
@@ -318,6 +321,7 @@
                     android:layout_height="48dp"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/textview_regular"
                     android:ems="10"
                     android:gravity="center_vertical"
@@ -326,8 +330,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_update_user_info_office_address"
-                    tools:layout_editor_absoluteX="88dp"
-                    tools:layout_editor_absoluteY="193dp" />
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <ImageView
                     android:id="@+id/image_update_user_info_company_address"
@@ -348,25 +351,34 @@
                     app:layout_constraintEnd_toEndOf="@+id/text_update_user_info_company_address"
                     android:layout_marginRight="8dp"
                     app:srcCompat="@drawable/ic_edit" />
-
-                <!--button-->
-                <Button
-                    android:id="@+id/button_user_update_info"
-                    style="@style/Body"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/button_regular"
-                    android:text="수정하기"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_update_user_info_company_address"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scroll_view_update_user_info"
+            />
+
+        <!--button-->
+        <Button
+            android:id="@+id/button_user_update_info"
+            style="@style/Body"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_regular"
+            android:text="수정하기"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scroll_view_update_user_info"/>
 
         <ProgressBar
             android:id="@+id/progressBar_update_loading"

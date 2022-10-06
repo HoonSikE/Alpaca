@@ -29,20 +29,12 @@
                 app:tint="@color/primaryColor" />
 
             <TextView
-                style="@style/HeadBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="1:1 채팅 with "
-                android:layout_gravity="center_vertical"
-                />
-
-            <TextView
                 android:id="@+id/text_personal_chat_user_name"
                 style="@style/HeadBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Name"
+                android:layout_marginStart="16dp"
                 android:textColor="@color/primaryColor"
                 android:layout_gravity="center_vertical"
                 />

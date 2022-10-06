@@ -39,6 +39,15 @@
                 android:layout_gravity="center_vertical"/>
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_favorites"
+            />
+
         <TextView
             android:id="@+id/text_favorites_search_label"
             style="@style/SubHeadSemiBoldPrimaryColor"
@@ -49,7 +58,7 @@
             android:layout_gravity="center_vertical"
             app:layout_constraintTop_toTopOf="@+id/search_favorites_search"
             app:layout_constraintBottom_toBottomOf="@+id/search_favorites_search"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_favorites"/>
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_favorites_search"
@@ -57,10 +66,11 @@
             android:layout_height="40dp"
             android:elevation="10dp"
             app:defaultQueryHint="검색 주소를 입력해주세요."
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             app:iconifiedByDefault="false"
             app:queryBackground="@drawable/search_regular"
+            app:layout_constraintStart_toEndOf="@+id/text_favorites_search_label"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_favorites"
             app:layout_constraintEnd_toEndOf="parent"/>
 
