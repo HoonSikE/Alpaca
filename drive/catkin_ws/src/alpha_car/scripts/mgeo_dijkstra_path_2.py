@@ -63,7 +63,8 @@ class dijkstra_path_pub :
         rospy.Subscriber('/initialpose', PoseWithCovarianceStamped, self.init_callback)
 
         #TODO: (1) Mgeo data 읽어온 후 데이터 확인
-        load_path = os.path.normpath(os.path.join(current_path, 'lib/mgeo_data/R_KR_PG_K-City'))
+        load_path = os.path.normpath(os.path.join(current_path, '../../Sangam_Mgeo'))
+        # load_path = os.path.normpath(os.path.join(current_path, 'lib/mgeo_data/R_KR_PG_K-City'))
         mgeo_planner_map = MGeo.create_instance_from_json(load_path)
 
         node_set = mgeo_planner_map.node_set
@@ -89,12 +90,13 @@ class dijkstra_path_pub :
         self.global_path_msg.header.frame_id = '/map'
 
         self.global_path_msg = self.calc_dijkstra_path_node(self.start_node, self.end_node)
+        self.global_path_pub.publish(self.global_path_msg)
 
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             #TODO: (11) dijkstra 이용해 만든 Global Path 정보 Publish
             # dijkstra 이용해 만든 Global Path 메세지 를 전송하는 publisher 를 만든다.
-            self.global_path_pub.publish(self.global_path_msg)
+            # self.global_path_pub.publish(self.global_path_msg)
             
             rate.sleep()
     

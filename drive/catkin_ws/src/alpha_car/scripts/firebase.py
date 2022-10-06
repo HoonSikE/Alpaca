@@ -141,7 +141,7 @@ class Basic_firebase:
                         answer = x
 
                         data333 = {
-                                'dis' : -1 if 0 < answer < 5 else int(answer),
+                                'dis' : -1 if 0 < answer < 2 else int(answer),
                                 'time' : int(answer / 30000 * 60)
                             }
                         db.collection(u'CurrentLocation').document(u'Ego_0').update(data333)
@@ -149,6 +149,7 @@ class Basic_firebase:
 
             if prev != self.newData:
                 newData = self.newData
+                print(newData)
                 print("prev != newData !!!!!!!!!!!!!!!!!!!!!!!")
                 # 1. 좌표변환
                 start_x = float(newData['startingPoint']['long'])
@@ -168,6 +169,7 @@ class Basic_firebase:
                 print(startNode, endNode)
 
                 # 3. 다익스트라 실행
+                link_idx_array, points_list = None, None
                 link_idx_array, points_list = self.dijkstra(startNode, endNode)
                 self.on_path = points_list
                 
@@ -189,7 +191,7 @@ class Basic_firebase:
 
                 db.collection(u'Route').document(u'12가3456').set(data22)
                 
-
+                self.global_path_msg.poses = []
                 ###################
                 for point in points_list:
                     read_pose = PoseStamped()
@@ -207,6 +209,7 @@ class Basic_firebase:
                 # 4-2. start driving
                 if newData['checkState'] == True:
                     # global path publish
+                    
                     self.global_path_pub.publish(self.global_path_msg)
                 else:
                     data333 = {'dis' : len(points_list)* 1.3}
@@ -244,17 +247,17 @@ class Basic_firebase:
             for to_node in from_node.get_to_nodes():
                 for _, link in self.links.items():
                     if link.from_node.idx == from_node.idx and link.to_node.idx == to_node.idx:
-                        weight_from_this_node[to_node.idx] = [link.idx, len(link.points)]
+                        weight_from_this_node[to_node.idx] = [link.idx, len(link.points)] # len(link.points)
                         break
             
             for next_link in from_node.get_to_links():
                 # init : possible left changeable node, cost
-                    for left_link in next_link.get_all_left_links():
-                        weight_from_this_node[left_link.to_node.idx] = [left_link.idx, len(left_link.points) + 1]
+                    for x, left_link in enumerate(next_link.get_all_left_links(), 1):
+                        weight_from_this_node[left_link.to_node.idx] = [left_link.idx, len(left_link.points) + 20*x] # len(left_link.points)
 
                 # init : possible right changeable node, cost
-                    for right_link in next_link.get_all_right_links():
-                        weight_from_this_node[right_link.to_node.idx] = [right_link.idx, len(right_link.points) + 1]
+                    for x, right_link in enumerate(next_link.get_all_right_links(), 1):
+                        weight_from_this_node[right_link.to_node.idx] = [right_link.idx, len(right_link.points) + 20*x] # len(right_link.points)
             
             weight[from_node.idx] = weight_from_this_node
         
