@@ -51,7 +51,7 @@ class ChatBotAdapter: RecyclerView.Adapter<ChatBotAdapter.ChatBotMessageViewHold
                 holder.text_chat_bot_name.visibility = View.VISIBLE
             }else{
                 holder.image_chat_bot.visibility = View.INVISIBLE
-                holder.text_chat_bot_name.visibility = View.INVISIBLE
+                holder.text_chat_bot_name.visibility = View.GONE
             }
         }else {
             holder.layout_main.gravity = Gravity.RIGHT
