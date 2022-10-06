@@ -19,6 +19,7 @@ class FrequentDestinationRepositoryImpl(
 ) : FrequentDestinationRepository {
 
     override fun getDestination(result: (UiState<List<FrequentDestination>>) -> Unit) {
+        println("userId : " + ApplicationClass.userId)
         database.collection(FireStoreCollection.DESTINATION).document(ApplicationClass.userId)
             .get()
             .addOnSuccessListener { document ->
@@ -26,7 +27,7 @@ class FrequentDestinationRepositoryImpl(
                 if (document != null) {
                     val frequentDestinationDto = document.toObject(FrequentDestinationDto::class.java)
                     if(frequentDestinationDto != null){
-                        val destinations = frequentDestinationDto.frequentDestination
+                        val destinations = frequentDestinationDto.destination
                         val newFrequentDestination = mutableListOf<FrequentDestination>()
                         if(destinations != null){
                             for(des in destinations){
@@ -72,7 +73,7 @@ class FrequentDestinationRepositoryImpl(
             }
     }
 
-    override fun addDestination(frequentDestination: FrequentDestination, result: (UiState<FrequentDestination>) -> Unit) {
+    override fun addDestination(frequentDestination: FrequentDestinationDto, result: (UiState<FrequentDestinationDto>) -> Unit) {
         val document = database.collection(FireStoreCollection.DESTINATION).document(ApplicationClass.userId)
         document
             .set(frequentDestination)

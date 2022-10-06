@@ -56,11 +56,14 @@ class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.
 
     private fun initData() {
         startUserName = getName(arguments?.getString("startUserName") as String)
-        destinationUserName = getName(arguments?.getString("destinationUserName") as String)
-        ApplicationClass.prefs.destinationUserName = destinationUserName
-        destinationUserImg = arguments?.getString("destinationUserImg") as String
-        ApplicationClass.prefs.destinationUserImg = destinationUserImg
-        binding.textPersonalChatUserName.text = destinationUserName
+
+        ApplicationClass.prefs.destinationUserName = arguments?.getString("destinationUserName") as String
+        binding.textPersonalChatUserName.text = ApplicationClass.prefs.destinationUserName
+        destinationUserName = getName(ApplicationClass.prefs.destinationUserName.toString())
+
+        ApplicationClass.prefs.destinationUserImg = arguments?.getString("destinationUserImg") as String
+        destinationUserImg = ApplicationClass.prefs.destinationUserImg.toString()
+
 
         personalChatViewModel.checkChatRoom(
             startUserName = startUserName!!,
@@ -100,7 +103,7 @@ class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.
                 //메세지 보내기
                 // 시간 세팅
                 val time = System.currentTimeMillis()
-                val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                val dateFormat = SimpleDateFormat("MM월 dd일 hh:mm")
                 val curTime = dateFormat.format(Date(time)).toString()
 
                 val comment = ChatModel.CommentModel(
@@ -201,6 +204,7 @@ class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.
                         println(comments)
                     }
                     personalChatAdapter.updateList(comments)
+                    binding.messageActivityRecyclerview.scrollToPosition(personalChatAdapter.itemCount-1)
                 }
             }
         }
@@ -208,8 +212,7 @@ class PersonalChatFragment : BaseFragment<FragmentPersonalChatBinding>(R.layout.
     private fun getName(userName: String) : String {
         var result = userName
         // email Set으로 들어가면 오류가 생기므로 .과 @를 없앤다.
-        result = result!!.replace(".", "")
-        result = result!!.replace("@", "")
+        result = result!!.replace(".", "").replace("@", "")
         return result
     }
 }

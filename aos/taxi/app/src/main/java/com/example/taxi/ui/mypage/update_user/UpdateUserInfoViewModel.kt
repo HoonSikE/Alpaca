@@ -23,11 +23,16 @@ class UpdateUserInfoViewModel @Inject constructor(
     val addImageUpLoad: LiveData<UiState<User>>
         get() = _addImageUpLoad
 
+    // Provider 확인
+    private val _updateUserEachProvider = MutableLiveData<UiState<Boolean>>()
+    val updateUserEachProvider: LiveData<UiState<Boolean>>
+        get() = _updateUserEachProvider
+    
     // 전화번호
     private val _updateUserTel = MutableLiveData<UiState<String>>()
     val updateUserTel: LiveData<UiState<String>>
         get() = _updateUserTel
-
+    
     // 주소 삭제
     private val _deleteUserAddress = MutableLiveData<UiState<String>>()
     val deleteUserAddress: LiveData<UiState<String>>
@@ -60,6 +65,14 @@ class UpdateUserInfoViewModel @Inject constructor(
         }
     }
 
+    fun updateUserEachProvider(isEachProvider: Boolean){
+        userinfoRepository.updateUserEachProvider(
+            isEachProvider = isEachProvider
+        ) {
+            _updateUserEachProvider.value = it
+        }
+    }
+    
     fun updateUserTel(tel: String){
         userinfoRepository.updateUserTel(
             tel = tel
@@ -68,17 +81,13 @@ class UpdateUserInfoViewModel @Inject constructor(
         }
     }
 
-    fun deleteUserAddress(result: () -> Unit){
-        userinfoRepository.deleteUserAddress(
-        ) {
-            _deleteUserAddress.value = it
-        }
+    fun deleteUserAddress(){
+        _deleteUserAddress.value = UiState.Loading
+        userinfoRepository.deleteUserAddress { _deleteUserAddress.value = it }
     }
 
-    fun deleteImage(result: () -> Unit){
-        userinfoRepository.deleteImage(
-        ) {
-            _deleteImage.value = it
-        }
+    fun deleteImage(){
+        _deleteImage.value = UiState.Loading
+        userinfoRepository.deleteImage { _deleteImage.value = it }
     }
 }

@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FrequentDestinationDto(
-    var frequentDestination: MutableList<FrequentDestination> = mutableListOf()
+    var destination: MutableList<FrequentDestination> = mutableListOf()
 ) : Parcelable

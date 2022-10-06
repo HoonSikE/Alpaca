@@ -1,9 +1,12 @@
 package com.example.taxi.ui.mypage.update_user
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.example.taxi.databinding.DlgTelBinding
 import com.example.taxi.utils.constant.isValidEmail
@@ -19,6 +22,8 @@ class UpdateTelDialogFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DlgTelBinding.inflate(inflater, container, false)
         val view = binding.root
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         //ok 버튼 동작
         binding.buttonDlgTelUpdate.setOnClickListener {

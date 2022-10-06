@@ -16,7 +16,6 @@ import com.example.taxi.databinding.ItemChatBotListBinding
 class ChatBotAdapter: RecyclerView.Adapter<ChatBotAdapter.ChatBotMessageViewHolder>() {
     private var commentList = mutableListOf<String>()
     lateinit var onMessageClickListener: (View, String) -> Unit
-    private lateinit var chatBotMessageAdapterAdapter: ChatBotMessageAdapter
 
     fun setListData(data: MutableList<String>){
         commentList = data
@@ -42,27 +41,20 @@ class ChatBotAdapter: RecyclerView.Adapter<ChatBotAdapter.ChatBotMessageViewHold
     }
 
     override fun onBindViewHolder(holder: ChatBotMessageViewHolder, position: Int) {
-//        holder.textView_message.textSize = 20F
-//        holder.textView_message.text = commentList[position]
-//        holder.textView_message.setBackgroundResource(R.drawable.ic_chat_left)
-//        holder.textView_message.setPadding(16,32,16,16)
         if(commentList[position].substring(0 until 1) != "나"){
             holder.layout_main.gravity = Gravity.LEFT
             holder.textView_message.text = commentList[position]
-            holder.textView_message.setBackgroundResource(R.drawable.textview_regular)
-            holder.textView_message.setPadding(8,8,8,8)
+            holder.textView_message.setBackgroundResource(R.drawable.ic_chat_left)
             if(commentList[position].substring(0 until 2) == "아래" || position == 0){
-                holder.layout_main.setPadding(0, 16, 0, 0)
                 holder.image_chat_bot.visibility = View.VISIBLE
                 holder.text_chat_bot_name.visibility = View.VISIBLE
             }else{
                 holder.image_chat_bot.visibility = View.INVISIBLE
-                holder.text_chat_bot_name.visibility = View.INVISIBLE
+                holder.text_chat_bot_name.visibility = View.GONE
             }
         }else {
             holder.layout_main.gravity = Gravity.RIGHT
             holder.textView_message.text = commentList[position].substring(2 until commentList[position].length)
-            holder.textView_message.setPadding(32,32,32,32)
             holder.textView_message.setBackgroundResource(R.drawable.ic_chat_right)
             holder.image_chat_bot.visibility = View.INVISIBLE
             holder.text_chat_bot_name.visibility = View.INVISIBLE

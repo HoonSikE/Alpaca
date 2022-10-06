@@ -113,7 +113,7 @@ class local_path_pub :
 
                 '''
 
-                print(x,y)
+                # print(x,y)
                 #TODO: (7) Local Path 메세지 Publish
                 self.local_path_pub.publish(local_path_msg)
                 '''
@@ -140,7 +140,9 @@ class local_path_pub :
     def global_path_callback(self,msg):
         self.is_path = True
         self.global_path_msg = msg
-        # print(msg)
+        # print(msg.poses[:10])
+        # print(msg.poses[-10:])
+        # print(msg.poses[-1])
 
 if __name__ == '__main__':
     try:

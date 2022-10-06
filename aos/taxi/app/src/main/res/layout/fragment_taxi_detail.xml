@@ -26,314 +26,335 @@
                 android:focusable="true"
                 android:padding="3dp"
                 android:src="@drawable/ic_back"
-                app:tint="@color/black" />
+                app:tint="@color/primaryColor" />
 
             <TextView
-                style="@style/SubHeadBold"
+                style="@style/HeadBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="차량 상세 조회"
+                android:textColor="@color/primaryColor"
                 android:layout_gravity="center_vertical"
                 />
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_boarding_taxi_detail_car"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:src="@drawable/img_car"
-            android:background="@drawable/circle_profile"
-            android:padding="1dp"
-            android:layout_marginTop="24dp"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_boarding_taxi_detail" />
-
-        <ImageView
-            android:id="@+id/image_my_page_board_taxi_label"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_detail_number"
-            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_detail_number"
-            app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_detail_number"
-            app:srcCompat="@drawable/ic_taxi_number" />
-
-        <TextView
-            android:id="@+id/text_boarding_taxi_detail_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12가3456"
-            android:layout_marginTop="24dp"
-            style="@style/HeadBold"
-            app:layout_constraintTop_toBottomOf="@+id/image_boarding_taxi_detail_car"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_boarding_taxi_detail"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_boarding_taxi_detail_info"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view_taxi_detail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginVertical="24dp"
-            android:layout_marginHorizontal="16dp"
-            android:padding="16dp"
-            android:elevation="5dp"
-            android:background="@drawable/layout_user_profile"
-            app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_detail_number"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/button_boarding_taxi_person_chat"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_boarding_taxi_person_chat"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_boarding_taxi_detail"
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:ignore="MissingConstraints">
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_boarding_taxi_detail_car"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:src="@drawable/img_car"
+                    android:background="@drawable/circle_profile"
+                    android:padding="1dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_my_page_board_taxi_label"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_detail_number"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_detail_number"
+                    app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_detail_number"
+                    app:srcCompat="@drawable/ic_taxi_number" />
+
+                <TextView
+                    android:id="@+id/text_boarding_taxi_detail_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12가3456"
+                    android:layout_marginTop="24dp"
+                    style="@style/HeadBold"
+                    app:layout_constraintTop_toBottomOf="@+id/image_boarding_taxi_detail_car"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_boarding_taxi_detail_assessment"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/layout_boarding_taxi_detail_info"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="24dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:padding="16dp"
+                    android:elevation="5dp"
+                    android:background="@drawable/layout_user_profile"
+                    app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_detail_number"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="MissingConstraints">
-                   <!-- 승차감 -->
-                    <ImageView
-                        android:id="@+id/image_boarding_taxi_detail_ride_comfort_label"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_detail_ride_comfort"
-                        app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_detail_ride_comfort"
-                        app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_detail_ride_comfort"
-                        app:srcCompat="@drawable/ic_taxi_comfort" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
 
-                    <TextView
-                        android:id="@+id/text_boarding_taxi_detail_ride_comfort"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="승차감"
-                        android:paddingLeft="8dp"
-                        style="@style/SubHead"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="16dp"
+                        android:layout_height="match_parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="24dp"
-                        />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="MissingConstraints">
 
-                    <RatingBar
-                        android:id="@+id/rating_boarding_taxi_detail_ride_comfort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="?android:attr/ratingBarStyleIndicator"
-                        android:isIndicator="true"
-                        android:numStars="5"
-                        android:stepSize="1"
-                        android:layout_marginLeft="4dp"
-                        app:layout_constraintStart_toEndOf="@+id/text_boarding_taxi_detail_ride_comfort"
-                        app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_detail_ride_comfort"
-                        app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_detail_ride_comfort"
-                        />
+                       <!-- 승차감 -->
+                        <ImageView
+                            android:id="@+id/image_boarding_taxi_detail_ride_comfort_label"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_detail_ride_comfort"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_detail_ride_comfort"
+                            app:srcCompat="@drawable/ic_taxi_comfort" />
 
-                    <!-- 청결도 -->
-                    <ImageView
-                        android:id="@+id/imageboarding_taxi_detail_cleanliness_label"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        app:layout_constraintEnd_toStartOf="@+id/text_my_page_board_taxi_cleanliness"
-                        app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_cleanliness"
-                        app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_cleanliness"
-                        app:srcCompat="@drawable/ic_taxi_clean" />
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_detail_ride_comfort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="승차감"
+                            android:paddingLeft="8dp"
+                            style="@style/SubHead"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="24dp"
+                            />
 
-                    <TextView
-                        android:id="@+id/text_my_page_board_taxi_cleanliness"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="청결도"
-                        android:paddingLeft="8dp"
-                        style="@style/SubHead"
-                        app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_detail_ride_comfort"
-                        android:layout_marginTop="24dp"
-                        app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_detail_ride_comfort"
-                        />
+                        <RatingBar
+                            android:id="@+id/rating_boarding_taxi_detail_ride_comfort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?android:attr/ratingBarStyleIndicator"
+                            android:progressTint="@color/primaryColor"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="1"
+                            android:layout_marginLeft="16dp"
+                            app:layout_constraintStart_toEndOf="@+id/text_boarding_taxi_detail_ride_comfort"
+                            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_detail_ride_comfort"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_detail_ride_comfort"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            />
 
-                    <RatingBar
-                        android:id="@+id/rating_boarding_taxi_detail_cleanliness"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="?android:attr/ratingBarStyleIndicator"
-                        android:isIndicator="true"
-                        android:numStars="5"
-                        android:stepSize="1"
-                        android:layout_marginLeft="4dp"
-                        app:layout_constraintStart_toEndOf="@+id/text_my_page_board_taxi_cleanliness"
-                        app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_cleanliness"
-                        app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_cleanliness"
-                        />
+                        <!-- 청결도 -->
+                        <ImageView
+                            android:id="@+id/imageboarding_taxi_detail_cleanliness_label"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_my_page_board_taxi_cleanliness"
+                            app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_cleanliness"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_cleanliness"
+                            app:srcCompat="@drawable/ic_taxi_clean" />
+
+                        <TextView
+                            android:id="@+id/text_my_page_board_taxi_cleanliness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="청결도"
+                            android:paddingLeft="8dp"
+                            style="@style/SubHead"
+                            app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_detail_ride_comfort"
+                            android:layout_marginTop="24dp"
+                            app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_detail_ride_comfort"
+                            />
+
+                        <RatingBar
+                            android:id="@+id/rating_boarding_taxi_detail_cleanliness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?android:attr/ratingBarStyleIndicator"
+                            android:progressTint="@color/primaryColor"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="1"
+                            android:layout_marginLeft="16dp"
+                            app:layout_constraintStart_toEndOf="@+id/text_my_page_board_taxi_cleanliness"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/text_my_page_board_taxi_cleanliness"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_my_page_board_taxi_cleanliness"
+                            />
+                        <!-- 출발지 목적지 -->
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_start_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="출발지"
+                            android:paddingLeft="8dp"
+                            style="@style/SubHead"
+                            android:layout_marginTop="24dp"
+                            app:layout_constraintStart_toStartOf="@+id/text_my_page_board_taxi_cleanliness"
+                            app:layout_constraintTop_toBottomOf="@+id/text_my_page_board_taxi_cleanliness"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_start"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="출발지 조회"
+                            style="@style/SubHead"
+                            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_start_label"
+                            app:layout_constraintStart_toStartOf="@+id/rating_boarding_taxi_detail_cleanliness"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_destination_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="목적지"
+                            android:paddingLeft="8dp"
+                            style="@style/SubHead"
+                            android:layout_marginTop="24dp"
+                            app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_start_label"
+                            app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_start_label"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_destination"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="목적지 조회"
+                            style="@style/SubHead"
+                            android:layout_marginTop="24dp"
+                            app:layout_constraintStart_toStartOf="@+id/rating_boarding_taxi_detail_cleanliness"
+                            app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_start"
+                            />
+
+                        <!-- 소요시간 -->
+                        <ImageView
+                            android:id="@+id/image_boarding_taxi_time_required_label"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_time_required_label"
+                            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_time_required_label"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_time_required_label"
+                            app:srcCompat="@drawable/ic_timer" />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_time_required_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="소요 시간"
+                            android:paddingLeft="8dp"
+                            android:layout_marginTop="24dp"
+                            style="@style/SubHead"
+                            app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_destination"
+                            app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_destination_label"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_time_required"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00:00:00"
+                            style="@style/SubHead"
+                            app:layout_constraintStart_toEndOf="@+id/text_boarding_taxi_time_required_label"
+                            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_time_required_label"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_time_required_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            />
+
+                        <!-- 운행거리 -->
+                        <ImageView
+                            android:id="@+id/image_boarding_taxi_distance_label"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_distance_label"
+                            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_distance_label"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_distance_label"
+                            app:srcCompat="@drawable/ic_distance" />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_distance_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="운행 거리"
+                            android:paddingLeft="8dp"
+                            android:layout_marginTop="24dp"
+                            style="@style/SubHead"
+                            app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_time_required_label"
+                            app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_time_required_label"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_distance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00.00km"
+                            style="@style/SubHead"
+                            app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_time_required"
+                            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_distance_label"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_distance_label"
+                            />
+
+                        <!-- 요금 -->
+                        <ImageView
+                            android:id="@+id/image_boarding_taxi_cost_label"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_cost_label"
+                            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_cost_label"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_cost_label"
+                            app:srcCompat="@drawable/ic_money" />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_cost_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="요금 "
+                            android:paddingLeft="8dp"
+                            android:layout_marginTop="24dp"
+                            style="@style/SubHead"
+                            app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_distance_label"
+                            app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_distance_label"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_boarding_taxi_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0000원"
+                            style="@style/SubHead"
+                            app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_time_required"
+                            app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_cost_label"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_cost_label"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                <!-- 출발지 목적지 -->
-                <View
-                    android:id="@+id/view_boarding_taxi_destination_setting"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_boarding_taxi_detail_assessment"
-                    android:background="@drawable/button_regular"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/white"
-                    android:elevation="9dp"
-                    />
-
-                <TextView
-                    android:id="@+id/text_boarding_taxi_start"
-                    style="@style/Body"
-                    android:layout_width="0dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="32dp"
-                    android:hint="출발지"
-                    app:layout_constraintStart_toStartOf="@+id/view_boarding_taxi_destination_setting"
-                    app:layout_constraintTop_toTopOf="@+id/view_boarding_taxi_destination_setting"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_boarding_taxi_destination_setting"
-                    android:text=""
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:elevation="10dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/image_boarding_taxi_forward"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_forward"
-                    app:layout_constraintStart_toStartOf="@+id/view_boarding_taxi_destination_setting"
-                    app:layout_constraintEnd_toEndOf="@+id/view_boarding_taxi_destination_setting"
-                    app:layout_constraintTop_toTopOf="@+id/view_boarding_taxi_destination_setting"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_boarding_taxi_destination_setting"
-                    android:elevation="10dp"
-                    />
-
-                <TextView
-                    android:id="@+id/text_boarding_taxi_destination"
-                    style="@style/Body"
-                    android:layout_width="0dp"
-                    app:layout_constraintWidth_percent="0.30"
-                    android:layout_height="16dp"
-                    android:layout_marginEnd="32dp"
-                    android:maxLines="1"
-                    android:hint="목적지"
-                    android:ellipsize="end"
-                    app:layout_constraintEnd_toEndOf="@+id/view_boarding_taxi_destination_setting"
-                    app:layout_constraintTop_toTopOf="@+id/view_boarding_taxi_destination_setting"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_boarding_taxi_destination_setting"
-                    android:text=""
-                    android:elevation="10dp"
-                    />
-
-                <!-- 소요시간 -->
-                <ImageView
-                    android:id="@+id/image_boarding_taxi_time_required_label"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_time_required_label"
-                    app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_time_required_label"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_time_required_label"
-                    app:srcCompat="@drawable/ic_timer" />
-
-                <TextView
-                    android:id="@+id/text_boarding_taxi_time_required_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="소요 시간"
-                    android:paddingLeft="8dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginLeft="24dp"
-                    style="@style/SubHead"
-                    app:layout_constraintTop_toBottomOf="@+id/view_boarding_taxi_destination_setting"
-                    app:layout_constraintStart_toStartOf="@+id/layout_boarding_taxi_detail_assessment"
-                    />
-
-                <TextView
-                    android:id="@+id/text_boarding_taxi_time_required"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00:00:00"
-                    style="@style/SubHead"
-                    app:layout_constraintStart_toEndOf="@+id/text_boarding_taxi_time_required_label"
-                    app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_time_required_label"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_time_required_label"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <!-- 운행거리 -->
-                <ImageView
-                    android:id="@+id/image_boarding_taxi_distance_label"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_distance_label"
-                    app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_distance_label"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_distance_label"
-                    app:srcCompat="@drawable/ic_distance" />
-
-                <TextView
-                    android:id="@+id/text_boarding_taxi_distance_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="운행 거리"
-                    android:paddingLeft="8dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginLeft="24dp"
-                    style="@style/SubHead"
-                    app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_time_required_label"
-                    app:layout_constraintStart_toStartOf="@+id/layout_boarding_taxi_detail_assessment"
-                    />
-
-                <TextView
-                    android:id="@+id/text_boarding_taxi_distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00.00km"
-                    style="@style/SubHead"
-                    app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_time_required"
-                    app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_distance_label"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_distance_label"
-                    />
-                <!-- 요금 -->
-                <ImageView
-                    android:id="@+id/image_boarding_taxi_cost_label"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:layout_constraintEnd_toStartOf="@+id/text_boarding_taxi_cost_label"
-                    app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_cost_label"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_cost_label"
-                    app:srcCompat="@drawable/ic_money" />
-
-                <TextView
-                    android:id="@+id/text_boarding_taxi_cost_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="요금 "
-                    android:paddingLeft="8dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginLeft="24dp"
-                    style="@style/SubHead"
-                    app:layout_constraintTop_toBottomOf="@+id/text_boarding_taxi_distance_label"
-                    app:layout_constraintStart_toStartOf="@+id/layout_boarding_taxi_detail_assessment"
-                    />
-
-                <TextView
-                    android:id="@+id/text_boarding_taxi_cost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0000원"
-                    style="@style/SubHead"
-                    app:layout_constraintStart_toStartOf="@+id/text_boarding_taxi_time_required"
-                    app:layout_constraintTop_toTopOf="@+id/text_boarding_taxi_cost_label"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_boarding_taxi_cost_label"
-                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scroll_view_taxi_detail"
+            />
+
         <!--button-->
         <Button
             android:id="@+id/button_boarding_taxi_person_chat"
@@ -341,11 +362,12 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_regular"
             android:text="1:1 채팅"
             android:textColor="@color/primaryTextColor"
+            app:layout_constraintTop_toBottomOf="@+id/scroll_view_taxi_detail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

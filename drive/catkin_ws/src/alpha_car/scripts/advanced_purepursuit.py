@@ -9,6 +9,7 @@ from math import cos,sin,pi,sqrt,pow,atan2
 from geometry_msgs.msg import Point,PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry,Path
 from morai_msgs.msg import CtrlCmd,EgoVehicleStatus,GetTrafficLightStatus
+# from alpha_car.msg import global_msg
 import numpy as np
 import tf
 from tf.transformations import euler_from_quaternion,quaternion_from_euler
@@ -66,10 +67,12 @@ class pure_pursuit :
         # Gloabl Path 데이터는 경로의 곡률을 이용한 속도 계획을 위해 사용한다.
         
         rospy.Subscriber("/global_path", Path, self.global_path_callback)
+        # TODO 데이터 publisher 정의
+        # rospy.Subscriber("/global_data", global_msg, self.global_data_callback)
         # rospy.Subscriber("/local_path", Path, self.path_callback) # 58번째 줄로 대체
         rospy.Subscriber("/odom", Odometry, self.odom_callback)
         rospy.Subscriber("/Ego_topic", EgoVehicleStatus, self.status_callback)
-        rospy.Subscriber("/GetTrafficLightStatus", GetTrafficLightStatus, self.get_traffic_callback)
+        # rospy.Subscriber("/GetTrafficLightStatus", GetTrafficLightStatus, self.get_traffic_callback)
         self.ctrl_cmd_pub = rospy.Publisher("/ctrl_cmd", CtrlCmd, queue_size=1)
 
 
@@ -92,25 +95,28 @@ class pure_pursuit :
         self.min_lfd = 10
         self.max_lfd = 30
         self.lfd_gain = 0.78
-        self.target_velocity = 50
+        self.target_velocity = 40
 
         self.pid = pidControl()
         self.vel_planning = velocityPlanning(self.target_velocity/3.6, 0.15)
+        self.velocity_list = None
+
+        # global_path_callback 함수 속으로 이전, 해당 부분은 경로를 받았는지 확인하기 위해 사용
         while True:
             if self.is_global_path == True:
-                self.velocity_list = self.vel_planning.curvedBaseVelocity(self.global_path, 50)
+                # self.velocity_list = self.vel_planning.curvedBaseVelocity(self.global_path, 50)
                 break
             else:
                 rospy.loginfo('Waiting global path data')
 
         rate = rospy.Rate(30) # 30hz
         while not rospy.is_shutdown():
-            
 
-            if self.is_path == True and self.is_odom == True and self.is_status == True:
+            if self.is_path == True and self.is_odom == True and self.is_status == True and self.is_global_path == True and self.velocity_list:
                 prev_time = time.time()
                 
                 self.current_waypoint = self.get_current_waypoint(self.status_msg,self.global_path)
+                
                 self.target_velocity = self.velocity_list[self.current_waypoint]*3.6
                 
 
@@ -122,6 +128,7 @@ class pure_pursuit :
                     self.ctrl_cmd_msg.steering = 0.0
                 
                 output = self.pid.pid(self.target_velocity,self.status_msg.velocity.x*3.6)
+                print(output)
 
                 if output > 0.0:
                     self.ctrl_cmd_msg.accel = output
@@ -129,6 +136,10 @@ class pure_pursuit :
                 else:
                     self.ctrl_cmd_msg.accel = 0.0
                     self.ctrl_cmd_msg.brake = -output
+                    
+                print(len(self.path.poses))
+                if len(self.path.poses) <= 20 and self.ctrl_cmd_msg.brake < 1:
+                    self.ctrl_cmd_msg.brake = 10
 
                 #TODO: (8) 제어입력 메세지 Publish
                 
@@ -154,12 +165,22 @@ class pure_pursuit :
         
     def global_path_callback(self,msg):
         self.global_path = msg
+        self.is_global_path = False
+
+        # 임시적으로 에러 해결
+        self.velocity_list = self.vel_planning.curvedBaseVelocity(self.global_path, 50)
         self.is_global_path = True
 
-    def get_traffic_callback(self, msg):
-        self.traffic = msg
-        self.is_get_traffic = True
-        print(msg)
+    # TODO 데이터 수신
+    def global_data_callback(self, msg):
+        self.global_data = msg
+        self.is_global_data = True
+        # print(msg)
+
+    # def get_traffic_callback(self, msg):
+    #     self.traffic = msg
+    #     self.is_get_traffic = True
+    #     # print(msg)
     
     def get_current_waypoint(self,ego_status,global_path):
         min_dist = float('inf')        
@@ -230,9 +251,9 @@ class pure_pursuit :
         # 제어 입력을 위한 Steering 각도를 계산 합니다.
         # theta 는 전방주시거리(Look Forward Distance) 와 가장 가까운 Path Point 좌표의 각도를 계산 합니다.
         # Steering 각도는 Pure Pursuit 알고리즘의 각도 계산 수식을 적용하여 조향 각도를 계산합니다.
-        try:
+        if self.is_look_forward_point:
             theta = atan2(self.forward_point[1], self.forward_point[0])
-        except:
+        else:
             theta = 0
             
         steering = atan2(2*self.vehicle_length*sin(theta), self.lfd)
@@ -315,7 +336,7 @@ class velocityPlanning:
             out_vel_plan.append(v_max)
 
         for i in range(len(gloabl_path.poses) - point_num, len(gloabl_path.poses)-10):
-            out_vel_plan.append(30)
+            out_vel_plan.append(20)
 
         for i in range(len(gloabl_path.poses) - 10, len(gloabl_path.poses)):
             out_vel_plan.append(0)

@@ -42,6 +42,7 @@ class ProviderRepositoryImpl(
     }
 
     override fun addProvider(provider: Provider, result: (UiState<Provider>) -> Unit){
+
         if(provider.car?.carImage != ""){
             var storage = FirebaseStorage.getInstance()
             var imgFileName = ApplicationClass.prefs.providerId + ".png"
@@ -105,6 +106,23 @@ class ProviderRepositoryImpl(
                     )
                 )
                 Log.d("updateProvider", "Destination has been created fail")
+            }
+    }
+
+    override fun deleteProvider(result: (UiState<String>) -> Unit){
+        val document = database.collection(FireStoreCollection.PROVIDER).document(ApplicationClass.userId)
+        document.delete()
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success("User has been deleted successfully")
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
             }
     }
 

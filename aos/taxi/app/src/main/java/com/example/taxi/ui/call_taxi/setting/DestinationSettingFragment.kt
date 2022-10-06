@@ -12,10 +12,7 @@ import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.api.KakaoAPI
 import com.example.taxi.data.dto.mypage.Favorites
-import com.example.taxi.data.dto.user.destination.Destination
-import com.example.taxi.data.dto.user.destination.DestinationSearch
-import com.example.taxi.data.dto.user.destination.DestinationSearchDto
-import com.example.taxi.data.dto.user.destination.FrequentDestination
+import com.example.taxi.data.dto.user.destination.*
 import com.example.taxi.databinding.FragmentDestinationSettingBinding
 import com.example.taxi.ui.home.user.DestinationListAdapter
 import com.example.taxi.ui.home.user.FavoritesAdapter
@@ -44,6 +41,7 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     private lateinit var favoritesAdapter: FavoritesAdapter
     private lateinit var destinationSearchListAdapter: DestinationSearchListAdapter
     private val userHomeViewModel : UserHomeViewModel by viewModels()
+    var list : MutableList<FrequentDestination> = mutableListOf()
 
     private val destinationOnClickListener: (View, String, String, String, String) -> Unit = { _, place, address, x, y ->
         destination = Destination(address,x,place,y)
@@ -70,6 +68,10 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     }
 
     private fun checkEnd(){
+        if(list.isEmpty()){
+            list.add(FrequentDestination(destination.address,destination.latitude,0,destination.addressName,destination.longitude))
+            userHomeViewModel.addDestination(FrequentDestinationDto(list))
+        }
         if(binding.textDestinationSettingStart.text !="" && binding.textDestinationSettingDestination.text != ""){
             findNavController().navigate(R.id.action_destinationSettingFragment_to_callTaxiFragment,
             bundleOf("Destination" to destination, "StartingPoint" to startingPoint))
@@ -133,8 +135,10 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
                 }
                 is UiState.Success -> {
                     binding.progressBar.hide()
-                    val list : MutableList<FrequentDestination> = state.data.toMutableList()
-                    destinationListAdapter.updateList(list)
+                    if(state.data != null){
+                        list = state.data.toMutableList()
+                        destinationListAdapter.updateList(list)
+                    }
                     binding.recyclerviewDestinationSettingDestinationList.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textDestinationSettingNoContentDestination.hide()
 
@@ -275,10 +279,10 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
     }
 
     private fun showFavoritesDialog(address: String) {
-        FavoritesDialogFragment { favoritesListener(address) }.show(childFragmentManager, "FAVORITES_DIALOG")
+        FavoritesDialogFragment(address){favoritesListener}.show(childFragmentManager, "FAVORITES_DIALOG")
     }
 
-    private val favoritesListener: (address: String) -> Unit = {
-        //userHomeViewModel.deleteFavorites()
+    private val favoritesListener: () -> Unit = {
+        userHomeViewModel.getFavorites()
     }
 }

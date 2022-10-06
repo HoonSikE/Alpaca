@@ -25,7 +25,7 @@ class SCANCluster:
     def __init__(self):
 
         self.scan_sub = rospy.Subscriber("/velodyne_points", PointCloud2, self.callback)
-        self.cluster_pub = rospy.Publisher("/clusters", PoseArray, queue_size=10)
+        self.cluster_pub = rospy.Publisher("/clusters", PoseArray, queue_size=15)
 
         self.pc_np = None
 
@@ -34,7 +34,14 @@ class SCANCluster:
         # DBSCAN의 Parameter를 결정하는 영역입니다.
         # sklearn.cluster의 DBSCAN에 대해 조사하여 적절한 Parameter를 입력하기 바랍니다.
         '''
-        self.dbscan = DBSCAN(eps = 0.1, min_samples=10)
+        # eps = 1.5, min_samples=32
+        # eps = 2.0, min_samples=20~40
+        # eps = 2.5, min_samples=40
+        # eps = 3.0, min_samples=50
+        # eps = 3.8, min_samples=35
+        # eps = 4.0, min_samples=35
+        # eps = 4.5, min_samples=45
+        self.dbscan = DBSCAN(eps = 0.5, min_samples=5)
 
     def callback(self, msg):    
         self.pc_np = self.pointcloud2_to_xyz(msg)
@@ -43,11 +50,15 @@ class SCANCluster:
             cluster_msg = PoseArray()
 
         else: 
+            # 
             pc_xy = self.pc_np[:, :2]
+            # print(pc_xy)
 
             db = self.dbscan.fit_predict(pc_xy)
+            # print(db)
 
             n_cluster = np.max(db) + 1
+            # print(n_cluster)
 
             cluster_msg = PoseArray()
 
@@ -55,6 +66,15 @@ class SCANCluster:
             cluster_msg.header.frame_id = '/velodyne_points'
             
             for cluster in range(n_cluster):
+                cnt = 0
+                x_sum = 0
+                y_sum = 0
+                for idx, label in enumerate(db):
+                    if label == cluster:
+                        x_sum += pc_xy[idx][0]
+                        y_sum += pc_xy[idx][1]
+                        cnt += 1
+
                 #TODO: (2) 각 Cluster를 대표하는 위치 값 계산                
                 '''
                 # DBSCAN으로 Clustering 된 각 Cluster의 위치 값을 계산하는 영역입니다.
@@ -64,10 +84,11 @@ class SCANCluster:
                 # Output : cluster position x,y   
                 '''
                 tmp_pose=Pose()
-                tmp_pose.position.x = pc_xy[cluster][0]
-                tmp_pose.position.y = pc_xy[cluster][1]
+                tmp_pose.position.x = x_sum / cnt
+                tmp_pose.position.y = y_sum / cnt
+
                 cluster_msg.poses.append(tmp_pose)
-        print(cluster_msg)
+        # print(cluster_msg)
         self.cluster_pub.publish(cluster_msg)
 
     def pointcloud2_to_xyz(self, cloud_msg):
@@ -83,6 +104,7 @@ class SCANCluster:
             '''
             dist = (point[0]**2 + point[1]**2 + point[2]**2)**0.5
             angle = atan2(point[1], point[0])
+            # print(dist, angle)
             
             if point[0] > 0 and 1.50 > point[2] > -1.25 and dist < 50:
                 point_list.append((point[0], point[1], point[2], point[3], dist, angle))
