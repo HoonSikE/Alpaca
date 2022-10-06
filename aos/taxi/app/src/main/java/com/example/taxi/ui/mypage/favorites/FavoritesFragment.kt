@@ -71,7 +71,6 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragme
         binding.searchFavoritesSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // 검색 버튼 누를 때 호출
-
                 return true
             }
 
@@ -151,11 +150,7 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragme
 
     // Dialog를 보여줌과 동시에 삭제 명령을 내린다.
     private fun showFavoritesDialog(address: String) {
-        FavoritesDialogFragment(address) { favoritesListener }.show(childFragmentManager, "FAVORITES_DIALOG")
-    }
-
-    private val favoritesListener: () -> Unit = {
-        userHomeViewModel.getFavorites()
+        FavoritesDialogFragment(address) { userHomeViewModel.getFavorites() }.show(childFragmentManager, "FAVORITES_DIALOG")
     }
 
     private fun initSearchAdapter(list : List<DestinationSearch>){

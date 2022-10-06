@@ -194,11 +194,7 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun showFavoritesDialog(address: String) {
-        FavoritesDialogFragment(address){favoritesListener}.show(childFragmentManager, "FAVORITES_DIALOG")
-    }
-
-    private val favoritesListener: () -> Unit = {
-        userHomeViewModel.getFavorites()
+        FavoritesDialogFragment(address){userHomeViewModel.getFavorites()}.show(childFragmentManager, "FAVORITES_DIALOG")
     }
 
     private fun getGrade(useCount : Int){
