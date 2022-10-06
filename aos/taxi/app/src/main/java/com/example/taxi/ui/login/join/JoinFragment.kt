@@ -288,6 +288,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     binding.editTextJoinTel2.isEnabled = false
                     binding.editTextJoinTel3.isEnabled = false
                     binding.buttonJoinTelAuth.text = "인증완료"
+                    binding.buttonJoinTelAuth.setBackgroundResource(R.color.lightGray)
                 }
             }
         }
