@@ -46,7 +46,11 @@ class TaxiDetailFragment : BaseFragment<FragmentTaxiDetailBinding>(R.layout.frag
         binding.imgBoardingTaxiDetailBack.setOnClickListener{
             requireActivity().onBackPressed()
         }
-        binding.layoutBoardingTaxiDetailAssessment.setOnClickListener{
+        binding.ratingBoardingTaxiDetailRideComfort.setOnClickListener{
+            val idx = arguments?.getInt("index") as Int
+            findNavController().navigate(R.id.action_taxiDetailFragment_to_taxiAssessmentFragment, bundleOf("BoardedTaxi" to boardedTaxi, "index" to idx))
+        }
+        binding.ratingBoardingTaxiDetailCleanliness.setOnClickListener{
             val idx = arguments?.getInt("index") as Int
             findNavController().navigate(R.id.action_taxiDetailFragment_to_taxiAssessmentFragment, bundleOf("BoardedTaxi" to boardedTaxi, "index" to idx))
         }

@@ -16,7 +16,6 @@ import com.example.taxi.databinding.ItemChatBotListBinding
 class ChatBotAdapter: RecyclerView.Adapter<ChatBotAdapter.ChatBotMessageViewHolder>() {
     private var commentList = mutableListOf<String>()
     lateinit var onMessageClickListener: (View, String) -> Unit
-    private lateinit var chatBotMessageAdapterAdapter: ChatBotMessageAdapter
 
     fun setListData(data: MutableList<String>){
         commentList = data
