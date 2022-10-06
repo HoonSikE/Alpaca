@@ -1,5 +1,7 @@
 package com.example.taxi.utils.constant
 
+import com.example.taxi.data.dto.user.route.Distance
+
 
 const val USER_SEQ = "user_seq"
 const val NAME = "name"
@@ -12,6 +14,7 @@ const val CARNUMBER = "carNumber"
 const val RIDECOMFORTAVERAGE= "rideComfortAverage"
 const val FEE = "Fee"
 const val DISTANCE = "distance"
+const val DISTANCESTART = "DistanceStart"
 const val MILEAGE = "Mileage"
 const val CARIMAGE = "carImage"
 const val CARNAME = "carName"

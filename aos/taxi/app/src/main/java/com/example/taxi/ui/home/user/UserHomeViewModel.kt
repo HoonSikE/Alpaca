@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.taxi.data.dto.mypage.Favorites
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.data.dto.user.destination.FrequentDestination
+import com.example.taxi.data.dto.user.destination.FrequentDestinationDto
 import com.example.taxi.data.repository.FrequentDestinationRepository
 import com.example.taxi.utils.constant.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,10 @@ class UserHomeViewModel @Inject constructor(
     private val _destinations = MutableLiveData<UiState<List<FrequentDestination>>>()
     val destinations: LiveData<UiState<List<FrequentDestination>>>
         get() = _destinations
+
+    private val _addDestinations = MutableLiveData<UiState<FrequentDestinationDto>>()
+    val addDestinations: LiveData<UiState<FrequentDestinationDto>>
+        get() = _addDestinations
 
     private val _updateDestinations = MutableLiveData<UiState<List<FrequentDestination>>>()
     val updateDestinations: LiveData<UiState<List<FrequentDestination>>>
@@ -86,5 +91,10 @@ class UserHomeViewModel @Inject constructor(
     fun deleteFavorites() {
         _deleteFavorites.value = UiState.Loading
         repository.deleteFavorites { _deleteFavorites.value = it }
+    }
+
+    fun addDestination(frequentDestination: FrequentDestinationDto) {
+        _addDestinations.value = UiState.Loading
+        repository.addDestination(frequentDestination) { _addDestinations.value = it }
     }
 }
