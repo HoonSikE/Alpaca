@@ -1,14 +1,14 @@
 <launch>
     <node pkg="alpha_car" type="mgeo_pub_kcity.py" name="mgeo_pub"  />
+    <node pkg="alpha_car" type="mgeo_dijkstra_path_2.py" name="mgeo_dijkstra_path"  />
     <!-- <node pkg="alpha_car" type="mgeo_pub.py" name="mgeo_pub"  /> -->
     <node pkg="alpha_car" type="gpsimu_parser.py" name="gpsimu_parser" />
-    <node pkg="alpha_car" type="advanced_purepursuit.py" name="advanced_purepursuit" args="/lattice_path" />
+    <node pkg="alpha_car" type="advanced_purepursuit.py" name="advanced_purepursuit" args="/lattice_path"  output="screen" />
     <node pkg="alpha_car" type="tf_pub.py" name="tf"  />
     <node pkg="alpha_car" type="local_path_pub.py" name="local_path_pub" />
-
-    <node pkg="alpha_car" type="global_path_pub.py" name="global_path_pub"  />
+    
     <node pkg="alpha_car" type="lattice_planner.py" name="lattice_planner" args="/Object_topic_to_lidar"/>
-    <node pkg="alpha_car" type="lidar_velodyne_cluster.py" name="lidar_velodyne_cluster" output="screen" />
+    <node pkg="alpha_car" type="lidar_velodyne_cluster.py" name="lidar_velodyne_cluster" />
     <node pkg="alpha_car" type="lidar_velodyne_cluster_viz.py" name="lidar_velodyne_cluster_viz"  />
 
     <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
