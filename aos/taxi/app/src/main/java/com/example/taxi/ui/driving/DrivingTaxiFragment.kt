@@ -349,17 +349,20 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     }
 
     private fun getFee(distance: Double){
-        var distance = distance
+        var distanceStart = ApplicationClass.prefs.distanceStart
+        var distance = distanceStart?.minus(distance)
         val numberFormat: NumberFormat = NumberFormat.getInstance()
-        if(distance <= 3){
-            var feeNum = numberFormat.format(3000)
-            binding.textDrivingTaxiFee.text = feeNum + " 원"
-        }else{
-            distance -= 3
-            var res = distance/0.16
-            fee = 3000 + (res.toInt()*100)
-            var feeNum = numberFormat.format(fee)
-            binding.textDrivingTaxiFee.text = feeNum + " 원"
+        if (distance != null) {
+            if(distance <= 3){
+                var feeNum = numberFormat.format(3000)
+                binding.textDrivingTaxiFee.text = feeNum + " 원"
+            }else{
+                distance -= 3
+                var res = distance/0.16
+                fee = 3000 + (res.toInt()*100)
+                var feeNum = numberFormat.format(fee)
+                binding.textDrivingTaxiFee.text = feeNum + " 원"
+            }
         }
     }
 

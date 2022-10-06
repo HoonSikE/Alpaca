@@ -82,6 +82,14 @@ class PreferenceUtil(context: Context) {
             }
         }
 
+    var distanceStart : Float?
+        get() = taxi.getFloat(DISTANCESTART, 0.0F)
+        set(value){
+            if (value != null) {
+                taxi.edit().putFloat(DISTANCESTART, value).apply()
+            }
+        }
+
     var carImage : String?
         get() = taxi.getString(CARIMAGE, null)
         set(value){

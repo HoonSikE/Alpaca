@@ -69,8 +69,9 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
 //                    binding.progressBar.hide()
                     binding.textProviderHomeNoContentUserList.hide()
                     binding.textProviderHomeFailedUserList.hide()
-                    userList = state.data
-                    initAdapter(state.data)
+                        userList = state.data
+                        initAdapter(state.data)
+
                 }
             }
         }
@@ -157,7 +158,9 @@ class ProviderHomeFragment : BaseFragment<FragmentProviderHomeBinding>(R.layout.
         providerAdapter = ProviderAdapter().apply {
             onTaxiUserClickListener = onClickListener
             context = requireContext()
-            taxiUserList = userList.user as MutableList<TaxiUser>
+            if(userList.user.isNotEmpty()){
+                taxiUserList = userList.user as MutableList<TaxiUser>
+            }
         }
         binding.recyclerProviderHomeUserList.apply {
             adapter = providerAdapter
