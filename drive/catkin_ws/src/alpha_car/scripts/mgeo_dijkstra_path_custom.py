@@ -12,6 +12,7 @@ import json
 from math import cos,sin,sqrt,pow,atan2,pi
 from geometry_msgs.msg import Point32,PoseStamped, PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry,Path
+from alpha_car.msg import global_data
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path)
@@ -58,6 +59,7 @@ class dijkstra_path_pub :
         rospy.init_node('dijkstra_path_pub', anonymous=True)
 
         self.global_path_pub = rospy.Publisher('/global_path',Path, queue_size = 1)
+        self.global_data_pub = rospy.Publisher('/global_data', global_data, queue_size = 1)
 
         rospy.Subscriber('/move_base_simple/goal', PoseStamped, self.goal_callback)
         rospy.Subscriber('/initialpose', PoseWithCovarianceStamped, self.init_callback)
@@ -88,13 +90,17 @@ class dijkstra_path_pub :
         self.global_path_msg = Path()
         self.global_path_msg.header.frame_id = '/map'
 
-        self.global_path_msg = self.calc_dijkstra_path_node(self.start_node, self.end_node)
+        # TODO 데이터를 담아서
+        self.global_path_msg, self.global_data_msg = self.calc_dijkstra_path_node(self.start_node, self.end_node)
 
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             #TODO: (11) dijkstra 이용해 만든 Global Path 정보 Publish
             # dijkstra 이용해 만든 Global Path 메세지 를 전송하는 publisher 를 만든다.
             self.global_path_pub.publish(self.global_path_msg)
+
+            # TODO 전송
+            self.global_data_pub.publish(self.global_data_msg)
             
             rate.sleep()
     
@@ -160,7 +166,8 @@ class dijkstra_path_pub :
             read_pose.pose.orientation.w = 1
             out_path.poses.append(read_pose)
 
-        return out_path
+        # TODO Path와 전역경로상의 노드, 링크, 점의 데이터가 담긴 딕셔너리도 같이 반환
+        return (out_path, path)
 
 class Dijkstra:
     def __init__(self, nodes, links):
@@ -212,6 +219,7 @@ class Dijkstra:
 
         # 찾아보기 귀찮아서 Node.find_shortest_link_leading_to_node 를 그대로 복붙하였다.
         to_links = []
+        Node()
         for link in from_node.get_to_links():
             if link.to_node is to_node:
                 to_links.append(link)
