@@ -19,6 +19,7 @@
             >
             <ImageView
                 android:id="@+id/image_messageItem_profile"
+                android:layout_marginTop="10dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/img_user"/>
@@ -33,20 +34,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이름"
+                android:layout_marginLeft="8dp"
                 android:textColor="#000000"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/text_messageItem_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:text="메세지"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp"
                 android:textColor="#000000" />
             <TextView
                 android:id="@+id/text_messageItem_time"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="시간"
+                android:layout_marginHorizontal="8dp"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

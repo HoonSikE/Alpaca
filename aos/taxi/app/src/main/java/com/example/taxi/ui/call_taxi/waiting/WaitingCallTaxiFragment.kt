@@ -188,7 +188,6 @@ class WaitingCallTaxiFragment : BaseFragment<FragmentWaitingCallTaxiBinding>(R.l
 
     private fun sortTaxiList(taxiList: Taxi) {
         taxi = taxiList
-        binding.progressBar.hide()
         Log.d("taxi", taxi.toString())
         ApplicationClass.prefs.carNumber = taxi.carNumber
         ApplicationClass.prefs.carImage = taxi.carImage

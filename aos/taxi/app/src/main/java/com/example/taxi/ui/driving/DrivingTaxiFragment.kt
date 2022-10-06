@@ -78,7 +78,6 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
         Glide.with(requireContext())
             .load(ApplicationClass.prefs.carImage)
             .into(binding.imageDrivingTaxiCar)
-        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun observerData(){
@@ -126,6 +125,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
                     deletePaths()
                     drawMarkers(location)
                     drawPolyline(location)
+                    callTaxiViewModel.getCurrentLocation()
                 }
             }
         }
@@ -312,7 +312,7 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
             childFragmentManager.findFragmentById(R.id.fragmentContainer_driving_taxi) as MapFragment?
                 ?: MapFragment.newInstance().also {
                     childFragmentManager.beginTransaction()
-                        .add(R.id.fragmentContainer_location_tracking_taxi, it)
+                        .add(R.id.fragmentContainer_driving_taxi, it)
                         .commit()
                 }
         _naverMap.getMapAsync(this)
@@ -349,17 +349,20 @@ class DrivingTaxiFragment : BaseFragment<FragmentDrivingTaxiBinding>(R.layout.fr
     }
 
     private fun getFee(distance: Double){
-        var distance = distance
+        var distanceStart = ApplicationClass.prefs.distanceStart
+        var distance = distanceStart?.minus(distance)
         val numberFormat: NumberFormat = NumberFormat.getInstance()
-        if(distance <= 3){
-            var feeNum = numberFormat.format(3000)
-            binding.textDrivingTaxiFee.text = feeNum + " 원"
-        }else{
-            distance -= 3
-            var res = distance/0.16
-            fee = 3000 + (res.toInt()*100)
-            var feeNum = numberFormat.format(fee)
-            binding.textDrivingTaxiFee.text = feeNum + " 원"
+        if (distance != null) {
+            if(distance <= 3){
+                var feeNum = numberFormat.format(3000)
+                binding.textDrivingTaxiFee.text = feeNum + " 원"
+            }else{
+                distance -= 3
+                var res = distance/0.16
+                fee = 3000 + (res.toInt()*100)
+                var feeNum = numberFormat.format(fee)
+                binding.textDrivingTaxiFee.text = feeNum + " 원"
+            }
         }
     }
 

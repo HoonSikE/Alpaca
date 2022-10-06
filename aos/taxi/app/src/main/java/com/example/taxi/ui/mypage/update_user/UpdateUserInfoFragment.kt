@@ -14,15 +14,20 @@ import com.example.taxi.data.dto.user.User
 import com.example.taxi.data.dto.user.address_info.AddressInfo
 import com.example.taxi.databinding.FragmentUpdateUserInfoBinding
 import com.example.taxi.di.ApplicationClass
+import com.example.taxi.ui.login.AuthViewModel
+import com.example.taxi.ui.login.join.PhoneAuthDialogFragment
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
+import com.example.taxi.utils.constant.isValidEmail
 import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.layout.fragment_update_user_info) {
+    private val authViewModel : AuthViewModel by viewModels()
     private val updateUserInfoViewModel : UpdateUserInfoViewModel by viewModels()
+    var verificationId : String = ""
 
     // 사진 업로드
     var pickImageFromAlbum = 0
@@ -71,6 +76,35 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
             }
             dialog.show(childFragmentManager, "update tel")
         }
+        binding.buttonUpdateTelAuth.setOnClickListener{
+            var activity = requireActivity()
+            if(ApplicationClass.prefs.tel != binding.textUpdateUserInfoPhone.text){
+                var tmp = binding.textUpdateUserInfoPhone.text.toString().split("-")
+                val phoneNumber = tmp[0].replace("010", "10") + tmp[1] + tmp[2]
+
+                authViewModel.phoneAuth (
+                    phoneNumber = "+82" + phoneNumber,
+                    activity = activity
+                )
+                toast("인증번호가 전송되었습니다. 60초 이내에 입력해주세요.")
+                binding.buttonUpdateTelAuth.isEnabled = false
+
+                val dialog = UpdatePhoneAuthDialogFragment()
+                // 화면 밖 터치시 종료되지 않게 하기
+                dialog.isCancelable = false
+                dialog.setOnOKClickedListener { content ->
+                    if(verificationId != "") {
+                        authViewModel.ckeckPhoneAuth(
+                            verificationId = verificationId,
+                            code = content
+                        )
+                    }
+                }
+                dialog.show(childFragmentManager, "complete phone auth")
+            }else{
+                toast("기존 휴대폰 번호와 동일합니다..")
+            }
+        }
         binding.imageUpdateHomeAddressImageButton.setOnClickListener{
             val dialog = UpdateAddressDialogFragment("home")
             dialog.setOnOKClickedListener { content ->
@@ -89,26 +123,30 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
         }
         /** 윗부분은 text만 바꾸는것이고 밑에가 DB에 넣는 부분임 */
         binding.buttonUserUpdateInfo.setOnClickListener{
-            // 이미지 추가
-            if(uriPhoto.toString() != ""){
-                val user = User("", uriPhoto.toString(), "", 0, "", ApplicationClass.prefs.userSeq.toString(), false)
-                updateUserInfoViewModel.addImageUpLoad(
-                    user = user
+            if(validation()){
+                // 이미지 추가
+                if(uriPhoto.toString() != ""){
+                    val user = User("", uriPhoto.toString(), "", 0, "", ApplicationClass.prefs.userSeq.toString(), false)
+                    updateUserInfoViewModel.addImageUpLoad(
+                        user = user
+                    )
+                }
+
+                // 전화번호 추가
+                updateUserInfoViewModel.updateUserTel(
+                    tel = binding.textUpdateUserInfoPhone.text.toString()
                 )
+
+                // 주소정보 추가 (userSeq값 할당 후 실행)
+                val addressInfo = AddressInfo(binding.textUpdateUserInfoCompanyAddress.text.toString(), binding.textUpdateUserInfoHomeAddress.text.toString())
+                updateUserInfoViewModel.addAddressInfo(
+                    addressInfo = addressInfo
+                )
+
+                findNavController().navigate(R.id.action_updateUserInfoFragment_to_myPageFragment)
+            }else{
+                toast("휴대폰 인증을 해주세요.")
             }
-
-            // 전화번호 추가
-            updateUserInfoViewModel.updateUserTel(
-                tel = binding.textUpdateUserInfoPhone.text.toString()
-            )
-
-            // 주소정보 추가 (userSeq값 할당 후 실행)
-            val addressInfo = AddressInfo(binding.textUpdateUserInfoCompanyAddress.text.toString(), binding.textUpdateUserInfoHomeAddress.text.toString())
-            updateUserInfoViewModel.addAddressInfo(
-                addressInfo = addressInfo
-            )
-
-            findNavController().navigate(R.id.action_updateUserInfoFragment_to_myPageFragment)
         }
     }
 
@@ -145,5 +183,36 @@ class UpdateUserInfoFragment : BaseFragment<FragmentUpdateUserInfoBinding>(R.lay
                 }
             }
         }
+        authViewModel.phoneAuth.observe(viewLifecycleOwner) { state ->
+            verificationId = state
+        }
+        authViewModel.ckeckPhoneAuth.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                is UiState.Loading -> {
+                    binding.progressBarUpdateLoading.show()
+                }
+                is UiState.Failure -> {
+                    binding.progressBarUpdateLoading.hide()
+                    binding.buttonUpdateTelAuth.text = "인증실패"
+                    state.error?.let { toast(it) }
+                }
+                is UiState.Success -> {
+                    binding.progressBarUpdateLoading.hide()
+                    toast(state.data)
+                    binding.imageUpdateUserInfoPhone.isEnabled = false
+                    binding.buttonUpdateTelAuth.isEnabled = false
+                    binding.buttonUpdateTelAuth.text = "인증완료"
+                }
+            }
+        }
+    }
+
+    private fun validation(): Boolean {
+        if(ApplicationClass.prefs.tel != binding.textUpdateUserInfoPhone.text) {
+            if (binding.buttonUpdateTelAuth.text != "인증완료") {
+                return false
+            }
+        }
+        return true
     }
 }

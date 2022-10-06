@@ -81,6 +81,11 @@ class AuthViewModel @Inject constructor(
     val deleteUserInfo: LiveData<UiState<String>>
         get() = _deleteUserInfo
 
+    // 회원 탈퇴
+    private val _withDrawal = MutableLiveData<UiState<String>>()
+    val withDrawal: LiveData<UiState<String>>
+        get() = _withDrawal
+
     fun getCurrentUser(result: (FirebaseUser) -> Unit){
         repository.getCurrentUser(result)
     }
@@ -202,14 +207,13 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun withDrawal(result: () -> Unit){
-        repository.withDrawal(result)
+    fun withDrawal(){
+        _withDrawal.value = UiState.Loading
+        repository.withDrawal { _withDrawal.value = it }
     }
 
-    fun deleteUserInfo(result: () -> Unit){
-        repository.deleteUserInfo(
-        ) {
-            _deleteUserInfo.value = it
-        }
+    fun deleteUserInfo() {
+        _deleteUserInfo.value = UiState.Loading
+        repository.deleteUserInfo { _deleteUserInfo.value = it }
     }
 }

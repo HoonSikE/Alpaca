@@ -3,6 +3,7 @@ package com.example.taxi.ui.home.user
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,15 +13,18 @@ import com.bumptech.glide.Glide
 import com.example.taxi.R
 import com.example.taxi.base.BaseFragment
 import com.example.taxi.data.dto.mypage.Favorites
+import com.example.taxi.data.dto.provider.ProviderCar
 import com.example.taxi.data.dto.user.destination.Destination
 import com.example.taxi.data.dto.user.destination.FrequentDestination
 import com.example.taxi.databinding.FragmentUserHomeBinding
 import com.example.taxi.di.ApplicationClass
+import com.example.taxi.ui.home.provider.ProviderViewModel
 import com.example.taxi.utils.constant.UiState
 import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notify
 
 @AndroidEntryPoint
 class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_user_home) {
@@ -28,6 +32,7 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     private lateinit var favoritesAdapter: FavoritesAdapter
     private var favorites : MutableList<Favorites> = mutableListOf()
     private val userHomeViewModel : UserHomeViewModel by viewModels()
+    private val providerViewModel : ProviderViewModel by viewModels()
     private lateinit var destination: Destination
     private var addressFavorites = ""
 
@@ -47,17 +52,31 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     override fun init() {
+        initData()
         initAdapter()
         observerData()
         setOnClickListeners()
     }
 
-    private fun initAdapter() {
-        if(ApplicationClass.prefs.isEachProvider == true){
-            binding.imageMoveProvider.show()
-        }else{
-            binding.imageMoveProvider.hide()
+    private fun initData() {
+        val profileImage = ApplicationClass.prefs?.profileImage
+        if (profileImage != "")
+            Glide.with(this).load(profileImage).into(binding.imageUserHomeProfile)
+
+        binding.textUserHomeName.text = ApplicationClass.prefs.name + "님, 안녕하세요!"
+        binding.textUserHomeCount.text = ApplicationClass.prefs.useCount.toString()
+
+        val useCount = ApplicationClass.prefs.useCount
+        if (useCount != null) {
+            getGrade(useCount)
         }
+        if(ApplicationClass.prefs.isEachProvider == true){
+            providerViewModel.getProvider()
+        }
+    }
+
+
+    private fun initAdapter() {
         userHomeViewModel.getDestinations()
         destinationListAdapter = DestinationListAdapter().apply {
             onItemClickListener = destinationOnClickListener
@@ -76,7 +95,7 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun observerData() {
-        userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
+        providerViewModel.provider.observe(viewLifecycleOwner){ state ->
             when (state) {
                 is UiState.Loading -> {
                     binding.progressBar.show()
@@ -87,44 +106,72 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
-                    binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler_no_item)
-                    binding.textUserHomeNoContentDestination.show()
                 }
                 is UiState.Success -> {
                     binding.progressBar.hide()
+                    val provider = state.data
+                    ApplicationClass.prefs.carImage = provider.car!!.carImage
+                    ApplicationClass.prefs.carName = provider.car!!.carName
+                    ApplicationClass.prefs.carNumber = provider.car!!.carNumber
+                }
+            }
+        }
+        userHomeViewModel.destinations.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+//                    binding.progressBar.show()
+                    binding.textUserHomeNoContentDestination.show()
+                    binding.textUserHomeFailedDestination.hide()
+                }
+                is UiState.Failure -> {
+//                    binding.progressBar.hide()
+                    state.error?.let {
+                        toast(it)
+                        Log.d("UiState.Failure", it)
+                    }
+                    binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler_no_item)
+                    binding.textUserHomeNoContentDestination.hide()
+                    binding.textUserHomeFailedDestination.show()
+                }
+                is UiState.Success -> {
+//                    binding.progressBar.hide()
                     Glide.with(requireContext())
                         .load(ApplicationClass.prefs.profileImage)
                         .into(binding.imageUserHomeProfile)
                     binding.textUserHomeName.text = ApplicationClass.prefs.name + "님, 안녕하세요"
                     binding.textUserHomeCount.text = ApplicationClass.prefs.useCount.toString() + "회"
-                    setLevel()
                     val list : MutableList<FrequentDestination> = state.data.toMutableList()
                     destinationListAdapter.updateList(list)
                     binding.recyclerviewUserHomeDestinationList.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textUserHomeNoContentDestination.hide()
+                    binding.textUserHomeFailedDestination.hide()
                 }
             }
         }
         userHomeViewModel.favorites.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    //binding.progressBar.show()
+//                    binding.progressBar.show()
+                    binding.textUserHomeNoContentFavorites.show()
+                    binding.textUserHomeFailedFavorites.hide()
                 }
                 is UiState.Failure -> {
-                    //binding.progressBar.hide()
+//                    binding.progressBar.hide()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                     binding.recyclerviewUserHomeFavorites.setBackgroundResource(R.drawable.layout_recycler_no_item)
-                    binding.textUserHomeNoContentFavorites.show()
+                    binding.textUserHomeNoContentFavorites.hide()
+                    binding.textUserHomeFailedFavorites.show()
                 }
                 is UiState.Success -> {
-                    //binding.progressBar.hide()
+//                    binding.progressBar.hide()
                     favorites = state.data.toMutableList()
                     favoritesAdapter.updateList(favorites)
                     binding.recyclerviewUserHomeFavorites.setBackgroundResource(R.drawable.layout_recycler)
                     binding.textUserHomeNoContentFavorites.hide()
+                    binding.textUserHomeFailedFavorites.hide()
                 }
             }
         }
@@ -135,7 +182,11 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
             findNavController().navigate(R.id.action_userHomeFragment_to_myPageFragment)
         }
         binding.imageMoveProvider.setOnClickListener {
-            findNavController().navigate(R.id.action_userHomeFragment_to_providerHomeFragment)
+            if(ApplicationClass.prefs.isEachProvider == true){
+                findNavController().navigate(R.id.action_userHomeFragment_to_providerHomeFragment)
+            }else{
+                findNavController().navigate(R.id.action_userHomeFragment_to_joinProviderFragment)
+            }
         }
         binding.buttonUserHomeCallTaxi.setOnClickListener {
             findNavController().navigate(R.id.action_userHomeFragment_to_startPointSettingFragment)
@@ -143,47 +194,28 @@ class UserHomeFragment: BaseFragment<FragmentUserHomeBinding>(R.layout.fragment_
     }
 
     private fun showFavoritesDialog(address: String) {
-        FavoritesDialogFragment { favoritesListener(address) }.show(childFragmentManager, "FAVORITES_DIALOG")
+        FavoritesDialogFragment(address){userHomeViewModel.getFavorites()}.show(childFragmentManager, "FAVORITES_DIALOG")
     }
 
-    private val favoritesListener: (address: String) -> Unit = {
-        if(favorites.size < 2) {
-            userHomeViewModel.deleteFavorites()
+    private fun getGrade(useCount : Int){
+        if(0 < useCount && useCount < 5) {
+            binding.textUserHomeClass.setText("Bronze")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(),R.color.bronze))
+        }else if(5 <= useCount && useCount < 10){
+            binding.textUserHomeClass.setText("Siver")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.silver))
+        }else if(10 <= useCount && useCount < 20){
+            binding.textUserHomeClass.setText("Gold")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.gold))
+        }else if(20 <= useCount && useCount < 30){
+            binding.textUserHomeClass.setText("Platinum")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.platinum))
+        }else if(useCount >= 30){
+            binding.textUserHomeClass.setText("Diamond")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.diamond))
         }else{
-            for(i in 0 until favorites.size){
-                if(favorites[i].address == addressFavorites) {
-                    favorites.removeAt(i)
-                    userHomeViewModel.updateFavorites(favorites)
-                }
-            }
-
-        }
-        userHomeViewModel.getFavorites()
-    }
-
-    @SuppressLint("ResourceAsColor")
-    private fun setLevel(){
-        when(ApplicationClass.prefs.useCount?.div(10)){
-            1 -> {
-                binding.textUserHomeClass.text = "Bronze"
-                binding.textUserHomeClass.setTextColor(R.color.bronze)
-            }
-            2 -> {
-                binding.textUserHomeClass.text = "Silver"
-                binding.textUserHomeClass.setTextColor(R.color.silver)
-            }
-            3 -> {
-                binding.textUserHomeClass.text = "Gold"
-                binding.textUserHomeClass.setTextColor(R.color.gold)
-            }
-            4 -> {
-                binding.textUserHomeClass.text = "Platinum"
-                binding.textUserHomeClass.setTextColor(R.color.platinum)
-            }
-            5 -> {
-                binding.textUserHomeClass.text = "Diamond"
-                binding.textUserHomeClass.setTextColor(R.color.diamond)
-            }
+            binding.textUserHomeClass.setText("Unrank")
+            binding.textUserHomeClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
     }
 }

@@ -92,17 +92,23 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         endDrivingViewModel.boardedTaxiList.observe(viewLifecycleOwner) {state ->
             when (state) {
                 is UiState.Loading -> {
-                    binding.progressBar.show()
+//                    binding.progressBar.show()
+                    binding.textMyPageNoContentTaxiList.show()
+                    binding.textMyPageFailedTaxiList.hide()
                 }
                 is UiState.Failure -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textMyPageNoContentTaxiList.hide()
+                    binding.textMyPageFailedTaxiList.show()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textMyPageNoContentTaxiList.hide()
+                    binding.textMyPageFailedTaxiList.hide()
 //                    boardedTaxiList = state.data.taxiList as MutableList<BoardedTaxi>
                     boardedTaxiList = state.data
                     initAdapter(boardedTaxiList)
@@ -115,13 +121,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         if(0 < useCount && useCount < 5) {
             binding.textMyPageClass.setText("Bronze")
             binding.textMyPageClass.setTextColor(ContextCompat.getColor(requireContext(),R.color.bronze))
-        }else if(useCount < 10){
+        }else if(5 <= useCount && useCount < 10){
             binding.textMyPageClass.setText("Siver")
             binding.textMyPageClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.silver))
-        }else if(useCount < 20){
+        }else if(10 <= useCount && useCount < 20){
             binding.textMyPageClass.setText("Gold")
             binding.textMyPageClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.gold))
-        }else if(useCount < 30){
+        }else if(20 <= useCount && useCount < 30){
             binding.textMyPageClass.setText("Platinum")
             binding.textMyPageClass.setTextColor(ContextCompat.getColor(requireContext(), R.color.platinum))
         }else if(useCount >= 30){

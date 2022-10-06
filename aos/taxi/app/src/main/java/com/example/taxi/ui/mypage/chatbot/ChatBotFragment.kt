@@ -14,21 +14,28 @@ import com.example.taxi.utils.constant.hide
 import com.example.taxi.utils.constant.show
 import com.example.taxi.utils.view.toast
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
+import java.util.*
 
 @AndroidEntryPoint
 class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_chat_bot) {
     private val chatBotViewModel: ChatBotViewModel by viewModels()
     private lateinit var chatBotAdapter: ChatBotAdapter
     private var comments = ArrayList<String>()
-    private var message = "main"
-    private var messageTmp = ""
+    private var message = "0"
+    private var preMsg = Stack<String>()
+    private var messageTmp = "-1"
 
     private val messageClickListener: (View, String) -> Unit = { _, msg ->
         val tmp = msg.split(".")
-        messageTmp = msg
 
         if(message != tmp[0] && msg.substring(0 until 2) != "아래"){
+            if(preMsg.size > 0){
+                if(preMsg.peek() != messageTmp){
+                    preMsg.push(messageTmp)
+                }
+            }
+            messageTmp = msg
+
             message = tmp[0]
             println("click message: " + msg)
             println("message: " + tmp[0])
@@ -67,6 +74,29 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
         binding.imgChatBotBack.setOnClickListener{
             requireActivity().onBackPressed()
         }
+        binding.buttonChatBotStart.setOnClickListener{
+            preMsg.clear()
+            messageTmp = "0. 처음으로"
+            chatBotViewModel.checkChatBotMessage(
+                message = "0"
+            )
+        }
+        binding.buttonChatBotPrevious.setOnClickListener{
+            if(preMsg.size > 0){
+                messageTmp = preMsg.pop()
+                var tmp = messageTmp.split(".")
+                chatBotViewModel.checkChatBotMessage(
+                    message = tmp[0]
+                )
+            }
+        }
+        binding.buttonChatBotCall.setOnClickListener{
+            preMsg.clear()
+            messageTmp = "0-0. 상담사 연결"
+            chatBotViewModel.checkChatBotMessage(
+                message = "0-0"
+            )
+        }
     }
 
     private fun observerData() {
@@ -85,9 +115,9 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     if(state.data.value != null){
-                        if(messageTmp == ""){
+                        if(messageTmp == "-1"){
                             comments.add("안녕하세요! 저는 알파카 챗봇이라고 해요!")
-                        } else if(messageTmp != ""){
+                        } else {
                             comments.add("나:" + messageTmp)
                         }
                         comments.add("아래 항목을 선택해주세요!")
@@ -98,7 +128,7 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
                         println(comments)
                     }
                     chatBotAdapter.updateList(comments)
-
+                    binding.messageActivityRecyclerview.scrollToPosition(chatBotAdapter.itemCount-1)
                     println("comments : " + comments)
                 }
                 else -> {}

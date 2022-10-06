@@ -6,9 +6,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class BoardedTaxi(
     var userId: String = "",
-    var Cost: Int = 0,
-    val Destination: String = "",
-    val StartingPoint: String = "",
+    var cost: Int = 0,
+    val destination: String = "",
+    val startingPoint: String = "",
     val carImage: String = "",
     val carName: String = "",
     val carNumber: String = "",

@@ -60,7 +60,6 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        findNavController().navigate(R.id.action_locationTrackingTaxiFragment_to_startDrivingTaxiFragment)
         rootView = container
         initNaverMap()
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -77,7 +76,6 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
         Glide.with(requireContext())
             .load(ApplicationClass.prefs.carImage)
             .into(binding.imageLocationTrackingTaxiCar)
-        callTaxiViewModel.getCurrentLocation()
     }
 
     private fun observerData(){
@@ -125,6 +123,7 @@ class LocationTrackingTaxiFragment : BaseFragment<FragmentLocationTrackingTaxiBi
                     deletePaths()
                     drawMarkers(location)
                     drawPolyline(location)
+                    callTaxiViewModel.getCurrentLocation()
                 }
             }
         }

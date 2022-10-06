@@ -73,6 +73,7 @@ class InformationUserFragment : BaseFragment<FragmentInformationUserBinding>(R.l
     }
 
     private fun initAdapter() {
+        println("ApplicationClass.prefs.carNumber : " + ApplicationClass.prefs.carNumber)
         for(i in inside.photoList){
             if(i.carNumber == ApplicationClass.prefs.carNumber){
                 informationUserAdapter = InformationUserAdapter().apply {

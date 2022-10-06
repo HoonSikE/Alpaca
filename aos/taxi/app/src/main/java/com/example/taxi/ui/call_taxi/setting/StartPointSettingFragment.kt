@@ -43,6 +43,8 @@ class StartPointSettingFragment : BaseFragment<FragmentStartPointSettingBinding>
     private lateinit var naverMap: NaverMap
     private var destination = Destination("","","","")
     private lateinit var startingPoint : Destination
+    var checkState = false
+    var checkCamera = false
 
     override fun init() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -188,19 +190,21 @@ class StartPointSettingFragment : BaseFragment<FragmentStartPointSettingBinding>
                 // 파랑색 점, 현재 위치 표시
                 naverMap.locationOverlay.run {
                     isVisible = true
-                    position = if(currentLocation != null){
+                    position = if(currentLocation != null && checkState){
                         LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                     }else{
-                        LatLng(37.57586035222103,126.88868285691629)
+                        checkState = true
+                        LatLng(37.58253888738363,126.88582972882432)
                     }
                 }
 
                 // 카메라 현재위치로 이동
                 val cameraUpdate = CameraUpdate.scrollTo(
-                    if(currentLocation != null){
+                    if(currentLocation != null && checkCamera){
                         LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                     }else{
-                        LatLng(37.57586035222103,126.88868285691629)
+                        checkCamera = true
+                        LatLng(37.58253888738363,126.88582972882432)
                     }
                 )
                 naverMap.moveCamera(cameraUpdate)
