@@ -54,17 +54,29 @@ class InformationUserFragment : BaseFragment<FragmentInformationUserBinding>(R.l
         endDrivingViewModel.insideCarList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    binding.progressBar.show()
+//                    binding.progressBar.show()
+                    binding.textInformationStartNoContentStart.show()
+                    binding.textInformationStartNoContentEnd.show()
+                    binding.textInformationStartFailedStart.hide()
+                    binding.textInformationStartFailedEnd.hide()
                 }
                 is UiState.Failure -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textInformationStartNoContentStart.hide()
+                    binding.textInformationStartNoContentEnd.hide()
+                    binding.textInformationStartFailedStart.show()
+                    binding.textInformationStartFailedEnd.show()
                     state.error?.let {
                         toast(it)
                         Log.d("UiState.Failure", it)
                     }
                 }
                 is UiState.Success -> {
-                    binding.progressBar.hide()
+//                    binding.progressBar.hide()
+                    binding.textInformationStartNoContentStart.hide()
+                    binding.textInformationStartNoContentEnd.hide()
+                    binding.textInformationStartFailedStart.hide()
+                    binding.textInformationStartFailedEnd.hide()
                     inside = state.data
                     initAdapter()
                 }

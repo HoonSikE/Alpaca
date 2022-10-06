@@ -370,7 +370,7 @@
                     style="@style/SubHeadSemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="택시탑승 내용이 없습니다. 알파카를 이용해보세요!"
+                    android:text="택시탑승 내용이 없습니다.\n\n알파카를 이용해보세요!"
                     android:gravity="center"
                     android:textColor="@color/primaryColor"
                     android:visibility="gone"
