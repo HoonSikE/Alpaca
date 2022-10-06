@@ -196,6 +196,8 @@ class DestinationSettingFragment : BaseFragment<FragmentDestinationSettingBindin
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null && newText != "") {
                     searchKeyword(newText)
+                }else if(newText == ""){
+                    binding.recyclerviewDestinationSettingSearch.visibility = View.GONE
                 }
                 return true
             }
