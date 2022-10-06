@@ -110,6 +110,36 @@
                     app:layout_constraintTop_toBottomOf="@id/text_information_start" />
 
                 <TextView
+                    android:id="@+id/text_information_start_noContent_start"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출발 전 등록된 차량 내부 사진이 없습니다."
+                    android:gravity="center"
+                    android:textColor="@color/primaryColor"
+                    android:visibility="gone"
+                    android:elevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/recyclerview_information_start"
+                    app:layout_constraintBottom_toBottomOf="@+id/recyclerview_information_start"/>
+
+                <TextView
+                    android:id="@+id/text_information_start_failed_start"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출발 전 차량 내부 사진 조회에 실패했습니다."
+                    android:gravity="center"
+                    android:textColor="@color/primaryColor"
+                    android:visibility="gone"
+                    android:elevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/recyclerview_information_start"
+                    app:layout_constraintBottom_toBottomOf="@+id/recyclerview_information_start" />
+
+                <TextView
                     android:id="@+id/text_information_end"
                     style="@style/HeadSemiBold"
                     android:layout_width="wrap_content"
@@ -117,7 +147,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="20dp"
-                    android:text="차량 내부 사진 - 출발 전"
+                    android:text="차량 내부 사진 - 출발 후"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerview_information_start" />
 
@@ -134,6 +164,36 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_information_end" />
+
+                <TextView
+                    android:id="@+id/text_information_start_noContent_end"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출발 후 등록된 차량 내부 사진이 없습니다."
+                    android:gravity="center"
+                    android:textColor="@color/primaryColor"
+                    android:visibility="gone"
+                    android:elevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/recyclerview_information_end"
+                    app:layout_constraintBottom_toBottomOf="@+id/recyclerview_information_end"/>
+
+                <TextView
+                    android:id="@+id/text_information_start_failed_end"
+                    style="@style/SubHeadSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출발 후 차량 내부 사진 조회에 실패했습니다."
+                    android:gravity="center"
+                    android:textColor="@color/primaryColor"
+                    android:visibility="gone"
+                    android:elevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/recyclerview_information_end"
+                    app:layout_constraintBottom_toBottomOf="@+id/recyclerview_information_end" />
 
                 <TextView
                     android:id="@+id/text_information_user_ride_comfort"
