@@ -111,7 +111,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/button_light"
-            android:text="탑슴하기"
+            android:text="탑승하기"
             app:layout_constraintTop_toBottomOf="@+id/text_start_driving_taxi_door"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/back_start_driving_taxi_bar" />
@@ -141,7 +141,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_regular"
-            android:text="택시 호출하기"
+            android:text="택시 탑승하기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
