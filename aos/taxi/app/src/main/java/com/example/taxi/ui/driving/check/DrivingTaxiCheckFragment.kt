@@ -138,7 +138,7 @@ class DrivingTaxiCheckFragment : BaseFragment<FragmentDrivingTaxiCheckBinding>(R
     }
 
     private fun onCamera(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
                 takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
@@ -202,7 +202,7 @@ class DrivingTaxiCheckFragment : BaseFragment<FragmentDrivingTaxiCheckBinding>(R
 
         var denied = permission.count { ContextCompat.checkSelfPermission(requireContext(), it.value)  == PackageManager.PERMISSION_DENIED }
 
-        if(denied > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if(denied > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             requestPermissions(permission.values.toTypedArray(), REQUEST_IMAGE_CAPTURE)
         }
 
