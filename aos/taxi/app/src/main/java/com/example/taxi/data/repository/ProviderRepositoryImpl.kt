@@ -175,7 +175,7 @@ class ProviderRepositoryImpl(
     override fun updateUserList(userList: UserList, result: (UiState<UserList>) -> Unit) {
         val document = database.collection(FireStoreCollection.USERLIST).document(ApplicationClass.prefs.providerId.toString())
         document
-            .update("user",userList)
+            .update("user",userList.user)
             .addOnSuccessListener {
                 result.invoke(
                     UiState.Success(userList)
