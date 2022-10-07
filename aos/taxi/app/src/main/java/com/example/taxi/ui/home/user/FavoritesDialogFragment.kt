@@ -69,6 +69,7 @@ class FavoritesDialogFragment(var address : String, val confirm : () -> Unit) : 
                                 list.removeAt(i)
                                 Log.d("실행2 : ", list.toString() )
                                 userHomeViewModel.updateFavorites(list)
+                                break
                             }
                         }
                     }

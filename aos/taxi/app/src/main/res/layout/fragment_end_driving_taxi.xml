@@ -111,9 +111,11 @@
             android:elevation="5dp"
             android:numStars="5"
             android:stepSize="0.1"
+            android:isIndicator="false"
+            android:progressTint="@color/primaryColor"
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/back_end_taxi_bar"
             app:layout_constraintTop_toBottomOf="@id/text_end_taxi_ride_comfort"
             app:layout_constraintStart_toStartOf="parent"
             />
@@ -140,7 +142,9 @@
             android:stepSize="0.1"
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
+            android:progressTint="@color/primaryColor"
+            android:isIndicator="false"
+            app:layout_constraintEnd_toStartOf="@+id/back_end_taxi_bar"
             app:layout_constraintTop_toBottomOf="@id/text_end_taxi_cleanliness"
             app:layout_constraintStart_toStartOf="parent"
             />

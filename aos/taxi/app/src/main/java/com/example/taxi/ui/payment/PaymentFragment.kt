@@ -36,7 +36,8 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
 
         var product = "AlpacaTaxi"
 
-        items.add(BootItem().setName(product).setId("ITEM_CODE_MOUSE").setQty(1).setPrice(ApplicationClass.prefs.fee!!.toDouble()))
+//        items.add(BootItem().setName(product).setId("ITEM_CODE_MOUSE").setQty(1).setPrice(ApplicationClass.prefs.fee!!.toDouble()))
+        items.add(BootItem().setName(product).setId("ITEM_CODE_MOUSE").setQty(1).setPrice(1000.toDouble()))
         val payload = Payload()
 
         /** 정보 추가 핵심 부분. OrderName, Product, Price, User, item */
@@ -47,7 +48,8 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
             .setOrderId("1234")
             // Price와 items의 가격정보가 일치해야 한다. (틀리면 바로 오류)
             // 원래는 합계를 입력해야하지만, 어차피 1건이므로 바로 입력
-            .setPrice(ApplicationClass.prefs.fee!!.toDouble())
+//            .setPrice(ApplicationClass.prefs.fee!!.toDouble())
+            .setPrice(1000.toDouble())
             .setUser(getBootUser())
             .setExtra(extra).items = items
 
@@ -55,7 +57,8 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
         val map: MutableMap<String, Any> = HashMap()
         map["Service Name"] = "알파카"
         map["Product"] = product
-        map["Price"] = ApplicationClass.prefs.fee!!.toDouble().toInt().toString() + "원"
+//        map["Price"] = ApplicationClass.prefs.fee!!.toDouble().toInt().toString() + "원"
+        map["Price"] = "1000원"
         payload.metadata = map
 
         /** 이부분은 Bootpay 관리자 페이지에서만 확인하프로 크게 신경쓰지 않아도 됨. */
@@ -83,6 +86,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
                     Log.d("done", data)
                 }
             }).requestPayment()
+        ApplicationClass.prefs.useCount = ApplicationClass.prefs.useCount?.plus(1)
         findNavController().navigate(R.id.action_paymentFragment_to_userHomeFragment)
     }
 

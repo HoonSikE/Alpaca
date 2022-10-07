@@ -21,27 +21,35 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
     private val chatBotViewModel: ChatBotViewModel by viewModels()
     private lateinit var chatBotAdapter: ChatBotAdapter
     private var comments = ArrayList<String>()
-    private var message = "0"
+    private var lastMessage = "0"
     private var preMsg = Stack<String>()
-    private var messageTmp = "-1"
+    private var messageTmp = "0"
 
     private val messageClickListener: (View, String) -> Unit = { _, msg ->
+        if(preMsg.size > 0){
+            println("뭐냐뭐냐: " + preMsg.peek())
+        }
         val tmp = msg.split(".")
 
-        if(message != tmp[0] && msg.substring(0 until 2) != "아래"){
-            if(preMsg.size > 0){
-                if(preMsg.peek() != messageTmp){
-                    preMsg.push(messageTmp)
+        if(lastMessage != tmp[0] && msg.substring(0 until 2) != "아래"){
+            // 중복되게 넣지 않음.
+            if(preMsg.size > 0) {
+                if (preMsg.peek() != msg) {
+                    preMsg.push(msg)
                 }
+            } else if(preMsg.size == 0){
+                preMsg.push(messageTmp)
             }
+            // 사용자에게 출력 메세지
             messageTmp = msg
 
-            message = tmp[0]
+            // 챗봇 메세지
+            lastMessage = tmp[0]
             println("click message: " + msg)
             println("message: " + tmp[0])
 
             chatBotViewModel.checkChatBotMessage(
-                message = message
+                message = lastMessage
             )
         }
     }
@@ -65,8 +73,9 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
     }
 
     private fun initData() {
+        comments.add("안녕하세요! 저는 알파카 챗봇이라고 해요!")
         chatBotViewModel.checkChatBotMessage(
-            message = message
+            message = lastMessage
         )
     }
 
@@ -115,9 +124,7 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(R.layout.fragment_c
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     if(state.data.value != null){
-                        if(messageTmp == "-1"){
-                            comments.add("안녕하세요! 저는 알파카 챗봇이라고 해요!")
-                        } else {
+                        if(comments.size > 1){
                             comments.add("나:" + messageTmp)
                         }
                         comments.add("아래 항목을 선택해주세요!")
