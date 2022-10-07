@@ -159,48 +159,79 @@
 <br>
 
 <div align="center">
-     <img src="./README/mypage/Favorites1.png" width="30%">
-     <img src="./README/mypage/Favorites2.png" width="30%">
-     <img src="./README/mypage/Favorites3.png" width="30%">
-     <h3>[즐겨찾기 등록]</h3>
+   <img src="./README/mypage/Favorites1.png" width="30%">
+   <img src="./README/mypage/Favorites2.png" width="30%">
+   <img src="./README/mypage/Favorites3.png" width="30%">
+   <h3>[즐겨찾기 등록]</h3>
 </div>
 
 <br>
 
 <div align="center">
-     <img src="./README/mypage/Favorites4.png" width="30%">
-     <img src="./README/mypage/Favorites5.png" width="30%">
-     <h3>[즐겨찾기 삭제]</h3>
+   <img src="./README/mypage/Favorites4.png" width="30%">
+   <img src="./README/mypage/Favorites5.png" width="30%">
+   <h3>[즐겨찾기 삭제]</h3>
 </div>
 
 <br><br>
 
 ## 🚕 무인 택시 이용
-> + ### 출발지/목적지 설정, 
+> + ### 출발지/목적지 설정, 택시 호출, 택시 출발, 택시 도착 및 평점, 택시 탑승 전/후 점검
 > + ### Naver Map API와 Kakao 지도 API를 활용해 택시 위치와 경로를 기반으로 커스텀마커, 폴리라인 식별
 > + ### 경로에 따라 남은시간, 금액 식별
-> + ### Firestore Database 사용
-
-## 1. db
+> + ### 탑승 전/후 평점 시스템
+> + ### Firestore Database, Storage 사용
 
 <br>
 
-## 2. 주변 위치 정보 제공
+## 1. 출발지/목적지 설정
 
 <div align="center">
-   <img src="./README/gif/plogging/ploggingTrashcan.gif" width="30%">
-   <img src="./README/gif/plogging/ploggingToilet.gif" width="30%">
+   <img src="./README/taxi/StartPoint.png" width="30%">
+   <h3>[출발지/목적지 설정]</h3>
 </div>
 
 <br>
 
-## 3. SNS 사진 공유
-   - 기록에는 마킹과 폴리라인이 된 지도 사진이 기본 연동
-   - 필요 시 유저가 커스텀한 사진으로 변경 가능
-   - SNS 공유 기능
+## 2. 택시 호출
+   - 출발지 -> 목적지 간 경로 받아옴
+   - 택시 호출 후 탑승 평점 출력
 
 <div align="center">
-   <img src="./README/gif/sns.gif" width="30%">
+   <img src="./README/taxi/CallTaxi1.png" width="30%">
+   <img src="./README/taxi/CallTaxi2.png" width="30%">
+   <img src="./README/taxi/CallTaxi3.png" width="30%">
+   <h3>[택시 호출]</h3>
+</div>
+
+<br>
+
+## 3. 택시 출발
+   - 사용자에게 도착 후 문열림, 탑승 전 전검 기능 제공
+
+<div align="center">
+   <img src="./README/taxi/StartDriving.png" width="30%">
+   <h3>[택시 출발]</h3>
+</div>
+
+<br>
+
+## 4. 택시 도착 및 평점
+   - 탑승 후 평점 및 점검 기능 제공
+
+<div align="center">
+   <img src="./README/taxi/EndDriving.png" width="30%">
+   <h3>[택시 도착 및 평점]</h3>
+</div>
+
+<br>
+
+## 5. 택시 탑승 전/후 점검
+   - 탐승 전/후 사진을 통한 점검 (블랙 컨슈머 방지)
+
+<div align="center">
+   <img src="./README/taxi/CheckTaxi.png" width="30%">
+   <h3>[택시 탑승 전/후 점검]</h3>
 </div>
 
 <br><br>
@@ -257,6 +288,22 @@
    <img src="./README/home/UserList1.png" width="30%">
    <img src="./README/home/UserList2.png" width="30%">
    <h3>[제공자 차량 이용자 상세 내용]</h3>
+</div>
+
+<br><br>
+
+## 💰 결제
+
+> + ### Boot Pay API 사용
+
+<br>
+
+<div align="center">
+   <img src="./README/payment/Payment1.png" width="25%">
+   <img src="./README/payment/Payment2.png" width="25%">
+   <img src="./README/payment/Payment3.png" width="25%">
+   <img src="./README/payment/Payment4.png" width="20.6%">
+   <h3>[Boot Pay]</h3>
 </div>
 
 <br><br>
