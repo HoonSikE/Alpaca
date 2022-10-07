@@ -175,6 +175,62 @@
 
 <br><br>
 
+## 🏠 유저 / 제공자 화면
+> + ### 유저 홈, 제공자 홈, 제공자 차량 이용자 상세 내용
+> + ### 특정조건을 달성하면 등급 획득 가능 (Unrank, Bronze, Silver, Gold 등)
+> + ### Firestore Database 사용
+
+<br>
+
+## 1. 유저
+   - 유저 정보, 즐겨찾기, 자주가는 목적지 출력
+
+<div align="center">
+   <img src="./README/home/UserHome.png" width="30%">
+   <h3>[유저 홈]</h3>
+</div>
+
+<br>
+
+   - 택시 번호, 탑승 평점 출력
+
+<div align="center">
+   <img src="./README/home/BoardedTaxiList.png" width="30%">
+   <h3>[이용 택시 리스트]</h3>
+</div>
+
+<br>
+
+   - 택시 번호, 탑승 평점, 출발/목적지, 소요 시간, 운행 거리, 요금 출력, 1:1 채팅 기능 제공
+
+<div align="center">
+   <img src="./README/home/BoardedTaxiDetail.png" width="30%">
+   <h3>[이용 택시 상세 내용]</h3>
+</div>
+
+<br>
+
+## 2. 제공자
+   - 회원 정보 출력, 수익 금액, 차량 번호, 평점, 운행여부, 마감시간, 이용자 정보 조회
+
+<div align="center">
+   <img src="./README/home/ProviderHome1.png" width="30%">
+   <img src="./README/home/ProviderHome2.png" width="30%">
+   <h3>[제공자 홈]</h3>
+</div>
+
+<br>
+
+   - 출발 전/후 차량 내부 사진, 승차감 평점 조회, 1:1 채팅 기능 제공
+
+<div align="center">
+   <img src="./README/home/UserList1.png" width="30%">
+   <img src="./README/home/UserList2.png" width="30%">
+   <h3>[제공자 차량 이용자 상세 내용]</h3>
+</div>
+
+<br><br>
+
 ## 🚕 무인 택시 이용
 > + ### 출발지/목적지 설정, 택시 호출, 택시 출발, 택시 도착 및 평점, 택시 탑승 전/후 점검
 > + ### Naver Map API와 Kakao 지도 API를 활용해 택시 위치와 경로를 기반으로 커스텀마커, 폴리라인 식별
@@ -232,62 +288,6 @@
 <div align="center">
    <img src="./README/taxi/CheckTaxi.png" width="30%">
    <h3>[택시 탑승 전/후 점검]</h3>
-</div>
-
-<br><br>
-
-## 🏠 유저 / 제공자 화면
-> + ### 유저 홈, 제공자 홈, 제공자 차량 이용자 상세 내용
-> + ### 특정조건을 달성하면 등급 획득 가능 (Unrank, Bronze, Silver, Gold 등)
-> + ### Firestore Database 사용
-
-<br>
-
-## 1. 유저
-   - 유저 정보, 즐겨찾기, 자주가는 목적지 출력
-
-<div align="center">
-   <img src="./README/home/UserHome.png" width="30%">
-   <h3>[유저 홈]</h3>
-</div>
-
-<br>
-
-   - 택시 번호, 탑승 평점 출력
-
-<div align="center">
-   <img src="./README/home/BoardedTaxiList.png" width="30%">
-   <h3>[이용 택시 리스트]</h3>
-</div>
-
-<br>
-
-   - 택시 번호, 탑승 평점, 출발/목적지, 소요 시간, 운행 거리, 요금 출력, 1:1 채팅 기능 제공
-
-<div align="center">
-   <img src="./README/home/BoardedTaxiDetail.png" width="30%">
-   <h3>[이용 택시 상세 내용]</h3>
-</div>
-
-<br>
-
-## 2. 제공자
-   - 회원 정보 출력, 수익 금액, 차량 번호, 평점, 운행여부, 마감시간, 이용자 정보 조회
-
-<div align="center">
-   <img src="./README/home/ProviderHome1.png" width="30%">
-   <img src="./README/home/ProviderHome2.png" width="30%">
-   <h3>[제공자 홈]</h3>
-</div>
-
-<br>
-
-   - 출발 전/후 차량 내부 사진, 승차감 평점 조회, 1:1 채팅 기능 제공
-
-<div align="center">
-   <img src="./README/home/UserList1.png" width="30%">
-   <img src="./README/home/UserList2.png" width="30%">
-   <h3>[제공자 차량 이용자 상세 내용]</h3>
 </div>
 
 <br><br>
