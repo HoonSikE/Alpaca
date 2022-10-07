@@ -379,7 +379,7 @@
 | - | - | - | - |
 | 공통 | - |- 기획 : Notion, UI/UX(Kakao Oven/**Figma**), DB설계, 기능명세서<br>- 협업 : 코드 컨벤션 구성, 데일리 스크럼, **GitLab, JIRA**, 간트 차트<br>- **기술 : Android(MVVM/Hilt), Kotlin, Firebase**, nav_graph 설계| -  |
 | **김기한 😎** | **Mobile<br>(Android)** | **- 주요 담당 페이지 : 유저/제공자 메인화면, 출발/목적지 설정, 자주가는 출발/목적지, 택시 운행 페이지, 즐겨찾기, 차량 평가**<br>- 기술 : 프로젝트 기본 틀 구성, ROS-Firebase-Android 데이터 통신, Naver Map API, Kakao 주소 API, apk 추출<br>- 기타 : PPT 자료 구성, 라이브 시연, 포팅메뉴얼 | - |
-| **박한훈 😆** |  **Mobile<br>(Android)**  | **- 주요 담당 페이지 : 회원 관리(문자/SNS), 마이페이지, 회원정보 출력, 결제, 탑승택시 목록, 즐겨찾기, 차량 평가, 1;1 채팅, 챗봇**<br>- 기술: BootPay API, 이미지 업로드, 기능별 Gif 편집<br>- 기타 : PPT 자료 구성 및 발표, UCC 촬영, ReadMe 작성, 포팅메뉴얼| - |
+| **박한훈 😆** |  **Mobile<br>(Android)**  | **- 주요 담당 페이지 : 회원 관리(문자/SNS), 마이페이지, 회원정보 출력, 결제, 탑승택시 목록, 즐겨찾기, 차량 평가, 1;1 채팅, 챗봇**<br>- 기술: BootPay API, 이미지 업로드, 기능별 자료 추출<br>- 기타 : PPT 자료 구성 및 발표, UCC 촬영, ReadMe 작성, 포팅메뉴얼| - |
 
 <br><br>
 
