@@ -210,7 +210,8 @@ class EndDrivingTaxiFragment : BaseFragment<FragmentEndDrivingTaxiBinding>(R.lay
                     Log.d("UiState.Success", "taxiListUpdate clear")
                     providerCar = state.data.car!!
                     revenue = state.data.revenue
-                    revenue += ApplicationClass.prefs.fee!!
+                    revenue += 1000
+                    //revenue += ApplicationClass.prefs.fee!!
                     providerViewModel.updateRevenue(revenue)
                 }
             }
