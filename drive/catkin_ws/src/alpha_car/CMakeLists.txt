@@ -51,6 +51,7 @@ add_message_files(
   DIRECTORY msg
   FILES
   student.msg
+  global_data.msg
 )
 
 ## Generate services in the 'srv' folder

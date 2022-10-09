@@ -9,7 +9,7 @@ from math import cos,sin,pi,sqrt,pow,atan2
 from geometry_msgs.msg import Point,PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry,Path
 from morai_msgs.msg import CtrlCmd,EgoVehicleStatus,GetTrafficLightStatus
-# from alpha_car.msg import global_msg
+from alpha_car.msg import global_data
 import numpy as np
 import tf
 from tf.transformations import euler_from_quaternion,quaternion_from_euler
@@ -68,7 +68,7 @@ class pure_pursuit :
         
         rospy.Subscriber("/global_path", Path, self.global_path_callback)
         # TODO 데이터 publisher 정의
-        # rospy.Subscriber("/global_data", global_msg, self.global_data_callback)
+        rospy.Subscriber("/global_data", global_data, self.global_data_callback)
         # rospy.Subscriber("/local_path", Path, self.path_callback) # 58번째 줄로 대체
         rospy.Subscriber("/odom", Odometry, self.odom_callback)
         rospy.Subscriber("/Ego_topic", EgoVehicleStatus, self.status_callback)
@@ -106,8 +106,8 @@ class pure_pursuit :
             if self.is_global_path == True:
                 # self.velocity_list = self.vel_planning.curvedBaseVelocity(self.global_path, 50)
                 break
-            else:
-                rospy.loginfo('Waiting global path data')
+            # else:
+            #     rospy.loginfo('Waiting global path data')
 
         rate = rospy.Rate(30) # 30hz
         while not rospy.is_shutdown():
@@ -175,7 +175,7 @@ class pure_pursuit :
     def global_data_callback(self, msg):
         self.global_data = msg
         self.is_global_data = True
-        # print(msg)
+        print(msg)
 
     # def get_traffic_callback(self, msg):
     #     self.traffic = msg
