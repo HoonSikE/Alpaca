@@ -14,12 +14,19 @@
 
 
 ############ 필요한 설정
+                # 글로벌 데이터 받기
+                rospy.Subscriber("/global_data", global_data, self.global_data_callback)
+
+                def global_data_callback(self, msg):
+                    self.global_data = msg
+
+
                 # 1. 링크셋, 노드셋 
                 current_path = os.path.dirname(os.path.realpath(__file__))
                 sys.path.append(current_path)
                 from lib.mgeo.class_defs import *
 
-                load_path = os.path.normpath(os.path.join(current_path, 'lib/mgeo_data/R_KR_PG_K-City'))
+                load_path = os.path.normpath(os.path.join(current_path, '../../Sangam_Mgeo'))
                 mgeo_planner_map = MGeo.create_instance_from_json(load_path)
                 self.node_set = mgeo_planner_map.node_set
                 self.link_set = mgeo_planner_map.link_set
@@ -57,7 +64,7 @@
                 dis = float('inf')
 
                 flag = 0
-                for link_idx in data['link_path']:
+                for link_idx in self.global_data.links_idx:
                     for x, y, _ in self.links[link_idx].points:
                         temp = ((self.current_postion.x - x)**2 + (self.current_postion.y - y)**2)**0.5
                         if temp < dis:
@@ -75,7 +82,7 @@
                 if forward_shortest_node.is_on_stop_line() == True:
                     # 차의 다음 진행 링크가 직진, 좌회전, 우회전인지 찾기
                     next_link_direction = None
-                    for link_idx in data['link_path']:
+                    for link_idx in self.global_data.links_idx:
                         if self.links[link_idx].get_from_node() == forward_shortest_node:
                             next_link_direction = self.links[link_idx].related_signal
                             break
@@ -84,4 +91,4 @@
                         pass
                     # 2-2. 다른 신호라서 통과 불가 >> npc 에 장애물 추가
                     else:
-                        local_npc_info.append([1, forward_shortest_node.point.x, forward_shortest_node.point.y])
+                        local_npc_info.append([1, forward_shortest_node.point.x, forward_shortest_node.point.y, 0])
