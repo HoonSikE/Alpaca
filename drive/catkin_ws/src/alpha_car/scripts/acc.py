@@ -44,31 +44,6 @@ class pure_pursuit :
     def __init__(self):
         rospy.init_node('pure_pursuit', anonymous=True)
 
-        #TODO: (1) subscriber, publisher 선언
-        
-        # Local/Gloabl Path 와 Odometry Ego Status 데이터를 수신 할 Subscriber 를 만들고 
-        # CtrlCmd 를 시뮬레이터로 전송 할 publisher 변수를 만든다.
-        # CtrlCmd 은 1장을 참고 한다.
-        # Ego topic 데이터는 차량의 현재 속도를 알기 위해 사용한다.
-        # Gloabl Path 데이터는 경로의 곡률을 이용한 속도 계획을 위해 사용한다.
-        
-        rospy.Subscriber("/global_path", Path, self.global_path_callback)
-        rospy.Subscriber("/local_path", Path, self.path_callback)
-        rospy.Subscriber("/odom", Odometry, self.odom_callback)
-        rospy.Subscriber("/Ego_topic", EgoVehicleStatus, self.status_callback)
-        rospy.Subscriber("/Object_topic", ObjectStatusList, self.object_info_callback)
-
-        # 글로벌 데이터 받기
-        rospy.Subscriber("/global_data", global_data, self.global_data_callback)
-
-        # 현재 신호등 정보 받기
-        rospy.Subscriber("/GetTrafficLightStatus", GetTrafficLightStatus, self.traffic_light_call_back)
-
-        self.possible_link_direction = [] # 지금 지나갈 수 있는 링크 속성 (직진, 좌회전, 우회전)
-
-                
-
-
         # 1. 링크셋, 노드셋 
         current_path = os.path.dirname(os.path.realpath(__file__))
         sys.path.append(current_path)
@@ -94,7 +69,8 @@ class pure_pursuit :
         self.is_look_forward_point = False
 
         self.forward_point = Point()
-        self.current_postion = Point()
+        self.possible_link_direction = [] # 지금 지나갈 수 있는 링크 속성 (직진, 좌회전, 우회전)
+
 
         self.vehicle_length = 2.6
         self.lfd = 12
@@ -102,6 +78,32 @@ class pure_pursuit :
         self.max_lfd = 30
         self.lfd_gain = 0.78 # 0.78
         self.target_velocity = 60
+
+        #TODO: (1) subscriber, publisher 선언
+        
+        # Local/Gloabl Path 와 Odometry Ego Status 데이터를 수신 할 Subscriber 를 만들고 
+        # CtrlCmd 를 시뮬레이터로 전송 할 publisher 변수를 만든다.
+        # CtrlCmd 은 1장을 참고 한다.
+        # Ego topic 데이터는 차량의 현재 속도를 알기 위해 사용한다.
+
+
+        # Gloabl Path 데이터는 경로의 곡률을 이용한 속도 계획을 위해 사용한다.
+        self.current_postion = Point()
+
+        rospy.Subscriber("/global_path", Path, self.global_path_callback)
+        rospy.Subscriber("/local_path", Path, self.path_callback)
+        rospy.Subscriber("/odom", Odometry, self.odom_callback)
+        rospy.Subscriber("/Ego_topic", EgoVehicleStatus, self.status_callback)
+        rospy.Subscriber("/Object_topic", ObjectStatusList, self.object_info_callback)
+
+        # 글로벌 데이터 받기
+        rospy.Subscriber("/global_data", global_data, self.global_data_callback)
+
+        # 현재 신호등 정보 받기
+        rospy.Subscriber("/GetTrafficLightStatus", GetTrafficLightStatus, self.traffic_light_call_back)
+
+        
+
 
         # pid, acc, 곡률주행 클래스 생성 및 초기화
         self.pid = pidControl()
@@ -116,13 +118,13 @@ class pure_pursuit :
             else:
                 rospy.loginfo('Waiting global path data')
 
+
         rate = rospy.Rate(30) # 30hz
         while not rospy.is_shutdown():
-
+            # print(self.is_path, self.is_odom, self.is_status)
             if self.is_path == True and self.is_odom == True and self.is_status == True:
-
                 # global_obj,local_obj
-                result = self.calc_vaild_obj([self.current_postion.x,self.current_postion.y,self.vehicle_yaw],self.object_data)
+                result = self.calc_vaild_obj([self.current_postion.x,self.current_postion.y,self.vehicle_yaw], self.object_data)
                 
                 global_npc_info = result[0] 
                 local_npc_info = result[1] 
@@ -148,7 +150,6 @@ class pure_pursuit :
                             break
                     if flag:
                         break
-                
                 forward_shortest_node = self.links[current_link].get_to_node() # 차량 전방, 가장 가까운 노드
 
                 # 2. 1번에서 찾은 노드가 정지선 == ture 이면 현재 신호와 차량의 향후 진행 링크 비교한다.
@@ -159,13 +160,16 @@ class pure_pursuit :
                         if self.links[link_idx].get_from_node() == forward_shortest_node:
                             next_link_direction = self.links[link_idx].related_signal
                             break
+
                     # 2-1. 맞는 신호라서 통과 가능 >> npc 에 장애물 추가하지 않고 그냥 패스
+                    print(next_link_direction, self.possible_link_direction)
                     if next_link_direction in self.possible_link_direction:
+                        print("you can go now!!!")
                         pass
                     # 2-2. 다른 신호라서 통과 불가 >> npc 에 장애물 추가
                     else:
-                        local_npc_info.append([1, forward_shortest_node.point.x, forward_shortest_node.point.y, 0])
-
+                        temp = forward_shortest_node.get_to_links()[0]
+                        local_npc_info.append([1, temp.points[0][0], temp.points[0][1], 0])
 
 
 
@@ -176,7 +180,7 @@ class pure_pursuit :
                 if self.is_look_forward_point :
                     self.ctrl_cmd_msg.steering = steering
                 else : 
-                    rospy.loginfo("no found forward point")
+                    # rospy.loginfo("no found forward point")
                     self.ctrl_cmd_msg.steering=0.0
 
                 self.adaptive_cruise_control.check_object(self.path ,global_npc_info, local_npc_info
@@ -230,6 +234,7 @@ class pure_pursuit :
     def traffic_light_call_back(self, msg):
         # 신호등 상태
         status = msg.trafficLightStatus
+        print(status)
         # 지나갈수 있는 속성값 정의
         if status == 1: # red
             self.possible_link_direction == []
@@ -253,8 +258,8 @@ class pure_pursuit :
         self.is_odom=True
         odom_quaternion=(msg.pose.pose.orientation.x,msg.pose.pose.orientation.y,msg.pose.pose.orientation.z,msg.pose.pose.orientation.w)
         _,_,self.vehicle_yaw=euler_from_quaternion(odom_quaternion)
-        self.current_postion.x=msg.pose.pose.position.x
-        self.current_postion.y=msg.pose.pose.position.y
+        self.current_postion.x = msg.pose.pose.position.x
+        self.current_postion.y = msg.pose.pose.position.y
 
     def status_callback(self,msg): ## Vehicl Status Subscriber 
         self.is_status=True
@@ -285,12 +290,12 @@ class pure_pursuit :
         angle_diff = abs(second_local_deg - first_local_deg)
         # print("first_local_deg: {0}".format(first_local_deg))
         # print("second_local_deg: {0}".format(second_local_deg))
-        print("angle_diff : {0}".format(angle_diff))
+        # print("angle_diff : {0}".format(angle_diff))
 
         # 차량과 도로의 각도 차이
         vehicle_yaw_deg = self.vehicle_yaw  * (180 / pi)
         yaw_diff = abs(second_local_deg - vehicle_yaw_deg)
-        print("yaw_diff : {0}".format(yaw_diff))
+        # print("yaw_diff : {0}".format(yaw_diff))
 
         return (angle_diff, yaw_diff)
 
